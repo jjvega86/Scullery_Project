@@ -11,6 +11,13 @@ namespace Scullery.Data
     public class ApplicationDbContext : IdentityDbContext
     {
         public DbSet<Planner> Planners { get; set; }
+        public DbSet<Pod> Pods { get; set; }
+        public DbSet<SavedRecipe> SavedRecipes { get; set; }
+        public DbSet<Budget> Budgets { get; set; }
+        public DbSet<KitchenInventory> KitchenInventories { get; set; }
+        public DbSet<Ingredient> Ingredients { get; set; }
+        public DbSet<MealPlan> MealPlans { get; set; }
+        public DbSet<ScheduledMeal> ScheduledMeals { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
