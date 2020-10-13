@@ -4,11 +4,14 @@ using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Scullery.Models;
 
 namespace Scullery.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {
+        public DbSet<Planner> Planners { get; set; }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
