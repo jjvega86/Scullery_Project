@@ -12,6 +12,9 @@ using Scullery.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
+using Scullery.ActionFilters;
 
 namespace Scullery
 {
@@ -34,6 +37,13 @@ namespace Scullery
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultUI()
                 .AddDefaultTokenProviders();
+
+            services.AddScoped<ClaimsPrincipal>(s =>
+            s.GetService<IHttpContextAccessor>().HttpContext.User);
+            services.AddControllers(config =>
+            {
+                config.Filters.Add(typeof(GlobalRouting));
+            });
 
             services.AddControllersWithViews();
             services.AddRazorPages();
