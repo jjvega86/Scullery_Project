@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -18,6 +19,12 @@ namespace Scullery.Controllers
 
         }
 
+        private string GetLoggedInUser()
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            return userId;
+        }
 
         // GET: SavedRecipeController
         // This view will trigger from the navbar "My Recipes"
@@ -25,7 +32,10 @@ namespace Scullery.Controllers
         // It will also include a search utility to find a recipe using the Spoonacular API
         public ActionResult Index()
         {
-            return View();
+            var planner = _context.Planners.Where(c => c.IdentityUserId == GetLoggedInUser()).SingleOrDefault();
+            var recipeCollection = _context.SavedRecipes.Where(c => c.PlannerId == planner.PlannerId).ToList();
+
+            return View(recipeCollection);
         }
 
         // GET: SavedRecipeController/Details/5

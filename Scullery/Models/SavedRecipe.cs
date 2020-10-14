@@ -13,7 +13,7 @@ namespace Scullery.Models
         public int SavedRecipeId { get; set; }
 
         [ForeignKey("PlannerId")]
-        public string PlannerId { get; set; }
+        public int PlannerId { get; set; }
         public Planner Planner { get; set; }
         public int SpoonacularRecipeId { get; set; }
         public string ImageURL { get; set; }
