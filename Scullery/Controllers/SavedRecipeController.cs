@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Scullery.Data;
+using System.Net.Http;
 using Newtonsoft.Json;
+
 
 namespace Scullery.Controllers
 {
@@ -42,6 +44,7 @@ namespace Scullery.Controllers
         [HttpPost]
         public ActionResult Search(string searchString)
         {
+            //install Spoonacular API as a 
             // take searchString input and GET results from Spoonacular API
             // take those results and post them to a new page that shows all results in a list
             // planner can then add recipes to their collection of recipes
