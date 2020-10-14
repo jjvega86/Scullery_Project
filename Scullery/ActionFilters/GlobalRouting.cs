@@ -26,11 +26,7 @@ namespace Scullery.ActionFilters
                     context.Result = new RedirectToActionResult("Index",
                     "Planner", null);
                 }
-                //else if (_claimsPrincipal.IsInRole("Employee"))
-                //{
-                //    context.Result = new RedirectToActionResult("Index",
-                //    "Employees", null);
-                //}
+             
             }
         }
         public void OnActionExecuted(ActionExecutedContext context)
