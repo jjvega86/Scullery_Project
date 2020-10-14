@@ -5,25 +5,23 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>My Recipes</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+
+    <form asp-controller="SavedRecipe" asp-action="Search">
+        <p>
+            Search For Recipes: <input type="text" name="SearchString">
+            <input type="submit" value="Search" />
+        </p>
+    </form>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.PlannerId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SpoonacularRecipeId)
+                @Html.DisplayNameFor(model => model.RecipeName)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ImageURL)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RecipeName)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.RecipeURL)
@@ -32,29 +30,24 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.PlannerId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SpoonacularRecipeId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ImageURL)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RecipeName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RecipeURL)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.SavedRecipeId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.SavedRecipeId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.SavedRecipeId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RecipeName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ImageURL)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RecipeURL)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.SavedRecipeId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.SavedRecipeId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.SavedRecipeId">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

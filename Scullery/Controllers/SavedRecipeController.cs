@@ -38,6 +38,12 @@ namespace Scullery.Controllers
             return View(recipeCollection);
         }
 
+        public ActionResult Search(string searchString)
+        {
+            return View();
+
+        }
+
         // GET: SavedRecipeController/Details/5
         public ActionResult Details(int id)
         {
