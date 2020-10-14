@@ -37,11 +37,23 @@
                 <input asp-for="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
-            <select asp-for="PodExists">
-                <option value="">Are you joining an existing Pod?</option>
-                <option value="1">Yes</option>
-                <option value="2">No</option>
-            </select>
+            <div class="form-group">
+                <select asp-for="PodExists">
+                    <option value="">Are you joining an existing Pod?</option>
+                    <option value="1">Yes</option>
+                    <option value="2">No</option>
+                </select>
+            </div>  
+            <div class="form-group">
+                <label asp-for="PodName" class="control-label"></label>
+                <input asp-for="PodName" class="form-control" />
+                <span asp-validation-for="PodName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PodPassword" class="control-label"></label>
+                <input asp-for="PodPassword" class="form-control" />
+                <span asp-validation-for="PodPassword" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

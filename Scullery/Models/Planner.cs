@@ -34,8 +34,6 @@ namespace Scullery.Models
         public int PodExists { get; set; }
 
         [NotMapped]
-        public string FounderUsername { get; set; }
-        [NotMapped]
         public string PodPassword { get; set; }
         [NotMapped]
         public string PodName { get; set; }

@@ -63,7 +63,7 @@ namespace Scullery.Controllers
         {
             if(planner.PodExists == 1)
             {
-                var pod = _context.Pods.Where(p => p.FounderUserName == planner.FounderUsername && p.PodPassword == planner.PodPassword).SingleOrDefault();
+                var pod = _context.Pods.Where(p => p.FounderUserName == planner.PodName && p.PodPassword == planner.PodPassword).SingleOrDefault();
                 planner.IdentityUserId = GetLoggedInUser();
                 planner.PodId = pod.PodId;
                 _context.Add(planner);
@@ -81,15 +81,13 @@ namespace Scullery.Controllers
                 _context.Add(pod);
                 _context.SaveChanges();
 
-                var selectedPod = _context.Pods.Where(p => p.FounderUserName == planner.FounderUsername && p.PodPassword == planner.PodPassword).SingleOrDefault();
+                var selectedPod = _context.Pods.Where(p => p.FounderUserName == planner.PodName && p.PodPassword == planner.PodPassword).SingleOrDefault();
                 planner.IdentityUserId = GetLoggedInUser();
                 planner.PodId = pod.PodId;
                 _context.Add(planner);
                 _context.SaveChanges();
 
                 return RedirectToAction(nameof(Index));
-
-
 
             }
 
