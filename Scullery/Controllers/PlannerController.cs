@@ -28,24 +28,32 @@ namespace Scullery.Controllers
             return planner;
         }
 
-
-        // GET: PlannerController
-        public async Task<IActionResult>  Index()
-        {
-            var planner = GetLoggedInPlanner();
-            return View(planner);
-        }
-
         // GET: PlannerController/Details/5
+        // Profile page for Planner
         public ActionResult Details(int id)
         {
             return View();
         }
 
+        // GET: PlannerController
+        // Default view that shows progress bar for Budget and Today's Assigned Meals to prepare
+        public ActionResult Index()
+        {
+            var planner = GetLoggedInPlanner();
+
+            if (planner == null)
+            {
+                return RedirectToAction("Create");
+            }
+
+            return View(planner);
+        }
+
         // GET: PlannerController/Create
         public ActionResult Create()
         {
-            return View();
+            Planner planner = new Planner();
+            return View(planner);
         }
 
         // POST: PlannerController/Create
@@ -62,6 +70,7 @@ namespace Scullery.Controllers
                 return View();
             }
         }
+
 
         // GET: PlannerController/Edit/5
         public ActionResult Edit(int id)
