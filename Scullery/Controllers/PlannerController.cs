@@ -60,15 +60,17 @@ namespace Scullery.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Planner planner)
         {
-            try
+            if(ModelState.IsValid)
             {
+                planner.IdentityUserId = GetLoggedInUser();
+                _context.Add(planner);
+                _context.SaveChanges();
 
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+
+            return RedirectToAction("Create");
+           
         }
 
 

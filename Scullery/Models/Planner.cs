@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -26,6 +27,12 @@ namespace Scullery.Models
         public string Email { get; set; }
         public string SpoonacularUserName { get; set; }
         public string UserHash { get; set; }
+
+        [NotMapped]
+        public SelectList Options { get; set; }
+
+        [NotMapped]
+        public int PodExists { get; set; }
         
 
     }
