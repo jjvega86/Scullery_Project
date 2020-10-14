@@ -61,13 +61,36 @@ namespace Scullery.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Planner planner)
         {
-            if(ModelState.IsValid)
+            if(planner.PodExists == 1)
             {
+                var pod = _context.Pods.Where(p => p.FounderUserName == planner.FounderUsername && p.PodPassword == planner.PodPassword).SingleOrDefault();
                 planner.IdentityUserId = GetLoggedInUser();
+                planner.PodId = pod.PodId;
                 _context.Add(planner);
                 _context.SaveChanges();
 
                 return RedirectToAction(nameof(Index));
+            }
+            else if (planner.PodExists == 2)
+            {
+                Pod pod = new Pod();
+                pod.PodName = planner.PodName;
+                pod.PodPassword = planner.PodPassword;
+                pod.FounderUserName = planner.UserName;
+
+                _context.Add(pod);
+                _context.SaveChanges();
+
+                var selectedPod = _context.Pods.Where(p => p.FounderUserName == planner.FounderUsername && p.PodPassword == planner.PodPassword).SingleOrDefault();
+                planner.IdentityUserId = GetLoggedInUser();
+                planner.PodId = pod.PodId;
+                _context.Add(planner);
+                _context.SaveChanges();
+
+                return RedirectToAction(nameof(Index));
+
+
+
             }
 
             return RedirectToAction("Create");
