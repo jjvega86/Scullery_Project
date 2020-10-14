@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Scullery.Data;
 
-namespace Scullery.Data.Migrations
+namespace Scullery.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -44,6 +44,15 @@ namespace Scullery.Data.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "73445ebb-6908-4d67-aa5a-807ef2b603b1",
+                            ConcurrencyStamp = "7623794c-4c1f-4c2f-be13-a470940f93ee",
+                            Name = "Planner",
+                            NormalizedName = "PLANNER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
