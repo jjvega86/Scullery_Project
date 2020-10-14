@@ -20,12 +20,11 @@ namespace Scullery.Controllers
 
         }
 
-        private Planner GetLoggedInPlanner()
+        private string GetLoggedInUser()
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var planner = _context.Planners.Where(c => c.IdentityUserId == userId).SingleOrDefault();
 
-            return planner;
+            return userId;
         }
 
         // GET: PlannerController/Details/5
@@ -39,7 +38,7 @@ namespace Scullery.Controllers
         // Default view that shows progress bar for Budget and Today's Assigned Meals to prepare
         public ActionResult Index()
         {
-            var planner = GetLoggedInPlanner();
+            var planner = _context.Planners.Where(c => c.IdentityUserId == GetLoggedInUser()).SingleOrDefault();
 
             if (planner == null)
             {
@@ -59,10 +58,11 @@ namespace Scullery.Controllers
         // POST: PlannerController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Planner planner)
         {
             try
             {
+
                 return RedirectToAction(nameof(Index));
             }
             catch
