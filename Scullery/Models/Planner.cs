@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
@@ -29,10 +30,12 @@ namespace Scullery.Models
         public string UserHash { get; set; }
 
         [NotMapped]
-        public SelectList Options { get; set; }
-
-        [NotMapped]
+        [BindProperty]
         public int PodExists { get; set; }
+
+       
+
+        
         
 
     }
