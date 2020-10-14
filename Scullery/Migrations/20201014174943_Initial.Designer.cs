@@ -10,8 +10,8 @@ using Scullery.Data;
 namespace Scullery.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201014133649_Init")]
-    partial class Init
+    [Migration("20201014174943_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -50,8 +50,8 @@ namespace Scullery.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "73445ebb-6908-4d67-aa5a-807ef2b603b1",
-                            ConcurrencyStamp = "7623794c-4c1f-4c2f-be13-a470940f93ee",
+                            Id = "949825f7-c154-4640-b64c-cae12de6b436",
+                            ConcurrencyStamp = "0b2e6ed6-b0ad-4acb-b39e-7ab04fd9f716",
                             Name = "Planner",
                             NormalizedName = "PLANNER"
                         });
@@ -365,8 +365,7 @@ namespace Scullery.Migrations
 
                     b.HasIndex("IdentityUserId");
 
-                    b.HasIndex("PodId")
-                        .IsUnique();
+                    b.HasIndex("PodId");
 
                     b.ToTable("Planners");
                 });
@@ -378,7 +377,7 @@ namespace Scullery.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("FounderUserName")
+                    b.Property<string>("FoundingUserName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PodName")
@@ -563,8 +562,8 @@ namespace Scullery.Migrations
                         .HasForeignKey("IdentityUserId");
 
                     b.HasOne("Scullery.Models.Pod", null)
-                        .WithOne("Planner")
-                        .HasForeignKey("Scullery.Models.Planner", "PodId")
+                        .WithMany("Planners")
+                        .HasForeignKey("PodId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

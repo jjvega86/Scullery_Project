@@ -28,13 +28,6 @@ namespace Scullery.Controllers
             return userId;
         }
 
-        // GET: PlannerController/Details/5
-        // Profile page for Planner
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
         // GET: PlannerController
         // Default view that shows progress bar for Budget and Today's Assigned Meals to prepare
         public ActionResult Index()
@@ -63,7 +56,7 @@ namespace Scullery.Controllers
         {
             if(planner.PodExists == 1)
             {
-                var pod = _context.Pods.Where(p => p.FounderUserName == planner.PodName && p.PodPassword == planner.PodPassword).SingleOrDefault();
+                var pod = _context.Pods.Where(p => p.PodName == planner.PodName && p.PodPassword == planner.PodPassword).SingleOrDefault();
                 planner.IdentityUserId = GetLoggedInUser();
                 planner.PodId = pod.PodId;
                 _context.Add(planner);
@@ -76,7 +69,7 @@ namespace Scullery.Controllers
                 Pod pod = new Pod();
                 pod.PodName = planner.PodName;
                 pod.PodPassword = planner.PodPassword;
-                pod.FounderUserName = planner.UserName;
+                pod.FoundingUserName = planner.UserName;
 
                 _context.Add(pod);
                 _context.SaveChanges();

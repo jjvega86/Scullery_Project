@@ -19,15 +19,13 @@ namespace Scullery.Models
         public string IdentityUserId { get; set; }
         public IdentityUser IdentityUser { get; set; }
 
-        [ForeignKey("PodId")]
-        public int PodId { get; set; }
-
         public string UserName { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
         public string SpoonacularUserName { get; set; }
         public string UserHash { get; set; }
+        public int PodId { get; set; }
 
         [NotMapped]
         [BindProperty]

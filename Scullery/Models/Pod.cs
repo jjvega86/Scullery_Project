@@ -11,13 +11,13 @@ namespace Scullery.Models
     {
         [Key]
         public int PodId { get; set; }
-
-        [ForeignKey("UserName")]
-        public string FounderUserName { get; set; }
-        public Planner Planner { get; set; }
+        public string FoundingUserName { get; set; }
 
         public string PodName { get; set; }
         public string PodPassword { get; set; }
+
+        public ICollection<Planner> Planners { get; set; }
+
 
     }
 }

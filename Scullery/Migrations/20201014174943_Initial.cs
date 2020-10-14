@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Scullery.Migrations
 {
-    public partial class Init : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -52,7 +52,7 @@ namespace Scullery.Migrations
                 {
                     PodId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FounderUserName = table.Column<string>(nullable: true),
+                    FoundingUserName = table.Column<string>(nullable: true),
                     PodName = table.Column<string>(nullable: true),
                     PodPassword = table.Column<string>(nullable: true)
                 },
@@ -239,13 +239,13 @@ namespace Scullery.Migrations
                     PlannerId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     IdentityUserId = table.Column<string>(nullable: true),
-                    PodId = table.Column<int>(nullable: false),
                     UserName = table.Column<string>(nullable: true),
                     FirstName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true),
                     SpoonacularUserName = table.Column<string>(nullable: true),
-                    UserHash = table.Column<string>(nullable: true)
+                    UserHash = table.Column<string>(nullable: true),
+                    PodId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -353,7 +353,7 @@ namespace Scullery.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "73445ebb-6908-4d67-aa5a-807ef2b603b1", "7623794c-4c1f-4c2f-be13-a470940f93ee", "Planner", "PLANNER" });
+                values: new object[] { "949825f7-c154-4640-b64c-cae12de6b436", "0b2e6ed6-b0ad-4acb-b39e-7ab04fd9f716", "Planner", "PLANNER" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -422,8 +422,7 @@ namespace Scullery.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Planners_PodId",
                 table: "Planners",
-                column: "PodId",
-                unique: true);
+                column: "PodId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SavedRecipes_PlannerId1",
