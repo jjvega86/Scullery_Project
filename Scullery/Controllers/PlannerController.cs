@@ -81,7 +81,7 @@ namespace Scullery.Controllers
                 _context.Add(pod);
                 _context.SaveChanges();
 
-                var selectedPod = _context.Pods.Where(p => p.FounderUserName == planner.PodName && p.PodPassword == planner.PodPassword).SingleOrDefault();
+                var selectedPod = _context.Pods.Where(p => p.PodName == planner.PodName && p.PodPassword == planner.PodPassword).FirstOrDefault();
                 planner.IdentityUserId = GetLoggedInUser();
                 planner.PodId = pod.PodId;
                 _context.Add(planner);
