@@ -8,17 +8,19 @@ using Microsoft.AspNetCore.Mvc;
 using Scullery.Data;
 using System.Net.Http;
 using Newtonsoft.Json;
-
+using Scullery.Services;
 
 namespace Scullery.Controllers
 {
     public class SavedRecipeController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly SpoonacularService _spoonacular;
 
-        public SavedRecipeController(ApplicationDbContext context)
+        public SavedRecipeController(ApplicationDbContext context, SpoonacularService spoonacular)
         {
             _context = context;
+            _spoonacular = spoonacular;
 
         }
 
@@ -48,8 +50,9 @@ namespace Scullery.Controllers
             // take searchString input and GET results from Spoonacular API
             // take those results and post them to a new page that shows all results in a list
             // planner can then add recipes to their collection of recipes
+            var searchResults = _spoonacular.GetSearchResults(searchString);
 
-            return View();
+            return View(searchResults);
 
         }
 
