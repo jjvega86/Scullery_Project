@@ -44,7 +44,7 @@ namespace Scullery.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Search(string searchString)
+        public async Task<IActionResult> SearchResults(string searchString)
         {
             //install Spoonacular API as a 
             // take searchString input and GET results from Spoonacular API
