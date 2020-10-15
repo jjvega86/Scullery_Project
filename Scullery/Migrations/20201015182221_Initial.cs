@@ -47,6 +47,21 @@ namespace Scullery.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Ingredients",
+                columns: table => new
+                {
+                    id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    name = table.Column<string>(nullable: true),
+                    localizedName = table.Column<string>(nullable: true),
+                    image = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Ingredients", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Pods",
                 columns: table => new
                 {
@@ -59,6 +74,26 @@ namespace Scullery.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Pods", x => x.PodId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ScheduledMeals",
+                columns: table => new
+                {
+                    ScheduledMealId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AssignedPlannerId = table.Column<int>(nullable: false),
+                    SavedRecipeId = table.Column<int>(nullable: false),
+                    MealPlanId = table.Column<int>(nullable: false),
+                    DateOfMeal = table.Column<DateTime>(nullable: true),
+                    Slot = table.Column<int>(nullable: false),
+                    MealCompleted = table.Column<bool>(nullable: false),
+                    Planned = table.Column<bool>(nullable: false),
+                    MealType = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ScheduledMeals", x => x.ScheduledMealId);
                 });
 
             migrationBuilder.CreateTable(
@@ -265,36 +300,12 @@ namespace Scullery.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Ingredients",
-                columns: table => new
-                {
-                    IngredientId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    KitchenInventoryId = table.Column<int>(nullable: false),
-                    SpoonacularIngredientId = table.Column<int>(nullable: false),
-                    IngredientName = table.Column<string>(nullable: true),
-                    UnitType = table.Column<string>(nullable: true),
-                    UnitQuantity = table.Column<double>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Ingredients", x => x.IngredientId);
-                    table.ForeignKey(
-                        name: "FK_Ingredients_KitchenInventories_KitchenInventoryId",
-                        column: x => x.KitchenInventoryId,
-                        principalTable: "KitchenInventories",
-                        principalColumn: "KitchenInventoryId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "SavedRecipes",
                 columns: table => new
                 {
                     SavedRecipeId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    PlannerId = table.Column<string>(nullable: true),
-                    PlannerId1 = table.Column<int>(nullable: true),
+                    PlannerId = table.Column<int>(nullable: false),
                     SpoonacularRecipeId = table.Column<int>(nullable: false),
                     ImageURL = table.Column<string>(nullable: true),
                     RecipeName = table.Column<string>(nullable: true),
@@ -304,56 +315,17 @@ namespace Scullery.Migrations
                 {
                     table.PrimaryKey("PK_SavedRecipes", x => x.SavedRecipeId);
                     table.ForeignKey(
-                        name: "FK_SavedRecipes_Planners_PlannerId1",
-                        column: x => x.PlannerId1,
-                        principalTable: "Planners",
-                        principalColumn: "PlannerId",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ScheduledMeals",
-                columns: table => new
-                {
-                    ScheduledMealId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    AssignedPlannerId = table.Column<int>(nullable: false),
-                    PlannerId = table.Column<int>(nullable: true),
-                    SavedRecipeId = table.Column<int>(nullable: false),
-                    MealPlanId = table.Column<int>(nullable: false),
-                    DateOfMeal = table.Column<DateTime>(nullable: true),
-                    Slot = table.Column<int>(nullable: false),
-                    MealCompleted = table.Column<bool>(nullable: false),
-                    Planned = table.Column<bool>(nullable: false),
-                    MealType = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ScheduledMeals", x => x.ScheduledMealId);
-                    table.ForeignKey(
-                        name: "FK_ScheduledMeals_MealPlans_MealPlanId",
-                        column: x => x.MealPlanId,
-                        principalTable: "MealPlans",
-                        principalColumn: "MealPlanId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ScheduledMeals_Planners_PlannerId",
+                        name: "FK_SavedRecipes_Planners_PlannerId",
                         column: x => x.PlannerId,
                         principalTable: "Planners",
                         principalColumn: "PlannerId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_ScheduledMeals_SavedRecipes_SavedRecipeId",
-                        column: x => x.SavedRecipeId,
-                        principalTable: "SavedRecipes",
-                        principalColumn: "SavedRecipeId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "949825f7-c154-4640-b64c-cae12de6b436", "0b2e6ed6-b0ad-4acb-b39e-7ab04fd9f716", "Planner", "PLANNER" });
+                values: new object[] { "1579c3f9-c10b-41df-a477-8ce858ded92f", "5571f2b2-2793-42f4-9d02-ee773bc2e65b", "Planner", "PLANNER" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -400,11 +372,6 @@ namespace Scullery.Migrations
                 column: "PodId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Ingredients_KitchenInventoryId",
-                table: "Ingredients",
-                column: "KitchenInventoryId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_KitchenInventories_PodId",
                 table: "KitchenInventories",
                 column: "PodId");
@@ -425,24 +392,9 @@ namespace Scullery.Migrations
                 column: "PodId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SavedRecipes_PlannerId1",
+                name: "IX_SavedRecipes_PlannerId",
                 table: "SavedRecipes",
-                column: "PlannerId1");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ScheduledMeals_MealPlanId",
-                table: "ScheduledMeals",
-                column: "MealPlanId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ScheduledMeals_PlannerId",
-                table: "ScheduledMeals",
                 column: "PlannerId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ScheduledMeals_SavedRecipeId",
-                table: "ScheduledMeals",
-                column: "SavedRecipeId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -469,12 +421,6 @@ namespace Scullery.Migrations
                 name: "Ingredients");
 
             migrationBuilder.DropTable(
-                name: "ScheduledMeals");
-
-            migrationBuilder.DropTable(
-                name: "AspNetRoles");
-
-            migrationBuilder.DropTable(
                 name: "KitchenInventories");
 
             migrationBuilder.DropTable(
@@ -482,6 +428,12 @@ namespace Scullery.Migrations
 
             migrationBuilder.DropTable(
                 name: "SavedRecipes");
+
+            migrationBuilder.DropTable(
+                name: "ScheduledMeals");
+
+            migrationBuilder.DropTable(
+                name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "Planners");

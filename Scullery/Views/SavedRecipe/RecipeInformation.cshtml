@@ -1,4 +1,4 @@
-﻿@model Scullery.Models.ViewModels.RecipeInformationSimple
+﻿@model Scullery.Models.SavedRecipe
 @{
     ViewData["Title"] = "RecipeInformation";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -11,14 +11,25 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.RecipeInformationResult.title)
+            @Html.DisplayNameFor(model => model.RecipeName)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.RecipeInformationResult.title)
+            @Html.DisplayFor(model => model.RecipeName)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Save" asp-route-id="@Model.RecipeInformationResult">Save To Your Recipe Collection</a> 
+    <form asp-action="Save" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="RecipeName"/>
+        <input type="hidden" asp-for="ImageURL"/>
+        <input type="hidden" asp-for="PlannerId"  />
+        <input type="hidden" asp-for="RecipeURL"  />
+        <input type="hidden" asp-for="SpoonacularRecipeId"  />
+        <div class="form-group">
+            <input type="submit" value="Save" class="btn btn-primary" />
+        </div>
+    </form>
+    
 </div>
 

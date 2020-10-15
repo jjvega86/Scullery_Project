@@ -10,7 +10,7 @@ using Scullery.Data;
 namespace Scullery.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201014174943_Initial")]
+    [Migration("20201015182221_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,6 +20,27 @@ namespace Scullery.Migrations
                 .HasAnnotation("ProductVersion", "3.1.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("Ingredient", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("image")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("localizedName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("id");
+
+                    b.ToTable("Ingredients");
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -50,8 +71,8 @@ namespace Scullery.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "949825f7-c154-4640-b64c-cae12de6b436",
-                            ConcurrencyStamp = "0b2e6ed6-b0ad-4acb-b39e-7ab04fd9f716",
+                            Id = "1579c3f9-c10b-41df-a477-8ce858ded92f",
+                            ConcurrencyStamp = "5571f2b2-2793-42f4-9d02-ee773bc2e65b",
                             Name = "Planner",
                             NormalizedName = "PLANNER"
                         });
@@ -261,35 +282,6 @@ namespace Scullery.Migrations
                     b.ToTable("Budgets");
                 });
 
-            modelBuilder.Entity("Scullery.Models.Ingredient", b =>
-                {
-                    b.Property<int>("IngredientId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("IngredientName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("KitchenInventoryId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SpoonacularIngredientId")
-                        .HasColumnType("int");
-
-                    b.Property<double>("UnitQuantity")
-                        .HasColumnType("float");
-
-                    b.Property<string>("UnitType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("IngredientId");
-
-                    b.HasIndex("KitchenInventoryId");
-
-                    b.ToTable("Ingredients");
-                });
-
             modelBuilder.Entity("Scullery.Models.KitchenInventory", b =>
                 {
                     b.Property<int>("KitchenInventoryId")
@@ -401,10 +393,7 @@ namespace Scullery.Migrations
                     b.Property<string>("ImageURL")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PlannerId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("PlannerId1")
+                    b.Property<int>("PlannerId")
                         .HasColumnType("int");
 
                     b.Property<string>("RecipeName")
@@ -418,7 +407,7 @@ namespace Scullery.Migrations
 
                     b.HasKey("SavedRecipeId");
 
-                    b.HasIndex("PlannerId1");
+                    b.HasIndex("PlannerId");
 
                     b.ToTable("SavedRecipes");
                 });
@@ -448,9 +437,6 @@ namespace Scullery.Migrations
                     b.Property<bool>("Planned")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("PlannerId")
-                        .HasColumnType("int");
-
                     b.Property<int>("SavedRecipeId")
                         .HasColumnType("int");
 
@@ -458,12 +444,6 @@ namespace Scullery.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("ScheduledMealId");
-
-                    b.HasIndex("MealPlanId");
-
-                    b.HasIndex("PlannerId");
-
-                    b.HasIndex("SavedRecipeId");
 
                     b.ToTable("ScheduledMeals");
                 });
@@ -528,15 +508,6 @@ namespace Scullery.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Scullery.Models.Ingredient", b =>
-                {
-                    b.HasOne("Scullery.Models.KitchenInventory", "KitchenInventory")
-                        .WithMany()
-                        .HasForeignKey("KitchenInventoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Scullery.Models.KitchenInventory", b =>
                 {
                     b.HasOne("Scullery.Models.Pod", "Pod")
@@ -572,24 +543,7 @@ namespace Scullery.Migrations
                 {
                     b.HasOne("Scullery.Models.Planner", "Planner")
                         .WithMany()
-                        .HasForeignKey("PlannerId1");
-                });
-
-            modelBuilder.Entity("Scullery.Models.ScheduledMeal", b =>
-                {
-                    b.HasOne("Scullery.Models.MealPlan", "MealPlan")
-                        .WithMany()
-                        .HasForeignKey("MealPlanId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Scullery.Models.Planner", "Planner")
-                        .WithMany()
-                        .HasForeignKey("PlannerId");
-
-                    b.HasOne("Scullery.Models.SavedRecipe", "SavedRecipe")
-                        .WithMany()
-                        .HasForeignKey("SavedRecipeId")
+                        .HasForeignKey("PlannerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

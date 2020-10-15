@@ -65,41 +65,43 @@ namespace Scullery.Controllers
 
         public async Task<IActionResult> ShowRecipeInformation(int id)
         {
+            var planner = await _context.Planners.Where(c => c.IdentityUserId == GetLoggedInUser()).SingleOrDefaultAsync();
 
             var rawRecipeInformation = await _spoonacular.GetRecipeInformation(id);
+            SavedRecipe recipeToSave = new SavedRecipe();
+            recipeToSave.PlannerId = planner.PlannerId;
 
-            RecipeInformationSimple simpleRecipeInformation = new RecipeInformationSimple();
+            recipeToSave.ImageURL = rawRecipeInformation.image;
+            recipeToSave.RecipeName = rawRecipeInformation.title;
+            recipeToSave.SpoonacularRecipeId = rawRecipeInformation.id;
+            recipeToSave.RecipeURL = rawRecipeInformation.spoonacularSourceUrl;
 
-            simpleRecipeInformation.RecipeInformationResult = rawRecipeInformation;
 
-            return View("RecipeInformation", simpleRecipeInformation);
+
+
+            return View("RecipeInformation", recipeToSave);
         }
 
        
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Save(RecipeInformation recipeinformation)
-        {  
-            try
+        public ActionResult Save(SavedRecipe saved)
+        {
+            if (ModelState.IsValid)
             {
-                var planner = await _context.Planners.Where(c => c.IdentityUserId == GetLoggedInUser()).SingleOrDefaultAsync();
-
-                SavedRecipe savedRecipe = new SavedRecipe();
-                savedRecipe.ImageURL = recipeinformation.image;
-                savedRecipe.PlannerId = planner.PlannerId;
-                savedRecipe.RecipeName = recipeinformation.title;
-                savedRecipe.SpoonacularRecipeId = recipeinformation.id;
-                savedRecipe.RecipeURL = recipeinformation.spoonacularSourceUrl;
-
-                _context.Add(savedRecipe);
+                _context.Add(saved);
                 _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
+
             }
-            catch(NullReferenceException e)
+            else
             {
-                return (IActionResult)e;
+                return View("Index");
+
             }
+           
+
         }
 
         // GET: SavedRecipeController/Delete/5

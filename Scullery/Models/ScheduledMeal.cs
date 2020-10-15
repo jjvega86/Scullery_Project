@@ -12,17 +12,10 @@ namespace Scullery.Models
         [Key]
         public int ScheduledMealId { get; set; }
 
-        [ForeignKey("PlannerId")]
         public int AssignedPlannerId { get; set; }
-        public Planner Planner { get; set; }
-
-        [ForeignKey("SavedRecipeId")]
         public int SavedRecipeId { get; set; }
-        public SavedRecipe SavedRecipe { get; set; }
 
-        [ForeignKey("MealPlanId")]
         public int MealPlanId { get; set; }
-        public MealPlan MealPlan { get; set; }
 
         public DateTime? DateOfMeal { get; set; }
         public int Slot { get; set; } //breakfast, lunch, or dinner according to Spoonacular API
