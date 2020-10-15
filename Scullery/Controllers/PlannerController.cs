@@ -28,11 +28,18 @@ namespace Scullery.Controllers
             return userId;
         }
 
+        private Planner GetLoggedInPlanner()
+        {
+            var planner = _context.Planners.Where(c => c.IdentityUserId == GetLoggedInUser()).SingleOrDefault();
+            return planner;
+
+        }
+
         // GET: PlannerController
         // Default view that shows progress bar for Budget and Today's Assigned Meals to prepare
         public ActionResult Index()
         {
-            var planner = _context.Planners.Where(c => c.IdentityUserId == GetLoggedInUser()).SingleOrDefault();
+            var planner = GetLoggedInPlanner();
 
             if (planner == null)
             {

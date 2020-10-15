@@ -34,13 +34,21 @@ namespace Scullery.Controllers
             return userId;
         }
 
+        private Planner GetLoggedInPlanner()
+        {
+            var planner = _context.Planners.Where(c => c.IdentityUserId == GetLoggedInUser()).SingleOrDefault();
+            return planner;
+
+        }
+
         // GET: SavedRecipeController
         // This view will trigger from the navbar "My Recipes"
         // It will take the LoggedInUser and show a list of their SavedRecipes
         // It will also include a search utility to find a recipe using the Spoonacular API
         public async Task <IActionResult> Index()
         {
-            var planner = await _context.Planners.Where(c => c.IdentityUserId == GetLoggedInUser()).SingleOrDefaultAsync();
+            var planner = GetLoggedInPlanner();
+
             var recipeCollection = await _context.SavedRecipes.Where(c => c.PlannerId == planner.PlannerId).ToListAsync();
 
             return View(recipeCollection);
@@ -65,7 +73,7 @@ namespace Scullery.Controllers
 
         public async Task<IActionResult> ShowRecipeInformation(int id)
         {
-            var planner = await _context.Planners.Where(c => c.IdentityUserId == GetLoggedInUser()).SingleOrDefaultAsync();
+            var planner = GetLoggedInPlanner();
 
             var rawRecipeInformation = await _spoonacular.GetRecipeInformation(id);
             SavedRecipe recipeToSave = new SavedRecipe();

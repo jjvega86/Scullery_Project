@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Scullery.Data;
+using Scullery.Models;
 
 namespace Scullery.Controllers
 {
@@ -28,12 +29,19 @@ namespace Scullery.Controllers
             return userId;
         }
 
+        private Planner GetLoggedInPlanner()
+        {
+            var planner =  _context.Planners.Where(c => c.IdentityUserId == GetLoggedInUser()).SingleOrDefault();
+            return planner;
+
+        }
+
 
         // GET: MealPlanController
         public ActionResult Index()
         {
 
-            var planner =  _context.Planners.Where(c => c.IdentityUserId == GetLoggedInUser()).SingleOrDefault();
+            var planner = GetLoggedInPlanner();
             var allMealPlans =  _context.MealPlans.Where(p => p.PodId == planner.PodId).ToList();
 
 
@@ -51,21 +59,28 @@ namespace Scullery.Controllers
         // GET: MealPlanController/Create
         public ActionResult Create()
         {
-            return View();
+            MealPlan mealPlan = new MealPlan();
+            return View(mealPlan);
         }
 
         // POST: MealPlanController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> Create(MealPlan mealPlan)
         {
-            try
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                var planner = GetLoggedInPlanner();
+
+                await _context.AddAsync(mealPlan);
+                await _context.SaveChangesAsync();
+
+                return View("Index");
+
             }
-            catch
+            else
             {
-                return View();
+                return null;
             }
         }
 
