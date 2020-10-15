@@ -104,25 +104,33 @@ namespace Scullery.Controllers
 
         }
 
+        public ActionResult Details(int id)
+        {
+            var recipe = _context.SavedRecipes.Where(r => r.SavedRecipeId == id).SingleOrDefault();
+            return View(recipe);
+        }
+
         // GET: SavedRecipeController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            var recipe = _context.SavedRecipes.Where(r => r.SavedRecipeId == id).SingleOrDefault();
+
+            return View(recipe);
         }
 
         // POST: SavedRecipeController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult DeletePost(int id)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var recipe = _context.SavedRecipes.Where(r => r.SavedRecipeId == id).SingleOrDefault();
+
+            _context.Remove(recipe);
+            _context.SaveChanges();
+
+            return View("Index");
+
+
         }
     }
 }
