@@ -71,6 +71,7 @@ namespace Scullery.Controllers
             if (ModelState.IsValid)
             {
                 var planner = GetLoggedInPlanner();
+                mealPlan.PodId = planner.PodId;
 
                 await _context.AddAsync(mealPlan);
                 await _context.SaveChangesAsync();
