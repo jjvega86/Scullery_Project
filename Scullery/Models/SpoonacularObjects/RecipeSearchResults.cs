@@ -1,5 +1,5 @@
 ﻿
-public class RecipeSearch
+public class RecipeSearchResults
 {
     public Result[] results { get; set; }
     public int offset { get; set; }

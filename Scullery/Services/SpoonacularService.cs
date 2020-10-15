@@ -17,7 +17,7 @@ namespace Scullery.Services
 
         }
 
-        public async Task<RecipeSearch> GetSearchResults(string searchInput)
+        public async Task<RecipeSearchResults> GetSearchResults(string searchInput)
         {
             string key = ApiKeys.Key;
             string url = $"https://api.spoonacular.com/recipes/complexSearch?query={searchInput}&apiKey={key}";
@@ -26,7 +26,7 @@ namespace Scullery.Services
             if (response.IsSuccessStatusCode)
             {
                 string json = response.Content.ReadAsStringAsync().Result;
-                return JsonConvert.DeserializeObject<RecipeSearch>(json);
+                return JsonConvert.DeserializeObject<RecipeSearchResults>(json);
             }
 
             return null;
