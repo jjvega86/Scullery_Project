@@ -16,6 +16,7 @@ using Microsoft.Extensions.Hosting;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 using Scullery.ActionFilters;
+using Scullery.Services;
 
 namespace Scullery
 {
@@ -48,6 +49,7 @@ namespace Scullery
 
             services.AddControllersWithViews();
             services.AddRazorPages();
+            services.AddTransient<SpoonacularService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

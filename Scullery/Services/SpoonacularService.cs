@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Scullery.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -15,6 +17,17 @@ namespace Scullery.Services
 
         }
 
+        public async Task<RecipeSearch> GetSearchResults(string searchInput)
+        {
+            HttpResponseMessage response = await client.GetAsync($"https://api.spoonacular.com/recipes/complexSearch?query={searchInput}&apiKey={ApiKeys.Key}");
+            if (response.IsSuccessStatusCode)
+            {
+                string json = response.Content.ReadAsStringAsync().Result;
+                return JsonConvert.DeserializeObject<RecipeSearch>(json);
+            }
+
+            return null;
+        }
 
     }
 }
