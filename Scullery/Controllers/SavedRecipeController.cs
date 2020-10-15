@@ -44,7 +44,7 @@ namespace Scullery.Controllers
             return View(recipeCollection);
         }
 
-        [HttpPost]
+        //[HttpPost]
         public async Task<IActionResult> SearchResults(string searchString)
         {
             //install Spoonacular API as a 
@@ -58,7 +58,7 @@ namespace Scullery.Controllers
             searchResults.Result = rawSearchResults;
             searchResults.Results = rawSearchResults.results.ToList();
 
-            return View(searchResults);
+            return View("SearchResults", searchResults);
 
         }
 
