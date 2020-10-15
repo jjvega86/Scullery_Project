@@ -65,6 +65,7 @@ namespace Scullery.Controllers
         // GET: SavedRecipeController/Details/5
         public ActionResult Details(int id)
         {
+
             return View();
         }
 
