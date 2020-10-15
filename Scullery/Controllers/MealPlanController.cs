@@ -30,11 +30,11 @@ namespace Scullery.Controllers
 
 
         // GET: MealPlanController
-        public async Task<IActionResult> Index()
+        public ActionResult Index()
         {
 
-            var planner = await _context.Planners.Where(c => c.IdentityUserId == GetLoggedInUser()).SingleOrDefaultAsync();
-            var allMealPlans = await _context.MealPlans.Where(p => p.PodId == planner.PodId).ToListAsync();
+            var planner =  _context.Planners.Where(c => c.IdentityUserId == GetLoggedInUser()).SingleOrDefault();
+            var allMealPlans =  _context.MealPlans.Where(p => p.PodId == planner.PodId).ToList();
 
 
             return View(allMealPlans);
