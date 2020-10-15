@@ -72,6 +72,7 @@ namespace Scullery.Controllers
             {
                 var planner = GetLoggedInPlanner();
                 mealPlan.PodId = planner.PodId;
+                CreateMealsToBePlanned(mealPlan);
 
                 await _context.AddAsync(mealPlan);
                 await _context.SaveChangesAsync();
@@ -83,6 +84,53 @@ namespace Scullery.Controllers
             {
                 return null;
             }
+        }
+
+        private IEnumerable<DateTime> EachDay(DateTime from, DateTime thru)
+        {
+            for (var day = from.Date; day.Date <= thru.Date; day = day.AddDays(1))
+                yield return day;
+        }
+
+        private void CreateMealsToBePlanned(MealPlan mealPlan)
+        {
+            foreach(DateTime day in EachDay(mealPlan.StartDate.Value, mealPlan.EndDate.Value))
+            {
+                List<ScheduledMeal> scheduledMeals = new List<ScheduledMeal>();
+                ScheduledMeal meal1 = new ScheduledMeal();
+                ScheduledMeal meal2 = new ScheduledMeal();
+                ScheduledMeal meal3 = new ScheduledMeal();
+
+                meal1.DateOfMeal = day;
+                meal1.Slot = 1;
+                meal1.MealPlanId = mealPlan.MealPlanId;
+                scheduledMeals.Add(meal1);
+
+                meal2.DateOfMeal = day;
+                meal2.Slot = 2;
+                meal2.MealPlanId = mealPlan.MealPlanId;
+                scheduledMeals.Add(meal2);
+
+
+                meal3.DateOfMeal = day;
+                meal3.Slot = 3;
+                meal3.MealPlanId = mealPlan.MealPlanId;
+                scheduledMeals.Add(meal2);
+
+                AddMealsToBePlanned(scheduledMeals);
+
+            }
+
+        }
+
+        private void AddMealsToBePlanned(List<ScheduledMeal> scheduledMeals)
+        {
+            foreach(ScheduledMeal meal in scheduledMeals)
+            {
+                _context.Add(meal);
+                _context.SaveChanges();
+            }
+
         }
 
         // GET: MealPlanController/Edit/5
