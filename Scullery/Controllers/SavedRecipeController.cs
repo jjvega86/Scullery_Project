@@ -44,13 +44,13 @@ namespace Scullery.Controllers
         }
 
         [HttpPost]
-        public ActionResult Search(string searchString)
+        public async Task<IActionResult> Search(string searchString)
         {
             //install Spoonacular API as a 
             // take searchString input and GET results from Spoonacular API
             // take those results and post them to a new page that shows all results in a list
             // planner can then add recipes to their collection of recipes
-            var searchResults = _spoonacular.GetSearchResults(searchString);
+            var searchResults = await _spoonacular.GetSearchResults(searchString);
 
             return View(searchResults);
 
