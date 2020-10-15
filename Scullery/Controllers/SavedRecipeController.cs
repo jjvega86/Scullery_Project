@@ -10,6 +10,8 @@ using System.Net.Http;
 using Newtonsoft.Json;
 using Scullery.Services;
 using Scullery.Models.ViewModels;
+using Scullery.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Scullery.Controllers
 {
@@ -36,10 +38,10 @@ namespace Scullery.Controllers
         // This view will trigger from the navbar "My Recipes"
         // It will take the LoggedInUser and show a list of their SavedRecipes
         // It will also include a search utility to find a recipe using the Spoonacular API
-        public ActionResult Index()
+        public async Task <IActionResult> Index()
         {
-            var planner = _context.Planners.Where(c => c.IdentityUserId == GetLoggedInUser()).SingleOrDefault();
-            var recipeCollection = _context.SavedRecipes.Where(c => c.PlannerId == planner.PlannerId).ToList();
+            var planner = await _context.Planners.Where(c => c.IdentityUserId == GetLoggedInUser()).SingleOrDefaultAsync();
+            var recipeCollection = await _context.SavedRecipes.Where(c => c.PlannerId == planner.PlannerId).ToListAsync();
 
             return View(recipeCollection);
         }
@@ -78,18 +80,25 @@ namespace Scullery.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Save(RecipeInformation recipeinformation)
-        {
-
-
-
-
+        {  
             try
             {
+                var planner = await _context.Planners.Where(c => c.IdentityUserId == GetLoggedInUser()).SingleOrDefaultAsync();
+
+                SavedRecipe savedRecipe = new SavedRecipe();
+                savedRecipe.ImageURL = recipeinformation.image;
+                savedRecipe.PlannerId = planner.PlannerId;
+                savedRecipe.RecipeName = recipeinformation.title;
+                savedRecipe.SpoonacularRecipeId = recipeinformation.id;
+                savedRecipe.RecipeURL = recipeinformation.spoonacularSourceUrl;
+
+                _context.Add(savedRecipe);
+                _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch(NullReferenceException e)
             {
-                return View();
+                return (IActionResult)e;
             }
         }
 
