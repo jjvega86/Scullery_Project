@@ -72,7 +72,7 @@ namespace Scullery.Controllers
 
             simpleRecipeInformation.RecipeInformationResult = rawRecipeInformation;
 
-            return View(simpleRecipeInformation);
+            return View("RecipeInformation", simpleRecipeInformation);
         }
 
         // GET: SavedRecipeController/Create
