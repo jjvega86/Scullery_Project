@@ -20,8 +20,5 @@ namespace Scullery.Models
         public DateTime? EndDate { get; set; }
 
         
-
-
-
     }
 }
