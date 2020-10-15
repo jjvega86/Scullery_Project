@@ -86,12 +86,12 @@ namespace Scullery.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Save(SavedRecipe saved)
+        public async Task <IActionResult> Save(SavedRecipe saved)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(saved);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
 
             }
@@ -119,14 +119,14 @@ namespace Scullery.Controllers
         }
 
         // POST: SavedRecipeController/Delete/5
-        [HttpPost]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeletePost(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var recipe = _context.SavedRecipes.Where(r => r.SavedRecipeId == id).SingleOrDefault();
+            var recipe = await _context.SavedRecipes.Where(r => r.SavedRecipeId == id).SingleOrDefaultAsync();
 
             _context.Remove(recipe);
-            _context.SaveChanges();
+           await _context.SaveChangesAsync();
 
             return View("Index");
 
