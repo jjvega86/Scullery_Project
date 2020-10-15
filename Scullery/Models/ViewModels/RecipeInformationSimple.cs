@@ -7,6 +7,7 @@ namespace Scullery.Models.ViewModels
 {
     public class RecipeInformationSimple
     {
+        public RecipeInformation RecipeInformationResult { get; set; }
 
     }
 }

@@ -68,7 +68,11 @@ namespace Scullery.Controllers
 
             var rawRecipeInformation = await _spoonacular.GetRecipeInformation(id);
 
-            return View();
+            RecipeInformationSimple simpleRecipeInformation = new RecipeInformationSimple();
+
+            simpleRecipeInformation.RecipeInformationResult = rawRecipeInformation;
+
+            return View(simpleRecipeInformation);
         }
 
         // GET: SavedRecipeController/Create
