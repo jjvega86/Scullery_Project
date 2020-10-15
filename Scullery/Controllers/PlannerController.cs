@@ -23,7 +23,7 @@ namespace Scullery.Controllers
 
         private string GetLoggedInUser()
         {
-            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             return userId;
         }

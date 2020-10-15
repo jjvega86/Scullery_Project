@@ -1,19 +1,46 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Scullery.Data;
 
 namespace Scullery.Controllers
 {
     public class MealPlanController : Controller
     {
-        // GET: MealPlanController
-        public ActionResult Index()
+
+        private readonly ApplicationDbContext _context;
+
+        public MealPlanController(ApplicationDbContext context)
         {
-            return View();
+            _context = context;
+
         }
+
+        private string GetLoggedInUser()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            return userId;
+        }
+
+
+        // GET: MealPlanController
+        public async Task<IActionResult> Index()
+        {
+
+            var planner = await _context.Planners.Where(c => c.IdentityUserId == GetLoggedInUser()).SingleOrDefaultAsync();
+            var allMealPlans = await _context.MealPlans.Where(p => p.PodId == planner.PodId).ToListAsync();
+
+
+            return View(allMealPlans);
+        }
+
+
 
         // GET: MealPlanController/Details/5
         public ActionResult Details(int id)
