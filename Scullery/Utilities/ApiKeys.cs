@@ -5,7 +5,13 @@ using System.Threading.Tasks;
 
 namespace Scullery.Utilities
 {
-    public class ApiKeys
+    public static class ApiKeys
     {
+        public static string Key;
+        static ApiKeys()
+        {
+            Key = "f85e1525604b46f188c0accbc3550c7b";
+
+        }
     }
 }
