@@ -44,7 +44,6 @@ namespace Scullery.Controllers
             return View(recipeCollection);
         }
 
-        //[HttpPost]
         public async Task<IActionResult> SearchResults(string searchString)
         {
             //install Spoonacular API as a 
@@ -62,7 +61,6 @@ namespace Scullery.Controllers
 
         }
 
-        // GET: SavedRecipeController/Details/5
         public async Task<IActionResult> ShowRecipeInformation(int id)
         {
 
@@ -75,38 +73,16 @@ namespace Scullery.Controllers
             return View("RecipeInformation", simpleRecipeInformation);
         }
 
-        // GET: SavedRecipeController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
+       
 
-        // POST: SavedRecipeController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> Save(RecipeInformation recipeinformation)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
 
-        // GET: SavedRecipeController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
 
-        // POST: SavedRecipeController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
+
+
             try
             {
                 return RedirectToAction(nameof(Index));
