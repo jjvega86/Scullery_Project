@@ -20,8 +20,8 @@ namespace Scullery.Services
 
         public async Task<RecipeSearchResults> GetSearchResults(string searchInput)
         {
-            string key = ApiKeys.Key;
-            string url = $"https://api.spoonacular.com/recipes/complexSearch?query={searchInput}&apiKey={key}";
+           
+            string url = $"https://api.spoonacular.com/recipes/complexSearch?query={searchInput}&apiKey={ApiKeys.Key}";
 
             HttpResponseMessage response = await client.GetAsync(url);
             if (response.IsSuccessStatusCode)
@@ -33,6 +33,20 @@ namespace Scullery.Services
             return null;
         }
 
+        public async Task<RecipeInformation> GetRecipeInformation(int id)
+        {
+            string url = $"https://api.spoonacular.com/recipes/{id}/information?includeNutrition=false&apiKey={ApiKeys.Key}";
+
+            HttpResponseMessage response = await client.GetAsync(url);
+            if (response.IsSuccessStatusCode)
+            {
+                string json = response.Content.ReadAsStringAsync().Result;
+                return JsonConvert.DeserializeObject<RecipeInformation>(json);
+            }
+
+            return null;
+
+        }
 
 
 
