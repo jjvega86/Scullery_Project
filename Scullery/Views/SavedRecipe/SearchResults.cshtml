@@ -6,3 +6,37 @@
 
 <h1>SearchResults</h1>
 
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+               Recipe Name
+            </th>
+            <th>
+               Recipe Image
+            </th>
+            <th>
+                Recipe Details       
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Results)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.image)
+                </td>
+                <td>
+                    <form asp-action="Details" asp-route-id="@item.id">
+                        <button type="submit" class="btn btn-outline-success">View Recipe Details</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

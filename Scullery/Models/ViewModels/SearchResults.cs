@@ -7,7 +7,9 @@ namespace Scullery.Models.ViewModels
 {
     public class SearchResults
     {
-        public RecipeSearchResults Results { get; set; }
+        public RecipeSearchResults Result { get; set; }
+
+        public IEnumerable<Result> Results { get; set; }
 
     }
 }

@@ -9,6 +9,7 @@ using Scullery.Data;
 using System.Net.Http;
 using Newtonsoft.Json;
 using Scullery.Services;
+using Scullery.Models.ViewModels;
 
 namespace Scullery.Controllers
 {
@@ -50,7 +51,12 @@ namespace Scullery.Controllers
             // take searchString input and GET results from Spoonacular API
             // take those results and post them to a new page that shows all results in a list
             // planner can then add recipes to their collection of recipes
-            var searchResults = await _spoonacular.GetSearchResults(searchString);
+            var rawSearchResults = await _spoonacular.GetSearchResults(searchString);
+
+            SearchResults searchResults = new SearchResults();
+
+            searchResults.Result = rawSearchResults;
+            searchResults.Results = rawSearchResults.results.ToList();
 
             return View(searchResults);
 
