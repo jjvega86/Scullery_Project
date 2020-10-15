@@ -16,7 +16,7 @@
                Recipe Image
             </th>
             <th>
-                Recipe Details       
+               Information     
             <th></th>
         </tr>
     </thead>
@@ -31,8 +31,8 @@
                     @Html.DisplayFor(modelItem => item.image)
                 </td>
                 <td>
-                    <form asp-action="Details" asp-route-id="@item.id">
-                        <button type="submit" class="btn btn-outline-success">View Recipe Details</button>
+                    <form asp-action="ShowRecipeInformation" asp-route-id="@item.id">
+                        <button type="submit" class="btn btn-outline-success">View Recipe Information</button>
                     </form>
                 </td>
             </tr>

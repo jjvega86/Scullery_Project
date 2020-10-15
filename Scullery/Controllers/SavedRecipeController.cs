@@ -63,8 +63,10 @@ namespace Scullery.Controllers
         }
 
         // GET: SavedRecipeController/Details/5
-        public ActionResult Details(int id)
+        public async Task<IActionResult> ShowRecipeInformation(int id)
         {
+
+            var rawRecipeInformation = await _spoonacular.GetRecipeInformation(id);
 
             return View();
         }
