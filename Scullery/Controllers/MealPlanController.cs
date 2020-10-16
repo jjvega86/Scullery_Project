@@ -184,15 +184,18 @@ namespace Scullery.Controllers
             var mealToPlan = _context.ScheduledMeals.Find(id);
 
             var recipes = _context.SavedRecipes.Where(r => r.PlannerId == mealToPlan.AssignedPlannerId).ToList();
+            SavedRecipe blankRecipe = new SavedRecipe();
+            blankRecipe.RecipeName = "None";
+            recipes.Add(blankRecipe);
 
-
-            mealToPlan.Recipes = new SelectList(recipes);
+            
+            mealToPlan.Recipes = new SelectList(recipes, nameof(SavedRecipe.SavedRecipeId), nameof(SavedRecipe.RecipeName));
             mealToPlan.Types = new SelectList(AddMealTypes());
 
             return View(mealToPlan);
         }
 
-        [HttpPost]
+        [HttpPost, ActionName("Plan")]
         [ValidateAntiForgeryToken]
         public ActionResult SavePlan (ScheduledMeal meal)
         {
@@ -207,7 +210,7 @@ namespace Scullery.Controllers
 
         private List<string> AddMealTypes()
         {
-            List<string> mealTypes = new List<string>() { "Leftovers", "Out", "Free"};
+            List<string> mealTypes = new List<string>() { "Leftovers", "Out", "Free", "Planned"};
 
             return mealTypes;
 

@@ -11,20 +11,20 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Plan">
+        <form asp-action="Plan" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="ScheduledMealId" />
             <input type="hidden" asp-for="AssignedPlannerId" />
-            <input type="hidden" asp-for="SavedRecipeId" />
+            @*<input type="hidden" asp-for="SavedRecipeId" />*@
             <input type="hidden" asp-for="MealPlanId" />
             <input type="hidden" asp-for="DateOfMeal" />
             <input type="hidden" asp-for="Slot" />
             <input type="hidden" asp-for="MealCompleted" />
             <input type="hidden" asp-for="Planned" />   
             <div class="form-group">
-                <label asp-for="Recipe" class="control-label"></label>
-                <select asp-for="Recipe" class="form-control" asp-items="@Model.Recipes"></select>
-                <span asp-validation-for="Recipe" class="text-danger"></span>
+                <label asp-for="SavedRecipeId" class="control-label"></label>
+                <select asp-for="SavedRecipeId" class="form-control" asp-items="@Model.Recipes"></select>
+                <span asp-validation-for="SavedRecipeId" class="text-danger"></span>
             </div>      
             <div class="form-group">
                 <label asp-for="MealType" class="control-label"></label>

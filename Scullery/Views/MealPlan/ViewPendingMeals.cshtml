@@ -45,7 +45,7 @@
                 }
             </td>           
             <td>
-                <form asp-action="Plan" asp-route-id="@item.ScheduledMealId">
+                <form asp-action="Plan" method="get" asp-route-id="@item.ScheduledMealId">
                     <button type="submit" class="btn btn-outline-success">Plan Meal!</button>
                 </form>
             </td>

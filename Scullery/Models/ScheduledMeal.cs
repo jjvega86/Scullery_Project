@@ -16,6 +16,9 @@ namespace Scullery.Models
         public int ScheduledMealId { get; set; }
 
         public int AssignedPlannerId { get; set; }
+
+        [Display(Name = "Recipe")]
+        [BindProperty]
         public int SavedRecipeId { get; set; }
 
         public int MealPlanId { get; set; }
@@ -25,12 +28,11 @@ namespace Scullery.Models
         public bool MealCompleted { get; set; }
         public bool Planned { get; set; } //use to mark this complete and filter once the assigned planner has planned the meal
 
-        [BindProperty]
-        [NotMapped]
-        public SavedRecipe Recipe { get; set; }
-
+      
         [NotMapped]
         public SelectList Recipes { get; set; }
+
+        [Display(Name = "Type of Meal")]
 
         [BindProperty]
         public string MealType { get; set; } // OUT, HOME, UNPLANNED - setting this property will trigger different display logic to handle various use cases
