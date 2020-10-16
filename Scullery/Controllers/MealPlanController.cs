@@ -186,6 +186,7 @@ namespace Scullery.Controllers
 
 
             mealToPlan.Recipes = new SelectList(recipes, "RecipeName", "Name");
+            mealToPlan.Types = new SelectList(AddMealTypes());
 
             return View(mealToPlan);
         }
