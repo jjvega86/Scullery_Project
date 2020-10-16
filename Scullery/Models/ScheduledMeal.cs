@@ -24,7 +24,10 @@ namespace Scullery.Models
         public int Slot { get; set; } //breakfast, lunch, or dinner according to Spoonacular API
         public bool MealCompleted { get; set; }
         public bool Planned { get; set; } //use to mark this complete and filter once the assigned planner has planned the meal
+        [BindProperty]
         public string MealType { get; set; } // OUT, HOME, UNPLANNED - setting this property will trigger different display logic to handle various use cases
+        [NotMapped]
+        public SelectList Types { get; set; }
 
         [NotMapped]
         [BindProperty]
