@@ -50,14 +50,6 @@ namespace Scullery.Controllers
             return View(allMealPlans);
         }
 
-
-
-        // GET: MealPlanController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
         // GET: MealPlanController/Create
         public ActionResult Create()
         {
@@ -132,39 +124,30 @@ namespace Scullery.Controllers
         //with an option to select a pod member to plan the meal
         public ActionResult ViewMealsToAssign(MealPlan mealPlan)
         {
-            var planners =  _context.Planners.Where(p => p.PodId == mealPlan.PodId).ToList();
             var mealsToAssign =  _context.ScheduledMeals.Where(m => m.MealPlanId == mealPlan.MealPlanId).ToList();
+            var finalMealsToAssign = mealsToAssign.Where(m => m.AssignedPlannerId == 0).OrderByDescending(m => m.DateOfMeal).ToList();
 
-            foreach(ScheduledMeal meal in mealsToAssign)
-            {
-                if(meal.AssignedPlannerId != 0)
-                {
-                    mealsToAssign.Remove(meal);
-                }
-            }
-
-            return View(mealsToAssign);
+            return View(finalMealsToAssign);
             
         }
 
    
 
         // GET: MealPlanController/Edit/5
-        public ActionResult Edit(int ScheduledMealId)
+        public ActionResult Edit(int id)
         {
-            var meal = _context.ScheduledMeals.Find(ScheduledMealId);
+            var meal = _context.ScheduledMeals.Find(id);
             var mealPlan = _context.MealPlans.Find(meal.MealPlanId);
             var planners = _context.Planners.Where(p => p.PodId == mealPlan.PodId).ToList();
 
-            List<string> plannerNames = new List<string>();
+            var plannerNames = new List<string>();
 
             foreach(Planner planner in planners)
             {
-                plannerNames.Add(planner.FirstName + "" + planner.LastName);
+                plannerNames.Add(planner.FirstName);
             }
             
-            meal.Planners = new SelectList(plannerNames, "Name", "Name");
-
+            meal.Planners = new SelectList(plannerNames);
             return View(meal);
         }
 
@@ -173,6 +156,9 @@ namespace Scullery.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult SubmitEdit(ScheduledMeal meal)
         {
+            var assignedPlanner = _context.Planners.Where(n => n.FirstName == meal.PlannerName).FirstOrDefault();
+
+            meal.AssignedPlannerId = assignedPlanner.PlannerId;
             _context.Update(meal);
             _context.SaveChanges();
             var mealPlan = _context.MealPlans.Find(meal.MealPlanId);

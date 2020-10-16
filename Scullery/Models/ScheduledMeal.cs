@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -26,9 +27,11 @@ namespace Scullery.Models
         public string MealType { get; set; } // OUT, HOME, UNPLANNED - setting this property will trigger different display logic to handle various use cases
 
         [NotMapped]
+        [BindProperty]
+        public string PlannerName { get; set; }
+        [NotMapped]
         public SelectList Planners { get; set; }
 
-        [NotMapped]
-        public string PlannerName { get; set; }
+        
     }
 }
