@@ -76,7 +76,7 @@ namespace Scullery.Controllers
                 await _context.AddAsync(mealPlan);
                 await _context.SaveChangesAsync();
 
-                CreateMealsToBePlanned(mealPlan, GetMealPlanId(mealPlan));
+                CreateMealsToBePlanned(mealPlan);
 
                 return View("Index");
 
@@ -87,20 +87,13 @@ namespace Scullery.Controllers
             }
         }
 
-        private int GetMealPlanId(MealPlan mealPlan)
-        {
-            var selectedMealPlan = _context.MealPlans.Where(m => m.PodId == mealPlan.PodId).SingleOrDefault();
-            return selectedMealPlan.MealPlanId;
-
-        }
-
         private IEnumerable<DateTime> EachDay(DateTime from, DateTime thru)
         {
             for (var day = from.Date; day.Date <= thru.Date; day = day.AddDays(1))
                 yield return day;
         }
 
-        private void CreateMealsToBePlanned(MealPlan mealPlan, int mealPlanId)
+        private async void CreateMealsToBePlanned(MealPlan mealPlan)
         {
             foreach(DateTime day in EachDay(mealPlan.StartDate.Value, mealPlan.EndDate.Value))
             {
@@ -111,35 +104,28 @@ namespace Scullery.Controllers
 
                 meal1.DateOfMeal = day;
                 meal1.Slot = 1;
-                meal1.MealPlanId = mealPlanId;
-                scheduledMeals.Add(meal1);
+                meal1.MealPlanId = mealPlan.MealPlanId;
+                await _context.AddAsync(meal1);
 
                 meal2.DateOfMeal = day;
                 meal2.Slot = 2;
-                meal2.MealPlanId = mealPlanId;
-                scheduledMeals.Add(meal2);
+                meal2.MealPlanId = mealPlan.MealPlanId;
+                await _context.AddAsync(meal2);
 
 
                 meal3.DateOfMeal = day;
                 meal3.Slot = 3;
-                meal3.MealPlanId = mealPlanId;
-                scheduledMeals.Add(meal2);
+                meal3.MealPlanId = mealPlan.MealPlanId;
+                await _context.AddAsync(meal3);
 
-                AddMealsToBePlanned(scheduledMeals);
+                await _context.SaveChangesAsync();
+
+
 
             }
 
         }
-
-        private void AddMealsToBePlanned(List<ScheduledMeal> scheduledMeals)
-        {
-            foreach(ScheduledMeal meal in scheduledMeals)
-            {
-                _context.Add(meal);
-                _context.SaveChanges();
-            }
-
-        }
+      
 
         // GET: MealPlanController/Edit/5
         public ActionResult Edit(int id)

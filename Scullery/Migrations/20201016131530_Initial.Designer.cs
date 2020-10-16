@@ -10,7 +10,7 @@ using Scullery.Data;
 namespace Scullery.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201015182221_Initial")]
+    [Migration("20201016131530_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -71,8 +71,8 @@ namespace Scullery.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "1579c3f9-c10b-41df-a477-8ce858ded92f",
-                            ConcurrencyStamp = "5571f2b2-2793-42f4-9d02-ee773bc2e65b",
+                            Id = "f56145c5-cdb9-4f09-afa7-d9e5c15c9bac",
+                            ConcurrencyStamp = "a785a1ce-4aae-40b6-aad8-cf0ceb7b6029",
                             Name = "Planner",
                             NormalizedName = "PLANNER"
                         });

@@ -9,6 +9,7 @@ namespace Scullery.Models
 {
     public class ScheduledMeal
     {
+        
         [Key]
         public int ScheduledMealId { get; set; }
 

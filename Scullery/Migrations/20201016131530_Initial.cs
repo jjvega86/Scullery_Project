@@ -325,7 +325,7 @@ namespace Scullery.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "1579c3f9-c10b-41df-a477-8ce858ded92f", "5571f2b2-2793-42f4-9d02-ee773bc2e65b", "Planner", "PLANNER" });
+                values: new object[] { "f56145c5-cdb9-4f09-afa7-d9e5c15c9bac", "a785a1ce-4aae-40b6-aad8-cf0ceb7b6029", "Planner", "PLANNER" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
