@@ -76,7 +76,7 @@ namespace Scullery.Controllers
                 await _context.AddAsync(mealPlan);
                 await _context.SaveChangesAsync();
 
-                CreateMealsToBePlanned(mealPlan);
+                await CreateMealsToBePlanned(mealPlan);
 
                 return RedirectToAction("Index","Planner");
 
@@ -116,7 +116,6 @@ namespace Scullery.Controllers
                 meal3.Slot = 3;
                 meal3.MealPlanId = mealPlan.MealPlanId;
                 await _context.AddAsync(meal3);
-
 
             }
 
