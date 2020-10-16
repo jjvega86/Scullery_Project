@@ -125,7 +125,7 @@ namespace Scullery.Controllers
         public ActionResult ViewMealsToAssign(MealPlan mealPlan)
         {
             var mealsToAssign =  _context.ScheduledMeals.Where(m => m.MealPlanId == mealPlan.MealPlanId).ToList();
-            var finalMealsToAssign = mealsToAssign.Where(m => m.AssignedPlannerId == 0).OrderByDescending(m => m.DateOfMeal).ToList();
+            var finalMealsToAssign = mealsToAssign.Where(m => m.AssignedPlannerId == 0).OrderBy(m => m.DateOfMeal).ToList();
 
             return View(finalMealsToAssign);
             
@@ -164,6 +164,16 @@ namespace Scullery.Controllers
             var mealPlan = _context.MealPlans.Find(meal.MealPlanId);
 
             return RedirectToAction("ViewMealsToAssign", mealPlan);
+
+        }
+
+        public async Task<IActionResult> ViewPendingMeals()
+        {
+            var planner = GetLoggedInPlanner();
+
+            var pendingMeals = await _context.ScheduledMeals.Where(m => m.AssignedPlannerId == planner.PlannerId).OrderBy(m => m.DateOfMeal).ToListAsync();
+
+            return View(pendingMeals);
 
         }
 

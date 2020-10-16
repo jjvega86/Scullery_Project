@@ -1,0 +1,58 @@
+﻿@model IEnumerable<Scullery.Models.ScheduledMeal>
+
+@{
+    ViewData["Title"] = "ViewPendingMeals";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Meals Ready To Be Planned!</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+           
+            <th>
+                @Html.DisplayNameFor(model => model.DateOfMeal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Slot)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MealType)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateOfMeal)
+            </td>
+            <td>
+                @if (item.Slot == 1)
+                {
+                    <p>Breakfast</p>
+                }
+                else if (item.Slot == 2)
+                {
+                    <p>Lunch</p>
+                }
+                else
+                {
+                    <p>Dinner</p>
+                }
+            </td>           
+            <td>
+                @Html.DisplayFor(modelItem => item.MealType)
+            </td>
+            @*<td>
+                <a asp-action="Edit" asp-route-id="@item.ScheduledMealId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ScheduledMealId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ScheduledMealId">Delete</a>
+            </td>*@
+        </tr>
+}
+    </tbody>
+</table>
