@@ -171,9 +171,10 @@ namespace Scullery.Controllers
         {
             var planner = GetLoggedInPlanner();
 
-            var pendingMeals = _context.ScheduledMeals.Where(m => m.AssignedPlannerId == planner.PlannerId).OrderBy(m => m.DateOfMeal).ToList();
+            var pendingMeals = _context.ScheduledMeals.Where(m => m.AssignedPlannerId == planner.PlannerId).ToList();
+            var sortedPendingMeals = pendingMeals.Where(m => m.Planned == false).OrderBy(m => m.DateOfMeal).ToList();
 
-            return View(pendingMeals);
+            return View(sortedPendingMeals);
 
         }
 
@@ -185,10 +186,23 @@ namespace Scullery.Controllers
             var recipes = _context.SavedRecipes.Where(r => r.PlannerId == mealToPlan.AssignedPlannerId).ToList();
 
 
-            mealToPlan.Recipes = new SelectList(recipes, "RecipeName", "Name");
+            mealToPlan.Recipes = new SelectList(recipes);
             mealToPlan.Types = new SelectList(AddMealTypes());
 
             return View(mealToPlan);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SavePlan (ScheduledMeal meal)
+        {
+            meal.Planned = true;
+            _context.Update(meal);
+            _context.SaveChanges();
+
+            var mealPlan = _context.MealPlans.Find(meal.MealPlanId);
+
+            return RedirectToAction("ViewPendingMeals", mealPlan);
         }
 
         private List<string> AddMealTypes()
