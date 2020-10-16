@@ -147,10 +147,7 @@ namespace Scullery.Controllers
             
         }
 
-        //POST assigned meals to ScheduledMeals entity 
-
-       
-
+   
 
         // GET: MealPlanController/Edit/5
         public ActionResult Edit(int ScheduledMealId)
