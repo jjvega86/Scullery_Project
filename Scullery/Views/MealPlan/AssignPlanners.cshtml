@@ -14,7 +14,10 @@
             
             <th>
                 @Html.DisplayNameFor(model => model.DateOfMeal)
-            </th>      
+            </th>
+            <th>
+                Meal Type
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -25,9 +28,21 @@
                 @Html.DisplayFor(modelItem => item.DateOfMeal)
             </td> 
             <td>
-                <a asp-action="Edit" asp-route-id="@item.ScheduledMealId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ScheduledMealId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ScheduledMealId">Delete</a>
+               @if(item.Slot == 1)
+                {
+                   <p>Breakfast</p>
+               }
+               else if(item.Slot == 2)
+               {
+                   <p>Lunch</p>
+               }
+               else
+               {
+                   <p>Dinner</p>
+               }
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ScheduledMealId">Assign Planner</a> |
             </td>
         </tr>
 }

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Scullery.Data;
 using Scullery.Models;
 
@@ -80,7 +81,7 @@ namespace Scullery.Controllers
                 await CreateMealsToBePlanned(mealPlan);
 
                 // this will redirect to an "assign" action that allows the meal plan creator to assign pod members to meal plan
-                return RedirectToAction("AssignPlanners","MealPlan");
+                return RedirectToAction("ViewMealsToAssign", mealPlan);
 
             }
             else
@@ -129,21 +130,17 @@ namespace Scullery.Controllers
 
         //GET meal plan and direct to view that contains all unplanned meals in a list
         //with an option to select a pod member to plan the meal
-        public async Task<IActionResult> AssignPlanners(MealPlan mealPlan)
+        public ActionResult ViewMealsToAssign(MealPlan mealPlan)
         {
-            var planners = await _context.Planners.Where(p => p.PodId == mealPlan.PodId).ToListAsync();
-            var mealsToAssign = await _context.ScheduledMeals.Where(m => m.MealPlanId == mealPlan.MealPlanId).ToListAsync();
-
-            List<string> plannerNames = new List<string>();
-
-            foreach(Planner planner in planners)
-            {
-                plannerNames.Add(planner.FirstName + planner.LastName);
-            }
+            var planners =  _context.Planners.Where(p => p.PodId == mealPlan.PodId).ToList();
+            var mealsToAssign =  _context.ScheduledMeals.Where(m => m.MealPlanId == mealPlan.MealPlanId).ToList();
 
             foreach(ScheduledMeal meal in mealsToAssign)
             {
-                meal.Planners = new SelectList(plannerNames, "Name", "Name");
+                if(meal.AssignedPlannerId != 0)
+                {
+                    mealsToAssign.Remove(meal);
+                }
             }
 
             return View(mealsToAssign);
@@ -156,24 +153,35 @@ namespace Scullery.Controllers
 
 
         // GET: MealPlanController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int ScheduledMealId)
         {
-            return View();
+            var meal = _context.ScheduledMeals.Find(ScheduledMealId);
+            var mealPlan = _context.MealPlans.Find(meal.MealPlanId);
+            var planners = _context.Planners.Where(p => p.PodId == mealPlan.PodId).ToList();
+
+            List<string> plannerNames = new List<string>();
+
+            foreach(Planner planner in planners)
+            {
+                plannerNames.Add(planner.FirstName + "" + planner.LastName);
+            }
+            
+            meal.Planners = new SelectList(plannerNames, "Name", "Name");
+
+            return View(meal);
         }
 
         // POST: MealPlanController/Edit/5
-        [HttpPost]
+        [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult SubmitEdit(ScheduledMeal meal)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            _context.Update(meal);
+            _context.SaveChanges();
+            var mealPlan = _context.MealPlans.Find(meal.MealPlanId);
+
+            return RedirectToAction("ViewMealsToAssign", mealPlan);
+
         }
 
         // GET: MealPlanController/Delete/5
