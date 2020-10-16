@@ -78,7 +78,7 @@ namespace Scullery.Controllers
 
                 CreateMealsToBePlanned(mealPlan);
 
-                return View("Index");
+                return RedirectToAction("Index","Planner");
 
             }
             else
@@ -93,11 +93,10 @@ namespace Scullery.Controllers
                 yield return day;
         }
 
-        private async void CreateMealsToBePlanned(MealPlan mealPlan)
+        private async Task CreateMealsToBePlanned(MealPlan mealPlan)
         {
             foreach(DateTime day in EachDay(mealPlan.StartDate.Value, mealPlan.EndDate.Value))
             {
-                List<ScheduledMeal> scheduledMeals = new List<ScheduledMeal>();
                 ScheduledMeal meal1 = new ScheduledMeal();
                 ScheduledMeal meal2 = new ScheduledMeal();
                 ScheduledMeal meal3 = new ScheduledMeal();
@@ -118,14 +117,13 @@ namespace Scullery.Controllers
                 meal3.MealPlanId = mealPlan.MealPlanId;
                 await _context.AddAsync(meal3);
 
-                await _context.SaveChangesAsync();
-
-
 
             }
 
+            await _context.SaveChangesAsync();
+
         }
-      
+
 
         // GET: MealPlanController/Edit/5
         public ActionResult Edit(int id)
