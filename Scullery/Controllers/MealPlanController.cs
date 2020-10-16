@@ -6,6 +6,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Scullery.Data;
 using Scullery.Models;
 
@@ -78,7 +79,8 @@ namespace Scullery.Controllers
 
                 await CreateMealsToBePlanned(mealPlan);
 
-                return RedirectToAction("Index","Planner");
+                // this will redirect to an "assign" action that allows the meal plan creator to assign pod members to meal plan
+                return RedirectToAction("AssignPlanners","MealPlan");
 
             }
             else
@@ -93,6 +95,8 @@ namespace Scullery.Controllers
                 yield return day;
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         private async Task CreateMealsToBePlanned(MealPlan mealPlan)
         {
             foreach(DateTime day in EachDay(mealPlan.StartDate.Value, mealPlan.EndDate.Value))
@@ -122,6 +126,33 @@ namespace Scullery.Controllers
             await _context.SaveChangesAsync();
 
         }
+
+        //GET meal plan and direct to view that contains all unplanned meals in a list
+        //with an option to select a pod member to plan the meal
+        public async Task<IActionResult> AssignPlanners(MealPlan mealPlan)
+        {
+            var planners = await _context.Planners.Where(p => p.PodId == mealPlan.PodId).ToListAsync();
+            var mealsToAssign = await _context.ScheduledMeals.Where(m => m.MealPlanId == mealPlan.MealPlanId).ToListAsync();
+
+            List<string> plannerNames = new List<string>();
+
+            foreach(Planner planner in planners)
+            {
+                plannerNames.Add(planner.FirstName + planner.LastName);
+            }
+
+            foreach(ScheduledMeal meal in mealsToAssign)
+            {
+                meal.Planners = new SelectList(plannerNames, "Name", "Name");
+            }
+
+            return View(mealsToAssign);
+            
+        }
+
+        //POST assigned meals to ScheduledMeals entity 
+
+       
 
 
         // GET: MealPlanController/Edit/5
