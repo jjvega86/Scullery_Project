@@ -167,13 +167,35 @@ namespace Scullery.Controllers
 
         }
 
-        public async Task<IActionResult> ViewPendingMeals()
+        public ActionResult ViewPendingMeals()
         {
             var planner = GetLoggedInPlanner();
 
-            var pendingMeals = await _context.ScheduledMeals.Where(m => m.AssignedPlannerId == planner.PlannerId).OrderBy(m => m.DateOfMeal).ToListAsync();
+            var pendingMeals = _context.ScheduledMeals.Where(m => m.AssignedPlannerId == planner.PlannerId).OrderBy(m => m.DateOfMeal).ToList();
 
             return View(pendingMeals);
+
+        }
+
+        //GET: Plan Meal
+        public ActionResult Plan(int id)
+        {
+            var mealToPlan = _context.ScheduledMeals.Find(id);
+
+            var recipes = _context.SavedRecipes.Where(r => r.PlannerId == mealToPlan.AssignedPlannerId).ToList();
+
+
+            mealToPlan.Recipes = new SelectList(recipes, "RecipeName", "Name");
+
+            return View(mealToPlan);
+        }
+
+        private List<string> AddMealTypes()
+        {
+            List<string> mealTypes = new List<string>() { "Leftovers", "Out", "Free"};
+
+            return mealTypes;
+
 
         }
 

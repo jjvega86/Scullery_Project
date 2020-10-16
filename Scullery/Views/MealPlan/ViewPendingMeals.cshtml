@@ -45,13 +45,10 @@
                 }
             </td>           
             <td>
-                @Html.DisplayFor(modelItem => item.MealType)
+                <form asp-action="Plan" asp-route-id="@item.ScheduledMealId">
+                    <button type="submit" class="btn btn-outline-success">Plan Meal!</button>
+                </form>
             </td>
-            @*<td>
-                <a asp-action="Edit" asp-route-id="@item.ScheduledMealId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ScheduledMealId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ScheduledMealId">Delete</a>
-            </td>*@
         </tr>
 }
     </tbody>
