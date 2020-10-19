@@ -54,8 +54,17 @@ namespace Scullery.Controllers
 
             }
 
-            return scheduledMeals;
+            
 
+            return SortMealsByDate(scheduledMeals);
+
+        }
+
+        private List<ScheduledMeal> SortMealsByDate (List<ScheduledMeal> scheduledMeals)
+        {
+            List<ScheduledMeal> sortedList = scheduledMeals.OrderBy(m => m.DateOfMeal).ToList();
+
+            return sortedList;
         }
 
         public ActionResult GetMealSchedule()
@@ -80,6 +89,7 @@ namespace Scullery.Controllers
                 }
 
             }
+
   
             return View(meals);
         }
