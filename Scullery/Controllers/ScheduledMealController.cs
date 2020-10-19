@@ -40,19 +40,28 @@ namespace Scullery.Controllers
 
         }
 
-        public async Task<IActionResult> GetMealSchedule()
+        private List<ScheduledMeal> GetAllPodScheduledMeals()
         {
             var planner = GetLoggedInPlanner();
-            var plannerPod =  _context.Pods.Find(planner.PodId);
-            var allPlanners = await _context.Planners.Where(p => p.PodId == plannerPod.PodId).ToListAsync();
+            var plannerPod = _context.Pods.Find(planner.PodId);
+            var allPlanners =  _context.Planners.Where(p => p.PodId == plannerPod.PodId).ToList();
             List<ScheduledMeal> scheduledMeals = new List<ScheduledMeal>();
 
             foreach (Planner podMember in allPlanners)
             {
-                var theseMeals = await _context.ScheduledMeals.Where(m => m.AssignedPlannerId == podMember.PlannerId).ToListAsync();
+                var theseMeals =  _context.ScheduledMeals.Where(m => m.AssignedPlannerId == podMember.PlannerId).ToList();
                 scheduledMeals.AddRange(theseMeals);
 
             }
+
+            return scheduledMeals;
+
+        }
+
+        public ActionResult GetMealSchedule()
+        {
+          
+            var scheduledMeals = GetAllPodScheduledMeals();
 
             List<MealEvent> meals = new List<MealEvent>();
 
@@ -74,6 +83,8 @@ namespace Scullery.Controllers
   
             return View(meals);
         }
+
+
 
         private MealEvent CreatePlannedMealEvent(ScheduledMeal meal)
         {
