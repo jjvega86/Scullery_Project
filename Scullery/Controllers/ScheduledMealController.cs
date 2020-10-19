@@ -25,21 +25,27 @@ namespace Scullery.Controllers
 
         }
 
+        private string GetLoggedInUser()
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            return userId;
+        }
+
+        private Planner GetLoggedInPlanner()
+        {
+            var planner = _context.Planners.Where(c => c.IdentityUserId == GetLoggedInUser()).SingleOrDefault();
+            return planner;
+
+        }
+
         // GET: ScheduledMealController
         public ActionResult Calendar()
         {
             return View();
         }
 
-        public JsonResult GetEvents()
-        {
-            var scheduledMeals = _context.ScheduledMeals.ToList();
-            MealEvent event = new MealEvent();
-           
-            var events = dc.Events.ToList();
-            return new JsonResult { Data = events, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-            
-        }
+       
 
 
     }
