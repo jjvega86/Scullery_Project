@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Scullery.Models;
 using Scullery.Utilities;
 using System;
 using System.Collections.Generic;
@@ -45,6 +46,14 @@ namespace Scullery.Services
             }
 
             return null;
+
+        }
+
+        public async Task ConnectUser(Planner planner)
+        {
+            string url = $"https://api.spoonacular.com/users/connect&apiKey={ApiKeys.Key}";
+            HttpRequestMessage request = await client.PostAsync(url, planner);
+            
 
         }
 
