@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>ViewSchedule</h1>
+<h1>Scheduled Meals</h1>
 
 <table class="table">
     <thead>
@@ -58,7 +58,7 @@
                 }
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.ScheduledMealId">Edit</a>
+                <a asp-controller="MealPlan" asp-action="Plan" asp-route-id="@item.ScheduledMealId">Edit</a>
             </td>
         </tr>
         }

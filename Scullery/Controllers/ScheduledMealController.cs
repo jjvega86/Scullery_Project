@@ -129,12 +129,11 @@ namespace Scullery.Controllers
 
         }
 
+       
 
-        //// GET: To be used with potential Full Calendar view (after MVP)
-        //public ActionResult Calendar()
-        //{
-        //    return View();
-        //}
+
+
+
 
 
 
