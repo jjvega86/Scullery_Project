@@ -48,21 +48,44 @@ namespace Scullery.Controllers
 
             foreach (ScheduledMeal meal in scheduledMeals)
             {
-                var recipe = _context.SavedRecipes.Find(meal.SavedRecipeId);
-                MealEvent mealEvent = new MealEvent();
-                mealEvent.MealDate = meal.DateOfMeal;
-                mealEvent.MealType = meal.MealType;
-                mealEvent.RecipeName = recipe.RecipeName;
-                var mealPlanner = _context.Planners.Find(recipe.PlannerId);
-                mealEvent.PlannerName = mealPlanner.FirstName;
-                mealEvent.Slot = meal.Slot;
+                switch (meal.MealType)
+                {
+                    case "Planned":
+                        meals.Add(CreatePlannedMealEvent(meal));
+                        
 
-                meals.Add(mealEvent);
+                        break;
+
+                    case "Leftovers":
+                        break;
+
+                    case "Out":
+                        break;
+
+                    default:
+                        break;
+                }
+
             }
-
-
-            
+  
             return View(meals);
+        }
+
+        private MealEvent CreatePlannedMealEvent(ScheduledMeal meal)
+        {
+            var recipe = _context.SavedRecipes.Find(meal.SavedRecipeId);
+            var mealPlanner = _context.Planners.Find(recipe.PlannerId);
+
+            MealEvent mealEvent = new MealEvent();
+            mealEvent.MealDate = meal.DateOfMeal;
+            mealEvent.MealType = meal.MealType;
+            mealEvent.RecipeName = recipe.RecipeName;
+            mealEvent.PlannerName = mealPlanner.FirstName;
+            mealEvent.Slot = meal.Slot;
+            mealEvent.ScheduledMealId = meal.ScheduledMealId;
+
+            return mealEvent;
+
         }
 
         //// GET: To be used with potential Full Calendar view (after MVP)
