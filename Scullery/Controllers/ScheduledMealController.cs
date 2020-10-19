@@ -39,11 +39,37 @@ namespace Scullery.Controllers
 
         }
 
-        // GET: ScheduledMealController
-        public ActionResult Calendar()
+        public async Task<IActionResult> GetMealSchedule()
         {
-            return View();
+            var planner = GetLoggedInPlanner();
+            var scheduledMeals = await _context.ScheduledMeals.Where(m => m.AssignedPlannerId == planner.PlannerId).ToListAsync();
+
+            List<MealEvent> meals = new List<MealEvent>();
+
+            foreach (ScheduledMeal meal in scheduledMeals)
+            {
+                var recipe = _context.SavedRecipes.Find(meal.SavedRecipeId);
+                MealEvent mealEvent = new MealEvent();
+                mealEvent.MealDate = meal.DateOfMeal;
+                mealEvent.MealType = meal.MealType;
+                mealEvent.RecipeName = recipe.RecipeName;
+                var mealPlanner = _context.Planners.Find(recipe.PlannerId);
+                mealEvent.PlannerName = mealPlanner.FirstName;
+                mealEvent.Slot = meal.Slot;
+
+                meals.Add(mealEvent);
+            }
+
+
+            
+            return View(meals);
         }
+
+        //// GET: To be used with potential Full Calendar view (after MVP)
+        //public ActionResult Calendar()
+        //{
+        //    return View();
+        //}
 
        
 
