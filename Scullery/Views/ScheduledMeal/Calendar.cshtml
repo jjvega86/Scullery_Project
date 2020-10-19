@@ -6,3 +6,19 @@
 
 <h1>Calendar</h1>
 
+<div id="calendar"></div>
+
+
+
+@section Scripts
+{
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
+    <script>
+        $(function () {
+            $('#calendar').fullCalendar({});
+
+        })
+    </script>
+}
