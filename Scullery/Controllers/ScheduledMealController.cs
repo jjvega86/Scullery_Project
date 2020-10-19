@@ -12,6 +12,7 @@ using Scullery.Services;
 using Scullery.Models.ViewModels;
 using Scullery.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Specialized;
 
 namespace Scullery.Controllers
 {
@@ -42,7 +43,16 @@ namespace Scullery.Controllers
         public async Task<IActionResult> GetMealSchedule()
         {
             var planner = GetLoggedInPlanner();
-            var scheduledMeals = await _context.ScheduledMeals.Where(m => m.AssignedPlannerId == planner.PlannerId).ToListAsync();
+            var plannerPod =  _context.Pods.Find(planner.PodId);
+            var allPlanners = await _context.Planners.Where(p => p.PodId == plannerPod.PodId).ToListAsync();
+            List<ScheduledMeal> scheduledMeals = new List<ScheduledMeal>();
+
+            foreach (Planner podMember in allPlanners)
+            {
+                var theseMeals = await _context.ScheduledMeals.Where(m => m.AssignedPlannerId == podMember.PlannerId).ToListAsync();
+                scheduledMeals.AddRange(theseMeals);
+
+            }
 
             List<MealEvent> meals = new List<MealEvent>();
 
@@ -92,7 +102,7 @@ namespace Scullery.Controllers
             mealEvent.RecipeName = "None";
             mealEvent.PlannerName = mealPlanner.FirstName;
             mealEvent.Slot = meal.Slot;
-            mealEvent.ScheduledMealId = 0;
+            mealEvent.ScheduledMealId = meal.ScheduledMealId;
 
             return mealEvent;
 
