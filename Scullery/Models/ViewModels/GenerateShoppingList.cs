@@ -13,5 +13,9 @@ namespace Scullery.Models.ViewModels
         public string User { get; set; }
 
         public string Hash { get; set; }
+
+        public string StartString { get; set; }
+
+        public string EndString { get; set; }
     }
 }

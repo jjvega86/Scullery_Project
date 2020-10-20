@@ -13,16 +13,19 @@ using Scullery.Models.ViewModels;
 using Scullery.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Specialized;
+using Scullery.Utilities;
 
 namespace Scullery.Controllers
 {
     public class ScheduledMealController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly SpoonacularService _spoonacular;
 
-        public ScheduledMealController(ApplicationDbContext context)
+        public ScheduledMealController(ApplicationDbContext context, SpoonacularService spoonacular)
         {
             _context = context;
+            _spoonacular = spoonacular;
 
         }
 
@@ -136,11 +139,14 @@ namespace Scullery.Controllers
             return View(dates);
         }
 
-        public ActionResult GenerateShoppingList(GenerateShoppingList dates)
+        public async Task<IActionResult> GenerateShoppingList(GenerateShoppingList dates)
         {
             var planner = GetLoggedInPlanner();
             dates.User = planner.SpoonacularUserName;
             dates.Hash = planner.UserHash;
+            dates.Start = UserTools.ConvertDateTimeToMealPlanFormat(dates.Start);
+
+            await _spoonacular.GenerateShoppingList(dates);
 
             return View(); // will return a list of ingredients to the View
         }
