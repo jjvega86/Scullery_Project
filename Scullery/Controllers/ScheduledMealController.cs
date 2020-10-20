@@ -144,12 +144,21 @@ namespace Scullery.Controllers
             var planner = GetLoggedInPlanner();
             dates.User = planner.SpoonacularUserName;
             dates.Hash = planner.UserHash;
-            dates.StartString = UserTools.ConvertDateTimeToMealPlanFormat(dates.Start);
-            dates.EndString = UserTools.ConvertDateTimeToMealPlanFormat(dates.End);
+            dates.StartString = TimeTools.ConvertDateTimeToMealPlanFormat(dates.Start);
+            dates.EndString = TimeTools.ConvertDateTimeToMealPlanFormat(dates.End);
 
-            await _spoonacular.GenerateShoppingList(dates);
+            var shoppingList = await _spoonacular.GenerateShoppingList(dates);
 
-            return View(); // will return a list of ingredients to the View
+            var preparedShoppingList = PrepareShoppingListViewModel(shoppingList);
+
+            return View(preparedShoppingList); // will return a list of ingredients to the View
+        }
+
+        private ShoppingList PrepareShoppingListViewModel(ShoppingListRequest list)
+        {
+
+
+            return null;
         }
 
        

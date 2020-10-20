@@ -225,7 +225,7 @@ namespace Scullery.Controllers
         {
             RecipeAddToMealPlan recipe = new RecipeAddToMealPlan();
             var savedRecipe = _context.SavedRecipes.Find(meal.SavedRecipeId);
-            recipe.date = UserTools.GetTimeStamp(meal.DateOfMeal.Value);
+            recipe.date = TimeTools.GetTimeStamp(meal.DateOfMeal.Value);
             recipe.slot = meal.Slot;
             recipe.type = "RECIPE";
             recipe.value = new Value();

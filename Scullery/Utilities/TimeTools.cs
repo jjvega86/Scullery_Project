@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Scullery.Utilities
 {
-    public static class UserTools
+    public static class TimeTools
     {
         public static int GetTimeStamp(DateTime date)
         {
