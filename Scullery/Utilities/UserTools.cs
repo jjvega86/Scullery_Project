@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Scullery.Utilities
@@ -11,5 +12,7 @@ namespace Scullery.Utilities
         {
             return date.ToString("yyyyMMddHHmmssffff");
         }
+
+        
     }
 }

@@ -69,6 +69,24 @@ namespace Scullery.Services
             return null;
         }
 
+        public async Task<string> AddRecipeToMealPlan(RecipeAddToMealPlan recipe, SpoonacularUserInfo userInfo)
+        {
+            string json = JsonConvert.SerializeObject(recipe);
+            StringContent stringContent = new StringContent(json);
+
+            string url = $"https://api.spoonacular.com/mealplanner/{userInfo.username}/items?apiKey={ApiKeys.Key}&hash={userInfo.hash}";
+            
+            var response = await client.PostAsync(url, stringContent);
+            if (response.IsSuccessStatusCode)
+            {
+                var responseString = await response.Content.ReadAsStringAsync();
+                return await Task.FromResult(responseString);
+
+            }
+
+            return null;
+        }
+
 
 
     }

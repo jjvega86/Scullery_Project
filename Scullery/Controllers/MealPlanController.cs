@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Scullery.Data;
 using Scullery.Models;
+using Scullery.Services;
+using Scullery.Utilities;
 
 namespace Scullery.Controllers
 {
@@ -17,10 +19,12 @@ namespace Scullery.Controllers
     {
 
         private readonly ApplicationDbContext _context;
+        private readonly SpoonacularService _spoonacular;
 
-        public MealPlanController(ApplicationDbContext context)
+        public MealPlanController(ApplicationDbContext context, SpoonacularService spoonacular)
         {
             _context = context;
+            _spoonacular = spoonacular;
 
         }
 
@@ -205,7 +209,10 @@ namespace Scullery.Controllers
 
             if (meal.MealType == "Planned")
             {
-                AddToSpoonacularMealPlan(meal); // add meal to Spoonacular API meal plan if it's a recipe
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var planner = _context.Planners.Where(c => c.IdentityUserId == GetLoggedInUser()).SingleOrDefault();
+                SpoonacularUserInfo userInfo = new SpoonacularUserInfo { hash = planner.UserHash, username = planner.SpoonacularUserName };
+                AddToSpoonacularMealPlan(meal, userInfo); // add meal to Spoonacular API meal plan if it's a recipe
 
             }
 
@@ -214,20 +221,20 @@ namespace Scullery.Controllers
             return RedirectToAction("ViewPendingMeals", mealPlan);
         }
 
-        private void AddToSpoonacularMealPlan(ScheduledMeal meal)
+        private async void AddToSpoonacularMealPlan(ScheduledMeal meal, SpoonacularUserInfo userInfo)
         {
             RecipeAddToMealPlan recipe = new RecipeAddToMealPlan();
             var savedRecipe = _context.SavedRecipes.Find(meal.SavedRecipeId);
-            recipe.date = meal.DateOfMeal; // convert to timestamp
+            recipe.date = Int32.Parse(UserTools.GetTimeStamp(meal.DateOfMeal.Value));
             recipe.slot = meal.Slot;
             recipe.type = "RECIPE";
             recipe.value.id = savedRecipe.SpoonacularRecipeId;
             recipe.value.imageType = "jpg";
             recipe.value.title = savedRecipe.RecipeName;
             recipe.value.servings = 2;
-                
-            
 
+            await _spoonacular.AddRecipeToMealPlan(recipe, userInfo);
+                
         }
 
 
@@ -241,25 +248,6 @@ namespace Scullery.Controllers
 
         }
 
-        // GET: MealPlanController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: MealPlanController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        
     }
 }
