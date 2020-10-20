@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Scullery.Models;
+using Scullery.Models.ViewModels;
 using Scullery.Utilities;
 using System;
 using System.Collections.Generic;
@@ -85,6 +86,22 @@ namespace Scullery.Services
             }
 
             return null;
+        }
+
+        public async Task<ShoppingListRequest> GenerateShoppingList(GenerateShoppingList dates)
+        {
+            string url = $"https://api.spoonacular.com/mealplanner/{dates.User}/shopping-list/{dates.Start}/{dates.End}?hash={dates.Hash}&apiKey={ApiKeys.Key}";
+            var response = await client.PostAsync(url, null);
+            if (response.IsSuccessStatusCode)
+            {
+                var responseString = await response.Content.ReadAsStringAsync();
+
+                return await Task.FromResult(JsonConvert.DeserializeObject<ShoppingListRequest>(responseString));
+
+            }
+
+            return null;
+
         }
 
 
