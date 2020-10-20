@@ -129,9 +129,20 @@ namespace Scullery.Controllers
 
         }
 
-        public Task<IActionResult> CreateShoppingList()
+        public ActionResult CreateShoppingList()
         {
+            GenerateShoppingList dates = new GenerateShoppingList();
 
+            return View(dates);
+        }
+
+        public ActionResult GenerateShoppingList(GenerateShoppingList dates)
+        {
+            var planner = GetLoggedInPlanner();
+            dates.User = planner.SpoonacularUserName;
+            dates.Hash = planner.UserHash;
+
+            return View(); // will return a list of ingredients to the View
         }
 
        
