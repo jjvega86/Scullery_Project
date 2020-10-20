@@ -33,22 +33,25 @@ namespace Scullery.Controllers
             return userId;
         }
 
-        private async Task<Planner> GetLoggedInPlanner()
+        private Planner GetLoggedInPlanner()
         {
-            var planner = await _context.Planners.Where(c => c.IdentityUserId == GetLoggedInUser()).SingleOrDefaultAsync();
+            var planner =  _context.Planners.Where(c => c.IdentityUserId == GetLoggedInUser()).SingleOrDefault();
 
-            if (planner.SpoonacularUserName == null)
+            if(planner.SpoonacularUserName == null)
             {
-                var spoonacularInfo = await _spoonacular.ConnectUser(planner);
-                planner.SpoonacularUserName = spoonacularInfo.username;
-                planner.UserHash = spoonacularInfo.hash;
+                var spoonacularInfo = _spoonacular.ConnectUser(planner);
+                planner.SpoonacularUserName = spoonacularInfo.Result.username;
+                planner.UserHash = spoonacularInfo.Result.hash;
                 _context.Update(planner);
-                await _context.SaveChangesAsync();
+                _context.SaveChanges();
             }
 
             return planner;
 
         }
+       
+
+
 
         // GET: PlannerController
         // Default view that shows progress bar for Budget and Today's Assigned Meals to prepare
@@ -109,7 +112,6 @@ namespace Scullery.Controllers
             return RedirectToAction("Create");
            
         }
-
 
         // GET: PlannerController/Edit/5
         public ActionResult Edit(int id)

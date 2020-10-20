@@ -53,20 +53,20 @@ namespace Scullery.Services
 
         public async Task<SpoonacularUserInfo> ConnectUser(Planner planner)
         {
+            
             string json = JsonConvert.SerializeObject(planner);
-            //JObject jObject = JObject.Parse(json);
-
             StringContent stringContent = new StringContent(json);
            
-
-
             string url = $"https://api.spoonacular.com/users/connect?apiKey={ApiKeys.Key}";
             var response = await client.PostAsync(url, stringContent);
-            var responseString = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+            {
+                var responseString = await response.Content.ReadAsStringAsync();
+                return await Task.FromResult(JsonConvert.DeserializeObject<SpoonacularUserInfo>(responseString));
 
-            SpoonacularUserInfo userInfo = JsonConvert.DeserializeObject<SpoonacularUserInfo>(responseString);
+            }
 
-            return userInfo;
+            return null;
         }
 
 
