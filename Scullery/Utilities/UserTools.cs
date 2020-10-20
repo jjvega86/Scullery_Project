@@ -18,7 +18,7 @@ namespace Scullery.Utilities
         public static string ConvertDateTimeToMealPlanFormat(DateTime date)
         {
 
-            return date.ToString("yyyy-mm-dd");
+            return date.ToString("yyyy-MM-dd");
         }
         
     }

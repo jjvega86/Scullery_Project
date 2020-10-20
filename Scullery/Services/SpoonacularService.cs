@@ -90,7 +90,7 @@ namespace Scullery.Services
 
         public async Task<ShoppingListRequest> GenerateShoppingList(GenerateShoppingList dates)
         {
-            string url = $"https://api.spoonacular.com/mealplanner/{dates.User}/shopping-list/{dates.Start}/{dates.End}?hash={dates.Hash}&apiKey={ApiKeys.Key}";
+            string url = $"https://api.spoonacular.com/mealplanner/{dates.User}/shopping-list/{dates.StartString}/{dates.EndString}?hash={dates.Hash}&apiKey={ApiKeys.Key}";
             var response = await client.PostAsync(url, null);
             if (response.IsSuccessStatusCode)
             {

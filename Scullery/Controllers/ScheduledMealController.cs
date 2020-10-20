@@ -144,7 +144,8 @@ namespace Scullery.Controllers
             var planner = GetLoggedInPlanner();
             dates.User = planner.SpoonacularUserName;
             dates.Hash = planner.UserHash;
-            dates.Start = UserTools.ConvertDateTimeToMealPlanFormat(dates.Start);
+            dates.StartString = UserTools.ConvertDateTimeToMealPlanFormat(dates.Start);
+            dates.EndString = UserTools.ConvertDateTimeToMealPlanFormat(dates.End);
 
             await _spoonacular.GenerateShoppingList(dates);
 
