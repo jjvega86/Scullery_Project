@@ -82,8 +82,12 @@ namespace Scullery.Controllers
             if(planner.PodExists == 1)
             {
                 var pod = _context.Pods.Where(p => p.PodName == planner.PodName && p.PodPassword == planner.PodPassword).SingleOrDefault();
+                var foundingPlanner = _context.Planners.Where(p => p.UserName == pod.FoundingUserName).SingleOrDefault();
                 planner.IdentityUserId = GetLoggedInUser();
                 planner.PodId = pod.PodId;
+                planner.SpoonacularUserName = foundingPlanner.SpoonacularUserName;
+                planner.UserHash = foundingPlanner.UserHash;
+                
                 _context.Add(planner);
                 _context.SaveChanges();
 
@@ -100,8 +104,8 @@ namespace Scullery.Controllers
                 _context.SaveChanges();
 
                 var selectedPod = _context.Pods.Where(p => p.PodName == planner.PodName && p.PodPassword == planner.PodPassword).FirstOrDefault();
-                planner.IdentityUserId = GetLoggedInUser();
                 planner.PodId = pod.PodId;
+                planner.IdentityUserId = GetLoggedInUser();
                 _context.Add(planner);
                 _context.SaveChanges();
 
