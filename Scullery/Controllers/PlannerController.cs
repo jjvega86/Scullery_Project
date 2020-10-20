@@ -6,18 +6,23 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Scullery.Data;
 using Scullery.Models;
+using Scullery.Services;
 
 namespace Scullery.Controllers
 {
     public class PlannerController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly SpoonacularService _spoonacular;
 
-        public PlannerController(ApplicationDbContext context)
+
+        public PlannerController(ApplicationDbContext context, SpoonacularService spoonacular)
         {
             _context = context;
+            _spoonacular = spoonacular;
 
         }
 
@@ -28,9 +33,16 @@ namespace Scullery.Controllers
             return userId;
         }
 
-        private Planner GetLoggedInPlanner()
+        private async Task<Planner> GetLoggedInPlanner()
         {
-            var planner = _context.Planners.Where(c => c.IdentityUserId == GetLoggedInUser()).SingleOrDefault();
+            var planner = await _context.Planners.Where(c => c.IdentityUserId == GetLoggedInUser()).SingleOrDefaultAsync();
+
+            if (planner.SpoonacularUserName == null)
+            {
+                await _spoonacular.ConnectUser(planner);
+
+            }
+
             return planner;
 
         }

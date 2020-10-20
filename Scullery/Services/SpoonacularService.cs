@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Scullery.Models;
 using Scullery.Utilities;
 using System;
@@ -49,12 +50,22 @@ namespace Scullery.Services
 
         }
 
-        public async Task ConnectUser(Planner planner)
+        public async Task<string> ConnectUser(Planner planner)
         {
-            string url = $"https://api.spoonacular.com/users/connect&apiKey={ApiKeys.Key}";
-            HttpRequestMessage request = await client.PostAsync(url, planner);
-            
+            var values = new Dictionary<string, string>
+            {
+                { "username", planner.UserName },
+                
+            };
 
+            var content = new FormUrlEncodedContent(values);
+
+            string url = $"https://api.spoonacular.com/users/connect?apiKey={ApiKeys.Key}";
+            var response = await client.PostAsync(url, content);
+
+            var responseString = await response.Content.ReadAsStringAsync();
+
+            return responseString;
         }
 
 
