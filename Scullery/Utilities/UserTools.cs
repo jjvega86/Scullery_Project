@@ -8,13 +8,16 @@ namespace Scullery.Utilities
 {
     public static class UserTools
     {
-        public static string GetTimeStamp(DateTime date)
+        public static int GetTimeStamp(DateTime date)
         {
-            return date.ToString("yyyyMMddHHmmssffff");
+            Int32 unixTimestamp = (Int32)(date.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
+
+            return unixTimestamp;
         }
 
         public static string ConvertDateTimeToMealPlanFormat(DateTime date)
         {
+
             return date.ToString("yyyy-mm-dd");
         }
         
