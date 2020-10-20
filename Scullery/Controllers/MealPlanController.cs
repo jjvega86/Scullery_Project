@@ -225,16 +225,23 @@ namespace Scullery.Controllers
         {
             RecipeAddToMealPlan recipe = new RecipeAddToMealPlan();
             var savedRecipe = _context.SavedRecipes.Find(meal.SavedRecipeId);
-            recipe.date = Int32.Parse(UserTools.GetTimeStamp(meal.DateOfMeal.Value));
+            recipe.date = (int)Int64.Parse(UserTools.GetTimeStamp(meal.DateOfMeal.Value));
             recipe.slot = meal.Slot;
             recipe.type = "RECIPE";
+            recipe.value = new Value();
             recipe.value.id = savedRecipe.SpoonacularRecipeId;
             recipe.value.imageType = "jpg";
             recipe.value.title = savedRecipe.RecipeName;
-            recipe.value.servings = 2;
+            recipe.value.servings = GetPodCount();
 
             await _spoonacular.AddRecipeToMealPlan(recipe, userInfo);
                 
+        }
+
+        private int GetPodCount()
+        {
+            int podMembersCount = _context.Planners.Where(p => p.PodId == GetLoggedInPlanner().PodId).Count();
+            return podMembersCount;
         }
 
 
