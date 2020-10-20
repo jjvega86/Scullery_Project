@@ -13,6 +13,10 @@ namespace Scullery.Utilities
             return date.ToString("yyyyMMddHHmmssffff");
         }
 
+        public static string ConvertDateTimeToMealPlanFormat(DateTime date)
+        {
+            return date.ToString("yyyy-mm-dd");
+        }
         
     }
 }
