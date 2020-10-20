@@ -232,7 +232,8 @@ namespace Scullery.Controllers
             recipe.value.id = savedRecipe.SpoonacularRecipeId;
             recipe.value.imageType = "jpg";
             recipe.value.title = savedRecipe.RecipeName;
-            recipe.value.servings = GetPodCount();
+            recipe.value.servings = GetPodCount(); // sets servings to the number of pod members (assuming enough food is needed for all planners)
+            // look at giving the user the option to set serving amount (if they have kids, they'll need more)
 
             await _spoonacular.AddRecipeToMealPlan(recipe, userInfo);
                 
@@ -251,8 +252,6 @@ namespace Scullery.Controllers
             List<string> mealTypes = new List<string>() { "Leftovers", "Out", "Free", "Planned"};
 
             return mealTypes;
-
-
         }
 
         

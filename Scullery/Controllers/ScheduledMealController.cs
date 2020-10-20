@@ -129,6 +129,11 @@ namespace Scullery.Controllers
 
         }
 
+        public Task<IActionResult> CreateShoppingList()
+        {
+
+        }
+
        
 
 
