@@ -39,8 +39,11 @@ namespace Scullery.Controllers
 
             if (planner.SpoonacularUserName == null)
             {
-                await _spoonacular.ConnectUser(planner);
-
+                var spoonacularInfo = await _spoonacular.ConnectUser(planner);
+                planner.SpoonacularUserName = spoonacularInfo.username;
+                planner.UserHash = spoonacularInfo.hash;
+                _context.Update(planner);
+                await _context.SaveChangesAsync();
             }
 
             return planner;
