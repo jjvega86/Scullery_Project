@@ -202,7 +202,7 @@ namespace Scullery.Controllers
             meal.Planned = true;
             _context.Update(meal);
             _context.SaveChanges();
-
+            // add service call to Spoonacular to add meal to API meal plan
             var mealPlan = _context.MealPlans.Find(meal.MealPlanId);
 
             return RedirectToAction("ViewPendingMeals", mealPlan);
