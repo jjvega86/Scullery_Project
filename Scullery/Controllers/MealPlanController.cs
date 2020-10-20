@@ -216,8 +216,21 @@ namespace Scullery.Controllers
 
         private void AddToSpoonacularMealPlan(ScheduledMeal meal)
         {
+            RecipeAddToMealPlan recipe = new RecipeAddToMealPlan();
+            var savedRecipe = _context.SavedRecipes.Find(meal.SavedRecipeId);
+            recipe.date = meal.DateOfMeal; // convert to timestamp
+            recipe.slot = meal.Slot;
+            recipe.type = "RECIPE";
+            recipe.value.id = savedRecipe.SpoonacularRecipeId;
+            recipe.value.imageType = "jpg";
+            recipe.value.title = savedRecipe.RecipeName;
+            recipe.value.servings = 2;
+                
+            
 
         }
+
+
 
         private List<string> AddMealTypes()
         {
