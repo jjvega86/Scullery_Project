@@ -1,5 +1,35 @@
-﻿@model Scullery.Models.ViewModels.GenerateShoppingList
+﻿@model Scullery.Models.ViewModels.ShoppingList
 @{
     ViewData["Title"] = "GenerateShoppingList";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+<h1>Shopping List</h1>
+<h2>Total Cost: @Html.ViewData.Model.TotalCost</h2>
+<table class="table">
+    <thead>
+        <tr>
+
+            <th>
+                Item Name
+            </th>
+            <th>
+                Cost
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Items)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.cost)
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
