@@ -202,10 +202,21 @@ namespace Scullery.Controllers
             meal.Planned = true;
             _context.Update(meal);
             _context.SaveChanges();
-            // add service call to Spoonacular to add meal to API meal plan
+
+            if (meal.MealType == "Planned")
+            {
+                AddToSpoonacularMealPlan(meal); // add meal to Spoonacular API meal plan if it's a recipe
+
+            }
+
             var mealPlan = _context.MealPlans.Find(meal.MealPlanId);
 
             return RedirectToAction("ViewPendingMeals", mealPlan);
+        }
+
+        private void AddToSpoonacularMealPlan(ScheduledMeal meal)
+        {
+
         }
 
         private List<string> AddMealTypes()
