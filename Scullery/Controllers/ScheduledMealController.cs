@@ -156,9 +156,22 @@ namespace Scullery.Controllers
 
         private ShoppingList PrepareShoppingListViewModel(ShoppingListRequest list)
         {
+            ShoppingList preppedList = new ShoppingList();
 
+            preppedList.StartDate = TimeTools.ConvertTimeStampToStringDate(list.startDate);
+            preppedList.EndDate = TimeTools.ConvertTimeStampToStringDate(list.endDate);
+            preppedList.TotalCost = list.cost;
+            preppedList.Items = new List<Item>();
 
-            return null;
+            foreach(Aisle aisle in list.aisles)
+            {
+                foreach(Item item in aisle.items)
+                {
+                    preppedList.Items.Add(item);
+                }
+            }
+
+            return preppedList;
         }
 
        

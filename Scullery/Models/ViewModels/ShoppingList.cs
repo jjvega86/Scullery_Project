@@ -8,8 +8,8 @@ namespace Scullery.Models.ViewModels
     public class ShoppingList
     {
         public float TotalCost { get; set; }
-        public int StartDate { get; set; }
-        public int EndDate { get; set; }
+        public string StartDate { get; set; }
+        public string EndDate { get; set; }
         public List<Item> Items { get; set; }
     }
 }

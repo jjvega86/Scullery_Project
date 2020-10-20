@@ -20,6 +20,15 @@ namespace Scullery.Utilities
 
             return date.ToString("yyyy-MM-dd");
         }
+
+        public static string ConvertTimeStampToStringDate(int date)
+        {
+            // Unix timestamp is seconds past epoch
+            System.DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
+            dateTime = dateTime.AddSeconds(date).ToLocalTime();
+            string newStringDate = TimeTools.ConvertDateTimeToMealPlanFormat(dateTime);
+            return newStringDate;
+        }
         
     }
 }
