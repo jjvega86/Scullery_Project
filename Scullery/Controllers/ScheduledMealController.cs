@@ -129,7 +129,7 @@ namespace Scullery.Controllers
 
         }
 
-        public ActionResult CreateShoppingList()
+        public ActionResult RequestShoppingList()
         {
             GenerateShoppingList dates = new GenerateShoppingList();
 
