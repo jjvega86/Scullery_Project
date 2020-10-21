@@ -7,8 +7,8 @@ namespace Scullery.Models.ViewModels
 {
     public class GenerateShoppingList
     {
-        public DateTime Start { get; set; } = DateTime.Now;
-        public DateTime End { get; set; } = DateTime.Now;
+        public DateTime Start { get; set; } = DateTime.Now.Date;
+        public DateTime End { get; set; } = DateTime.Now.Date;
 
         public string User { get; set; }
 

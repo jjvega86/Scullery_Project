@@ -17,13 +17,15 @@ public class Item
 {
     public int id { get; set; }
     public string name { get; set; }
-    public Measures measures { get; set; }
+    public Measures[] measures { get; set; }
     public string[] usages { get; set; }
     public bool pantryItem { get; set; }
     public string aisle { get; set; }
     public float cost { get; set; }
     public int ingredientId { get; set; }
 }
+
+
 
 
 
