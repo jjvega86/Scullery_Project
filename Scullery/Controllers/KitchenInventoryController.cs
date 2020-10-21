@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Scullery.Data;
 using Scullery.Models;
+using Scullery.Models.ViewModels;
 using Scullery.Services;
 
 namespace Scullery.Controllers
@@ -27,22 +28,31 @@ namespace Scullery.Controllers
             return View();
         }
 
-        public IActionResult SearchIngredients()
+        public async Task<IActionResult> SearchIngredients(string searchString)
         {
-            return View();
+            var rawSearchResults = await _spoonacular.AutoCompleteIngredientSearch(searchString);
+
+            IngredientResults results = new IngredientResults();
+
+            foreach (IngredientResult result in rawSearchResults.results)
+            {
+                results.Results.Add(result);
+            }
+
+            return View("SearchIngredients", results);
         }
 
-        public IActionResult AddIngredient()
+        public IActionResult SaveIngredient()
         {
             Ingredient ingredient = new Ingredient();
 
             return View(ingredient);
         }
 
-        [HttpPost, ActionName("AddIngredient")]
+        [HttpPost, ActionName("SaveIngredient")]
         [ValidateAntiForgeryToken]
 
-        public IActionResult AddIngredient(Ingredient ingredient)
+        public IActionResult SaveIngredient(Ingredient ingredient)
         {
             var planner = GetLoggedInPlanner();
             var kitchenInventory = _context.KitchenInventories.Where(i => i.PodId == planner.PodId).SingleOrDefault();
