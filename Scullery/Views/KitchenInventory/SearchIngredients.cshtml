@@ -1,5 +1,38 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model Scullery.Models.ViewModels.IngredientResults
 @{
+    ViewData["Title"] = "SearchResults";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+<h1>SearchResults</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Ingredient Name
+            </th>
+            <th>
+                Ingredient Image
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Results)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.image)
+                </td>
+                <td>
+                    <form asp-action="SaveIngredient" asp-route-id="@item.id">
+                        <button type="submit" class="btn btn-outline-success">Save To Pantry</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
