@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Scullery.Data;
 using Scullery.Models;
 using Scullery.Models.ViewModels;
@@ -23,9 +24,14 @@ namespace Scullery.Controllers
             _spoonacular = spoonacular;
 
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var planner = GetLoggedInPlanner();
+            var inventory =  await _context.KitchenInventories.Where(i => i.PodId == planner.PodId).SingleOrDefaultAsync();
+
+            var pantryIngredients = await _context.Ingredients.Where(i => i.KitchenInventoryId == inventory.KitchenInventoryId).ToListAsync();
+
+            return View(pantryIngredients);
         }
 
         public async Task<IActionResult> SearchIngredients(string searchString)
@@ -42,22 +48,26 @@ namespace Scullery.Controllers
             return View("SearchIngredients", results);
         }
 
-        public IActionResult SaveIngredient()
-        {
-            Ingredient ingredient = new Ingredient();
-
-            return View(ingredient);
-        }
-
         [HttpPost, ActionName("SaveIngredient")]
         [ValidateAntiForgeryToken]
 
-        public IActionResult SaveIngredient(Ingredient ingredient)
+        public IActionResult SaveIngredient(IngredientResult result)
         {
             var planner = GetLoggedInPlanner();
             var kitchenInventory = _context.KitchenInventories.Where(i => i.PodId == planner.PodId).SingleOrDefault();
 
-            return null;
+            Ingredient ingredient = new Ingredient();
+
+            ingredient.IngredientName = result.name;
+            ingredient.SpoonacularIngredientId = result.id;
+            ingredient.KitchenInventoryId = kitchenInventory.KitchenInventoryId;
+
+            _context.Add(ingredient);
+            _context.SaveChanges();
+
+
+
+            return View("Index");
         }
 
         private string GetLoggedInUser()

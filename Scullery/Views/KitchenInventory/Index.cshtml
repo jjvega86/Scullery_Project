@@ -10,17 +10,11 @@
     </p>
 </form>
 <hr />
-@*<table class="table">
+<table class="table">
     <thead>
         <tr>
             <th>
                 Ingredient Name
-            </th>
-            <th>
-                Ingredient Unit of Measure
-            </th>
-            <th>
-                Ingredient Quantity
             </th>
             <th></th>
         </tr>
@@ -32,12 +26,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.IngredientName)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UnitType)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UnitQuantity)
-                </td>
+               
                 <td>
                     <a asp-action="Details" asp-route-id="@item.IngredientId">Details</a> |
                     <a asp-action="Delete" asp-route-id="@item.IngredientId">Delete</a>
@@ -45,5 +34,5 @@
             </tr>
         }
     </tbody>
-</table>*@
+</table>
 

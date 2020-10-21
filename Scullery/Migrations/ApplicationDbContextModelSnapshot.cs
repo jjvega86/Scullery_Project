@@ -15,30 +15,9 @@ namespace Scullery.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.8")
+                .HasAnnotation("ProductVersion", "3.1.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("Ingredient", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("image")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("localizedName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("id");
-
-                    b.ToTable("Ingredients");
-                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -69,8 +48,8 @@ namespace Scullery.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "f56145c5-cdb9-4f09-afa7-d9e5c15c9bac",
-                            ConcurrencyStamp = "a785a1ce-4aae-40b6-aad8-cf0ceb7b6029",
+                            Id = "7470f7d7-0956-456d-9ec9-ec687dcbbb7e",
+                            ConcurrencyStamp = "9b41f548-835a-4162-832b-0bd6523bd338",
                             Name = "Planner",
                             NormalizedName = "PLANNER"
                         });
@@ -278,6 +257,35 @@ namespace Scullery.Migrations
                     b.HasIndex("PodId");
 
                     b.ToTable("Budgets");
+                });
+
+            modelBuilder.Entity("Scullery.Models.Ingredient", b =>
+                {
+                    b.Property<int>("IngredientId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("IngredientName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("KitchenInventoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SpoonacularIngredientId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("UnitQuantity")
+                        .HasColumnType("float");
+
+                    b.Property<string>("UnitType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("IngredientId");
+
+                    b.HasIndex("KitchenInventoryId");
+
+                    b.ToTable("Ingredient");
                 });
 
             modelBuilder.Entity("Scullery.Models.KitchenInventory", b =>
@@ -502,6 +510,15 @@ namespace Scullery.Migrations
                     b.HasOne("Scullery.Models.Pod", "Pod")
                         .WithMany()
                         .HasForeignKey("PodId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Scullery.Models.Ingredient", b =>
+                {
+                    b.HasOne("Scullery.Models.KitchenInventory", "KitchenInventory")
+                        .WithMany()
+                        .HasForeignKey("KitchenInventoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

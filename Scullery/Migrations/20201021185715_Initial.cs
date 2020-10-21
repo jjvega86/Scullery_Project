@@ -47,21 +47,6 @@ namespace Scullery.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Ingredients",
-                columns: table => new
-                {
-                    id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    name = table.Column<string>(nullable: true),
-                    localizedName = table.Column<string>(nullable: true),
-                    image = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Ingredients", x => x.id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Pods",
                 columns: table => new
                 {
@@ -300,6 +285,29 @@ namespace Scullery.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Ingredient",
+                columns: table => new
+                {
+                    IngredientId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    KitchenInventoryId = table.Column<int>(nullable: false),
+                    SpoonacularIngredientId = table.Column<int>(nullable: false),
+                    IngredientName = table.Column<string>(nullable: true),
+                    UnitType = table.Column<string>(nullable: true),
+                    UnitQuantity = table.Column<double>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Ingredient", x => x.IngredientId);
+                    table.ForeignKey(
+                        name: "FK_Ingredient_KitchenInventories_KitchenInventoryId",
+                        column: x => x.KitchenInventoryId,
+                        principalTable: "KitchenInventories",
+                        principalColumn: "KitchenInventoryId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "SavedRecipes",
                 columns: table => new
                 {
@@ -325,7 +333,7 @@ namespace Scullery.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "f56145c5-cdb9-4f09-afa7-d9e5c15c9bac", "a785a1ce-4aae-40b6-aad8-cf0ceb7b6029", "Planner", "PLANNER" });
+                values: new object[] { "7470f7d7-0956-456d-9ec9-ec687dcbbb7e", "9b41f548-835a-4162-832b-0bd6523bd338", "Planner", "PLANNER" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -370,6 +378,11 @@ namespace Scullery.Migrations
                 name: "IX_Budgets_PodId",
                 table: "Budgets",
                 column: "PodId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Ingredient_KitchenInventoryId",
+                table: "Ingredient",
+                column: "KitchenInventoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_KitchenInventories_PodId",
@@ -418,10 +431,7 @@ namespace Scullery.Migrations
                 name: "Budgets");
 
             migrationBuilder.DropTable(
-                name: "Ingredients");
-
-            migrationBuilder.DropTable(
-                name: "KitchenInventories");
+                name: "Ingredient");
 
             migrationBuilder.DropTable(
                 name: "MealPlans");
@@ -434,6 +444,9 @@ namespace Scullery.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "KitchenInventories");
 
             migrationBuilder.DropTable(
                 name: "Planners");
