@@ -53,6 +53,7 @@ namespace Scullery.Controllers
 
         public IActionResult SaveIngredient(IngredientResult result)
         {
+            var ingredientInfo = _spoonacular.GetIngredientInformation(result.id);
             var planner = GetLoggedInPlanner();
             var kitchenInventory = _context.KitchenInventories.Where(i => i.PodId == planner.PodId).SingleOrDefault();
 
