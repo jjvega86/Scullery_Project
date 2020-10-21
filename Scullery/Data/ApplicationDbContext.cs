@@ -40,5 +40,7 @@ namespace Scullery.Data
                 
            
         }
+
+        public DbSet<Scullery.Models.Ingredient> Ingredient { get; set; }
     }
 }

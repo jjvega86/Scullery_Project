@@ -17,8 +17,14 @@ namespace Scullery.Models
         public KitchenInventory KitchenInventory { get; set; }
 
         public int SpoonacularIngredientId { get; set; }
+
+        [Display(Name = "Ingredient Name")]
         public string IngredientName { get; set; }
+
+        [Display(Name = "Unit of Measure")]
         public string UnitType { get; set; }
+
+        [Display(Name = "Unit of Measure Quantity")]
         public double UnitQuantity { get; set; }
         
 

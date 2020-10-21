@@ -104,6 +104,11 @@ namespace Scullery.Services
 
         }
 
+        public async void AutoCompleteIngredientSearch(string searchInput)
+        {
+
+        }
+
 
 
     }
