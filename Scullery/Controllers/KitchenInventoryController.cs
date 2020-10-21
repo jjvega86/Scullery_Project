@@ -47,7 +47,7 @@ namespace Scullery.Controllers
             var planner = GetLoggedInPlanner();
             var kitchenInventory = _context.KitchenInventories.Where(i => i.PodId == planner.PodId).SingleOrDefault();
 
-
+            return null;
         }
 
         private string GetLoggedInUser()

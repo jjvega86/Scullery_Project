@@ -3,6 +3,47 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<input type="button" class="btn btn-primary" value="Add Ingredient To Pantry" onclick="location.href='@Url.Action("SearchIngredients", "KitchenInventory")'" />
-
+<form asp-controller="KitchenInventory" asp-action="SearchIngredients">
+    <p>
+        Search For Ingredients: <input type="text" name="SearchString">
+        <input type="submit" value="Search" />
+    </p>
+</form>
+<hr />
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Ingredient Name
+            </th>
+            <th>
+                Ingredient Unit of Measure
+            </th>
+            <th>
+                Ingredient Quantity
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IngredientName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UnitType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UnitQuantity)
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.IngredientId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.IngredientId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
 
