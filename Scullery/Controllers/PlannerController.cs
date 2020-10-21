@@ -36,13 +36,13 @@ namespace Scullery.Controllers
         private Planner GetLoggedInPlanner()
         {
             var planner =  _context.Planners.Where(c => c.IdentityUserId == GetLoggedInUser()).SingleOrDefault();
-            ValidatePlannerKitchenInventory(planner);
 
             if(planner.SpoonacularUserName == null)
             {
                 LinkSpoonacularAccount(planner);        
             }
 
+            ValidatePlannerKitchenInventory(planner);
 
             return planner;
 
@@ -64,7 +64,7 @@ namespace Scullery.Controllers
 
             if (plannerInventory == null)
             {
-                RedirectToAction("Create", "KitchenInventory", planner);
+                RedirectToAction("CreateInventory", "KitchenInventory", planner);
             }
 
         }
