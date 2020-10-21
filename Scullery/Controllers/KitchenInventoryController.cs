@@ -34,7 +34,7 @@ namespace Scullery.Controllers
 
             IngredientResults results = new IngredientResults();
 
-            foreach (IngredientResult result in rawSearchResults.results)
+            foreach (IngredientResult result in rawSearchResults)
             {
                 results.Results.Add(result);
             }

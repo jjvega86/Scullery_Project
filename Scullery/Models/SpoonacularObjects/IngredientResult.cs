@@ -1,9 +1,4 @@
 ﻿
-public class IngredientSearchResults
-{
-    public IngredientResult[] results { get; set; }
-}
-
 public class IngredientResult
 {
     public string name { get; set; }
