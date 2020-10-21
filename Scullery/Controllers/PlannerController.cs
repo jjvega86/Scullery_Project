@@ -122,16 +122,24 @@ namespace Scullery.Controllers
 
         }
 
-        private void ValidatePlannerKitchenInventory(Planner planner)
+        private IActionResult ValidatePlannerKitchenInventory(Planner planner)
         {
             var plannerInventory = _context.KitchenInventories.Where(i => i.PodId == planner.PodId).SingleOrDefault();
 
             if (plannerInventory == null)
             {
-                RedirectToAction("CreateInventory", "KitchenInventory", planner);
+                KitchenInventory inventory = new KitchenInventory() { PodId = planner.PodId };
+                _context.Add(inventory);
+                _context.SaveChanges();
+
+                return View(nameof(Index));
             }
 
+            return View(nameof(Index));
+
         }
+
+        
 
 
     }

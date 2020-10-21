@@ -26,14 +26,6 @@ namespace Scullery.Controllers
             return View();
         }
 
-        public IActionResult CreateInventory(Planner planner)
-        {
-            KitchenInventory inventory = new KitchenInventory() { PodId = planner.PodId };
-             _context.Add(inventory);
-            _context.SaveChanges();
-
-            return RedirectToAction("Index", "Planner");
-            
-        }
+       
     }
 }
