@@ -59,9 +59,11 @@ namespace Scullery.Controllers
 
             Ingredient ingredient = new Ingredient();
 
-            ingredient.IngredientName = result.name;
-            ingredient.SpoonacularIngredientId = result.id;
+            ingredient.IngredientName = ingredientInfo.Result.name;
+            ingredient.SpoonacularIngredientId = ingredientInfo.Result.id;
             ingredient.KitchenInventoryId = kitchenInventory.KitchenInventoryId;
+            ingredient.UnitType = ingredientInfo.Result.unit;
+            ingredient.UnitQuantity = ingredientInfo.Result.amount;
 
             _context.Add(ingredient);
             _context.SaveChanges();

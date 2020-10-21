@@ -120,7 +120,7 @@ namespace Scullery.Services
 
         public async Task<IngredientInformation> GetIngredientInformation(int id)
         {
-            string url = $"https://api.spoonacular.com/food/ingredients/{id}/information?amount=1&{ApiKeys.Key}";
+            string url = $"https://api.spoonacular.com/food/ingredients/{id}/information?apiKey={ApiKeys.Key}";
 
             HttpResponseMessage response = await client.GetAsync(url);
             if (response.IsSuccessStatusCode)
