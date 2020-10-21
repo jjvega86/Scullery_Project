@@ -36,17 +36,36 @@ namespace Scullery.Controllers
         private Planner GetLoggedInPlanner()
         {
             var planner =  _context.Planners.Where(c => c.IdentityUserId == GetLoggedInUser()).SingleOrDefault();
+            ValidatePlannerKitchenInventory(planner);
 
             if(planner.SpoonacularUserName == null)
             {
-                var spoonacularInfo = _spoonacular.ConnectUser(planner);
-                planner.SpoonacularUserName = spoonacularInfo.Result.username;
-                planner.UserHash = spoonacularInfo.Result.hash;
-                _context.Update(planner);
-                _context.SaveChanges();
+                LinkSpoonacularAccount(planner);        
             }
 
+
             return planner;
+
+        }
+
+        private void LinkSpoonacularAccount(Planner planner)
+        {
+            var spoonacularInfo = _spoonacular.ConnectUser(planner);
+            planner.SpoonacularUserName = spoonacularInfo.Result.username;
+            planner.UserHash = spoonacularInfo.Result.hash;
+            _context.Update(planner);
+            _context.SaveChanges();
+
+        }
+
+        private void ValidatePlannerKitchenInventory(Planner planner)
+        {
+            var plannerInventory = _context.KitchenInventories.Where(i => i.PodId == planner.PodId).SingleOrDefault();
+
+            if (plannerInventory == null)
+            {
+                RedirectToAction("Create", "KitchenInventory", planner);
+            }
 
         }
        
