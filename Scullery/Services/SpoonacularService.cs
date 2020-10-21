@@ -104,9 +104,18 @@ namespace Scullery.Services
 
         }
 
-        public async void AutoCompleteIngredientSearch(string searchInput)
+        public async Task<IngredientSearchResults> AutoCompleteIngredientSearch(string searchInput)
         {
+            string url = $"https://api.spoonacular.com/food/ingredients/autocomplete?query={searchInput}&number=5&metaInformation=true&apiKey={ApiKeys.Key}";
 
+            HttpResponseMessage response = await client.GetAsync(url);
+            if (response.IsSuccessStatusCode)
+            {
+                string json = response.Content.ReadAsStringAsync().Result;
+                return JsonConvert.DeserializeObject<IngredientSearchResults>(json);
+            }
+
+            return null;
         }
 
 

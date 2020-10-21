@@ -27,6 +27,11 @@ namespace Scullery.Controllers
             return View();
         }
 
+        public IActionResult SearchIngredients()
+        {
+            return View();
+        }
+
         public IActionResult AddIngredient()
         {
             Ingredient ingredient = new Ingredient();
