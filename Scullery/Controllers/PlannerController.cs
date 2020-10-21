@@ -26,53 +26,7 @@ namespace Scullery.Controllers
 
         }
 
-        private string GetLoggedInUser()
-        {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            return userId;
-        }
-
-        private Planner GetLoggedInPlanner()
-        {
-            var planner =  _context.Planners.Where(c => c.IdentityUserId == GetLoggedInUser()).SingleOrDefault();
-
-            if(planner.SpoonacularUserName == null)
-            {
-                LinkSpoonacularAccount(planner);        
-            }
-
-            ValidatePlannerKitchenInventory(planner);
-
-            return planner;
-
-        }
-
-        private void LinkSpoonacularAccount(Planner planner)
-        {
-            var spoonacularInfo = _spoonacular.ConnectUser(planner);
-            planner.SpoonacularUserName = spoonacularInfo.Result.username;
-            planner.UserHash = spoonacularInfo.Result.hash;
-            _context.Update(planner);
-            _context.SaveChanges();
-
-        }
-
-        private void ValidatePlannerKitchenInventory(Planner planner)
-        {
-            var plannerInventory = _context.KitchenInventories.Where(i => i.PodId == planner.PodId).SingleOrDefault();
-
-            if (plannerInventory == null)
-            {
-                RedirectToAction("CreateInventory", "KitchenInventory", planner);
-            }
-
-        }
-       
-
-
-
-        // GET: PlannerController
         // Default view that shows progress bar for Budget and Today's Assigned Meals to prepare
         public ActionResult Index()
         {
@@ -136,6 +90,49 @@ namespace Scullery.Controllers
            
         }
 
-        
+        private string GetLoggedInUser()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            return userId;
+        }
+
+        private Planner GetLoggedInPlanner()
+        {
+            var planner = _context.Planners.Where(c => c.IdentityUserId == GetLoggedInUser()).SingleOrDefault();
+
+            if (planner.SpoonacularUserName == null)
+            {
+                LinkSpoonacularAccount(planner);
+            }
+
+            ValidatePlannerKitchenInventory(planner);
+
+            return planner;
+
+        }
+
+        private void LinkSpoonacularAccount(Planner planner)
+        {
+            var spoonacularInfo = _spoonacular.ConnectUser(planner);
+            planner.SpoonacularUserName = spoonacularInfo.Result.username;
+            planner.UserHash = spoonacularInfo.Result.hash;
+            _context.Update(planner);
+            _context.SaveChanges();
+
+        }
+
+        private void ValidatePlannerKitchenInventory(Planner planner)
+        {
+            var plannerInventory = _context.KitchenInventories.Where(i => i.PodId == planner.PodId).SingleOrDefault();
+
+            if (plannerInventory == null)
+            {
+                RedirectToAction("CreateInventory", "KitchenInventory", planner);
+            }
+
+        }
+
+
     }
 }
