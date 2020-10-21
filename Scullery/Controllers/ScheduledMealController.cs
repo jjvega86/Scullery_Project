@@ -160,7 +160,7 @@ namespace Scullery.Controllers
 
             preppedList.StartDate = TimeTools.ConvertTimeStampToStringDate(list.startDate);
             preppedList.EndDate = TimeTools.ConvertTimeStampToStringDate(list.endDate);
-            preppedList.TotalCost = list.cost;
+            preppedList.TotalCost = (float)(list.cost *.01);
             preppedList.Items = new List<Item>();
 
             foreach(Aisle aisle in list.aisles)
@@ -169,13 +169,14 @@ namespace Scullery.Controllers
                 {
                     if(CompareKitchenInventoryToIngredient(item) == false)
                     {
+                        item.cost = (float)(item.cost * .01);
                         preppedList.Items.Add(item);
 
 
                     }
                     else
                     {
-                        preppedList.TotalCost -= item.cost;
+                        preppedList.TotalCost -= (float)(item.cost *.01);
                         continue;
                     }
                 }

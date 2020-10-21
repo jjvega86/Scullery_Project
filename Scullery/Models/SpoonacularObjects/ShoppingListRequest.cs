@@ -1,4 +1,6 @@
 ﻿
+using System.ComponentModel.DataAnnotations;
+
 public class ShoppingListRequest
 {
     public Aisle[] aisles { get; set; }
@@ -17,10 +19,12 @@ public class Item
 {
     public int id { get; set; }
     public string name { get; set; }
-    public Measures[] measures { get; set; }
+    public Measures measures { get; set; }
     public string[] usages { get; set; }
     public bool pantryItem { get; set; }
     public string aisle { get; set; }
+
+    [DisplayFormat(DataFormatString = "{0:C00}")]
     public float cost { get; set; }
     public int ingredientId { get; set; }
 }
