@@ -167,13 +167,41 @@ namespace Scullery.Controllers
             {
                 foreach(Item item in aisle.items)
                 {
-                    preppedList.Items.Add(item);
+                    if(CompareKitchenInventoryToIngredient(item) == false)
+                    {
+                        preppedList.Items.Add(item);
+
+
+                    }
+                    else
+                    {
+                        preppedList.TotalCost -= item.cost;
+                        continue;
+                    }
                 }
             }
 
             return preppedList;
         }
 
+        private bool CompareKitchenInventoryToIngredient(Item item)
+        {
+            bool isInPantry = false;
+            var planner = GetLoggedInPlanner();
+            var plannerPantry = _context.KitchenInventories.Where(i => i.PodId == planner.PodId).SingleOrDefault();
+            var ingredientsInPantry = _context.Ingredients.Where(i => i.KitchenInventoryId == plannerPantry.KitchenInventoryId).ToList();
+
+            foreach(Ingredient ingredient in ingredientsInPantry)
+            {
+                if(item.ingredientId == ingredient.SpoonacularIngredientId)
+                {
+                    isInPantry = true;
+                    break;
+                }
+            }
+
+            return isInPantry;
+        }
        
 
 
