@@ -8,6 +8,7 @@ using Scullery.Data;
 using Scullery.Models;
 using Scullery.Models.ViewModels;
 using Scullery.Services;
+using Scullery.Utilities;
 
 namespace Scullery.Controllers
 {
@@ -37,27 +38,49 @@ namespace Scullery.Controllers
 
         }
         public IActionResult Index()
-        {
-            var planner = GetLoggedInPlanner();
-            var budget = _context.Budgets.Where(b => b.PodId == planner.PodId).FirstOrDefault();
-
-            
-            return View(budget);
+        {  
+            return View(CreateBudget());
         }
 
-        public IActionResult CreateBudget()
+        private Budget CreateBudget()
         {
             // check for a budget during the current week (Sunday - Saturday)
             // if there isn't a budget for the current week, add one
             // carry over the CurrentWeekBudget from previous budget OR add a property to Pod that carries that value with it
-           
-            var planner = GetLoggedInPlanner();
-            Budget budget = new Budget();
-            budget.PodId = planner.PodId;
-            _context.Add(budget);
-            _context.SaveChanges();
+            bool currentWeekBudgetExists = false;
+            DateTime firstDayOfWeek = TimeTools.FirstDayOfWeek(DateTime.Today);
+            DateTime lastDayOfWeek = TimeTools.LastDayOfWeek(DateTime.Today);
 
-            return null;
+            var planner = GetLoggedInPlanner();
+            var allPlannerBudgets = _context.Budgets.Where(b => b.PodId == planner.PodId).ToList();
+            Budget currentBudget = new Budget();
+
+            foreach(Budget selectedBudget in allPlannerBudgets)
+            {
+                if(selectedBudget.CurrentWeekStart == firstDayOfWeek)
+                {
+                    currentWeekBudgetExists = true;
+                    currentBudget = selectedBudget;
+                    break;
+                }
+                
+            }
+
+            if(currentWeekBudgetExists == false)
+            {
+                Budget budget = new Budget();
+                budget.PodId = planner.PodId;
+                budget.CurrentWeekBudget = 0; // Make this carry over from last budget 
+                budget.CurrentWeekStart = firstDayOfWeek;
+                budget.CurrentWeekEnd = lastDayOfWeek;
+                _context.Add(budget);
+                _context.SaveChanges();
+                currentBudget = budget;
+
+            }
+
+            return currentBudget;
+
         }
 
         
