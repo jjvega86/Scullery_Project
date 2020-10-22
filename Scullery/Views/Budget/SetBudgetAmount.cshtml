@@ -1,0 +1,36 @@
+﻿@model Scullery.Models.Budget
+
+@{
+    ViewData["Title"] = "SetBudgetAmount";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>SetBudgetAmount</h1>
+
+<h4>Budget</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="SetBudgetAmount">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="BudgetId" />
+            <input type="hidden" asp-for="PodId" />
+            <input type="hidden" asp-for="CurrentWeekSpent" />
+            <input type="hidden" asp-for="CurrentWeekStart" />
+            <input type="hidden" asp-for="CurrentWeekEnd" />
+            <input type="hidden" asp-for="CumulativeBudget" />
+            <input type="hidden" asp-for="CumulativeSpent" />       
+            <div class="form-group">
+                <label asp-for="CurrentWeekBudget" class="control-label"></label>
+                <input asp-for="CurrentWeekBudget" class="form-control" />
+                <span asp-validation-for="CurrentWeekBudget" class="text-danger"></span>
+            </div>         
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+

@@ -67,16 +67,21 @@ namespace Scullery.Controllers
 
         public IActionResult SetBudgetAmount()
         {
-            var planner = GetLoggedInPlanner();
             var currentBudget = GetCurrentBudget();
 
             return View(currentBudget);
         }
 
         [HttpPost, ActionName("SetBudgetAmount")]
-        public IActionResult SetBudgetAmount(double amount)
+        public IActionResult SetBudgetAmount(Budget budget)
         {
-            return null;
+            var currentBudget = GetCurrentBudget();
+
+            currentBudget.CurrentWeekBudget = budget.CurrentWeekBudget;
+            _context.Update(currentBudget);
+            _context.SaveChanges();
+
+            return View("Index");
         }
 
         
