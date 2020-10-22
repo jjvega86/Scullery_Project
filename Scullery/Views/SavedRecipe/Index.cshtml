@@ -18,13 +18,13 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.RecipeName)
+                Recipe 
             </th>
+           <th>
+
+           </th>
             <th>
-                @Html.DisplayNameFor(model => model.ImageURL)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RecipeURL)
+                Recipe Source
             </th>
             <th></th>
         </tr>
@@ -37,10 +37,10 @@
                     @Html.DisplayFor(modelItem => item.RecipeName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ImageURL)
+                 <img src="@Url.Content(item.ImageURL)" alt="Image">
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.RecipeURL)
+                    <button href="@Url.Content(item.RecipeURL)" type="button" class="btn btn-outline-success">Open Recipe</button>
                 </td>
                 <td>
                     <a asp-action="Details" asp-route-id="@item.SavedRecipeId">Details</a> |
