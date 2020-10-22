@@ -86,10 +86,24 @@ namespace Scullery.Controllers
 
         public IActionResult AddExpense()
         {
+            BudgetExpenseAmount amount = new BudgetExpenseAmount();
 
+            return View(amount);
         }
 
-        
+        [HttpPost, ActionName("AddExpense")]
+        public IActionResult AddExpense(BudgetExpenseAmount amount)
+        {
+            var currentBudget = GetCurrentBudget();
+
+            currentBudget.CurrentWeekSpent += amount.ExpenseAmount;
+            _context.Update(currentBudget);
+            _context.SaveChanges();
+
+            return View("Index");
+        }
+
+
 
         //set up budgets to be automatically created for each week **
         //user sets weekly budget amount (that can change via edit action) **

@@ -30,9 +30,7 @@ namespace Scullery.Models
         public double CumulativeBudget { get; set; }
         public double CumulativeSpent { get; set; }
 
-        [NotMapped, Display(Name = "Enter expense amount!")]
-
-        public double ExpenseAmount { get; set; }
+       
 
     }
 }
