@@ -215,11 +215,10 @@ namespace Scullery.Controllers
             }
             else
             {
-                foreach (Budget previousBudget in allBudgets)
-                {
-                    budget.CumulativeBudget += previousBudget.CumulativeBudget;
-                    budget.CumulativeSpent += previousBudget.CumulativeSpent;
-                }
+                var lastBudget = allBudgets.OrderByDescending(b => b.BudgetId).FirstOrDefault();
+                budget.CumulativeBudget = lastBudget.CumulativeBudget + lastBudget.CurrentWeekBudget;
+                budget.CumulativeSpent = lastBudget.CumulativeSpent + lastBudget.CurrentWeekSpent;
+
             }
 
         }
