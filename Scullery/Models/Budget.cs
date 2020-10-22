@@ -21,13 +21,17 @@ namespace Scullery.Models
         public double CurrentWeekSpent { get; set; }
 
         [Display(Name = "When do you want your budget to start?")]
-
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:c}")]
         public DateTime? CurrentWeekStart { get; set; } = DateTime.Today;
 
         [Display(Name = "When will your budget end?")]
 
         public DateTime? CurrentWeekEnd { get; set; } = DateTime.Today;
+
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:c}")]
         public double CumulativeBudget { get; set; }
+
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:c}")]
         public double CumulativeSpent { get; set; }
 
        

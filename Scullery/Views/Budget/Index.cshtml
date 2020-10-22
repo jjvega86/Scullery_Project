@@ -7,5 +7,11 @@
 <h1>Budget</h1>
 <input type="button" class="btn btn-primary" value="Set Weekly Budget Amount" onclick="location.href='@Url.Action("SetBudgetAmount", "Budget")'" />
 <input type="button" class="btn btn-primary" value="Enter Expense" onclick="location.href='@Url.Action("AddExpense", "Budget")'" />
+<hr />
+<h4>Current Week Spent vs. Budget</h4>
+<p>@Model.CurrentWeekSpent / @Model.CurrentWeekBudget</p>
+<div class="progress">
+    <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="@Model.CurrentWeekSpent" aria-valuemin="0" aria-valuemax="@Model.CurrentWeekBudget"></div>
+</div>
 
 

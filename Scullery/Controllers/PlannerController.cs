@@ -177,6 +177,8 @@ namespace Scullery.Controllers
             budget.CurrentWeekBudget = InheritPreviousBudgetAmount(podId); // Make this carry over from last budget 
             budget.CurrentWeekStart = firstDayOfWeek;
             budget.CurrentWeekEnd = lastDayOfWeek;
+            UpdateCumulativeTotals(budget);
+
             _context.Add(budget);
             _context.SaveChanges();
 
@@ -198,6 +200,27 @@ namespace Scullery.Controllers
             }
 
             return currentAmount;
+
+        }
+
+        private void UpdateCumulativeTotals(Budget budget)
+        {     
+            var allBudgets = _context.Budgets.Where(b => b.PodId == budget.PodId).ToList();
+
+            if(allBudgets.Count <= 1)
+            {
+                budget.CumulativeBudget = 0;
+                budget.CumulativeSpent = 0;
+
+            }
+            else
+            {
+                foreach (Budget previousBudget in allBudgets)
+                {
+                    budget.CumulativeBudget += previousBudget.CumulativeBudget;
+                    budget.CumulativeSpent += previousBudget.CumulativeSpent;
+                }
+            }
 
         }
 
