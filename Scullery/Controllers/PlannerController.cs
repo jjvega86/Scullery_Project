@@ -174,11 +174,20 @@ namespace Scullery.Controllers
         {
             Budget budget = new Budget();
             budget.PodId = podId;
-            budget.CurrentWeekBudget = 0; // Make this carry over from last budget 
+            budget.CurrentWeekBudget = InheritPreviousBudgetAmount(podId); // Make this carry over from last budget 
             budget.CurrentWeekStart = firstDayOfWeek;
             budget.CurrentWeekEnd = lastDayOfWeek;
             _context.Add(budget);
             _context.SaveChanges();
+
+        }
+
+        private double InheritPreviousBudgetAmount(int podId)
+        {
+            var allBudgets = _context.Budgets.Where(b => b.PodId == podId).ToList();
+            double currentAmount = 0;
+
+            return currentAmount;
 
         }
 
