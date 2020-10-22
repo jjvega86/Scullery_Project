@@ -38,8 +38,13 @@ namespace Scullery.Controllers
 
         }
         public IActionResult Index()
-        {  
+        {
+            
+            
             return View(GetCurrentBudget());
+
+            
+            
         }
 
         private Budget GetCurrentBudget()
@@ -100,7 +105,7 @@ namespace Scullery.Controllers
             _context.Update(currentBudget);
             _context.SaveChanges();
 
-            return View("Index");
+            return RedirectToAction("Index");
         }
 
 
