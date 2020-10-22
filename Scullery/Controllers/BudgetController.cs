@@ -39,15 +39,12 @@ namespace Scullery.Controllers
         }
         public IActionResult Index()
         {  
-            return View(CreateBudget());
+            return View(GetCurrentBudget());
         }
 
-        public Budget CreateBudget()
+        private Budget GetCurrentBudget()
         {
-            // check for a budget during the current week (Sunday - Saturday)
-            // if there isn't a budget for the current week, add one
-            // carry over the CurrentWeekBudget from previous budget OR add a property to Pod that carries that value with it
-            bool currentWeekBudgetExists = false;
+            
             DateTime firstDayOfWeek = TimeTools.FirstDayOfWeek(DateTime.Today);
             DateTime lastDayOfWeek = TimeTools.LastDayOfWeek(DateTime.Today);
 
@@ -59,33 +56,32 @@ namespace Scullery.Controllers
             {
                 if(selectedBudget.CurrentWeekStart == firstDayOfWeek)
                 {
-                    currentWeekBudgetExists = true;
                     currentBudget = selectedBudget;
                     break;
                 }
                 
             }
 
-            if(currentWeekBudgetExists == false)
-            {
-                Budget budget = new Budget();
-                budget.PodId = planner.PodId;
-                budget.CurrentWeekBudget = 0; // Make this carry over from last budget 
-                budget.CurrentWeekStart = firstDayOfWeek;
-                budget.CurrentWeekEnd = lastDayOfWeek;
-                _context.Add(budget);
-                _context.SaveChanges();
-                currentBudget = budget;
-
-            }
-
             return currentBudget;
+        }
 
+        public IActionResult SetBudgetAmount()
+        {
+            var planner = GetLoggedInPlanner();
+            var currentBudget = GetCurrentBudget();
+
+            return View(currentBudget);
+        }
+
+        [HttpPost, ActionName("SetBudgetAmount")]
+        public IActionResult SetBudgetAmount(double amount)
+        {
+            return null;
         }
 
         
 
-        //set up budgets to be automatically created for each week
+        //set up budgets to be automatically created for each week **
         //user sets weekly budget amount (that can change via edit action)
         //user enters grocery expenses and budget progress is automatically updated for the week and lifecycle of app usage
     }

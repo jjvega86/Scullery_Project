@@ -162,22 +162,25 @@ namespace Scullery.Controllers
                 }
 
             }
-
             if (currentWeekBudgetExists == false)
             {
-                Budget budget = new Budget();
-                budget.PodId = planner.PodId;
-                budget.CurrentWeekBudget = 0; // Make this carry over from last budget 
-                budget.CurrentWeekStart = firstDayOfWeek;
-                budget.CurrentWeekEnd = lastDayOfWeek;
-                _context.Add(budget);
-                _context.SaveChanges();
+                CreateNewBudget(planner.PodId, firstDayOfWeek, lastDayOfWeek);
 
             }
 
-
         }
 
+        private void CreateNewBudget(int podId, DateTime firstDayOfWeek, DateTime lastDayOfWeek)
+        {
+            Budget budget = new Budget();
+            budget.PodId = podId;
+            budget.CurrentWeekBudget = 0; // Make this carry over from last budget 
+            budget.CurrentWeekStart = firstDayOfWeek;
+            budget.CurrentWeekEnd = lastDayOfWeek;
+            _context.Add(budget);
+            _context.SaveChanges();
+
+        }
 
 
 
