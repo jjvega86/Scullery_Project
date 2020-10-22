@@ -184,8 +184,8 @@ namespace Scullery.Controllers
 
         private double InheritPreviousBudgetAmount(int podId)
         {
-            var allBudgets = _context.Budgets.Where(b => b.PodId == podId).ToList();
-            double currentAmount = 0;
+            var lastBudget = _context.Budgets.Where(b => b.PodId == podId).OrderByDescending(b => b.BudgetId).FirstOrDefault();
+            double currentAmount = lastBudget.CurrentWeekBudget;
 
             return currentAmount;
 
