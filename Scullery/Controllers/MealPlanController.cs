@@ -85,17 +85,11 @@ namespace Scullery.Controllers
             }
         }
 
-        private IEnumerable<DateTime> EachDay(DateTime from, DateTime thru)
-        {
-            for (var day = from.Date; day.Date <= thru.Date; day = day.AddDays(1))
-                yield return day;
-        }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         private async Task CreateMealsToBePlanned(MealPlan mealPlan)
         {
-            foreach(DateTime day in EachDay(mealPlan.StartDate.Value, mealPlan.EndDate.Value))
+            foreach(DateTime day in TimeTools.EachDay(mealPlan.StartDate.Value, mealPlan.EndDate.Value))
             {
                 ScheduledMeal meal1 = new ScheduledMeal();
                 ScheduledMeal meal2 = new ScheduledMeal();

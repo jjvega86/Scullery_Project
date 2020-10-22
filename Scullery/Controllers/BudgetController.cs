@@ -39,27 +39,31 @@ namespace Scullery.Controllers
         public IActionResult Index()
         {
             var planner = GetLoggedInPlanner();
+            var budget = _context.Budgets.Where(b => b.PodId == planner.PodId).FirstOrDefault();
+
             
-            return View();
+            return View(budget);
         }
 
         public IActionResult CreateBudget()
         {
+            // check for a budget during the current week (Sunday - Saturday)
+            // if there isn't a budget for the current week, add one
+            // carry over the CurrentWeekBudget from previous budget OR add a property to Pod that carries that value with it
+           
             var planner = GetLoggedInPlanner();
             Budget budget = new Budget();
             budget.PodId = planner.PodId;
-
-            return View(budget);
-        }
-
-        [HttpPost, ActionName("CreateBudget")]
-        [ValidateAntiForgeryToken]
-        public IActionResult CreateBudget(Budget budget)
-        {
             _context.Add(budget);
             _context.SaveChanges();
 
-            return View("Index");
+            return null;
         }
+
+        
+
+        //set up budgets to be automatically created for each week
+        //user sets weekly budget amount (that can change via edit action)
+        //user enters grocery expenses and budget progress is automatically updated for the week and lifecycle of app usage
     }
 }
