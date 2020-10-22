@@ -105,7 +105,7 @@ namespace Scullery.Controllers
             }
             else
             {
-                return View("Index");
+                return RedirectToAction("Index");
 
             }
            
@@ -136,7 +136,7 @@ namespace Scullery.Controllers
             _context.Remove(recipe);
            await _context.SaveChangesAsync();
 
-            return View("Index");
+            return RedirectToAction("Index");
 
 
         }
