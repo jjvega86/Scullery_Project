@@ -84,11 +84,16 @@ namespace Scullery.Controllers
             return View("Index");
         }
 
+        public IActionResult AddExpense()
+        {
+
+        }
+
         
 
         //set up budgets to be automatically created for each week **
         //user sets weekly budget amount (that can change via edit action) **
-        //new budgets inherit previous week budget amount automatically
+        //new budgets inherit previous week budget amount automatically **
         //user enters grocery expenses and budget progress is automatically updated for the week and lifecycle of app usage
     }
 }
