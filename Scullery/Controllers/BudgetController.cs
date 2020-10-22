@@ -42,7 +42,7 @@ namespace Scullery.Controllers
             return View(CreateBudget());
         }
 
-        private Budget CreateBudget()
+        public Budget CreateBudget()
         {
             // check for a budget during the current week (Sunday - Saturday)
             // if there isn't a budget for the current week, add one

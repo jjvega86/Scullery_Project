@@ -22,11 +22,11 @@ namespace Scullery.Models
 
         [Display(Name = "When do you want your budget to start?")]
 
-        public DateTime? CurrentWeekStart { get; set; } = DateTime.Now;
+        public DateTime? CurrentWeekStart { get; set; } = DateTime.Today;
 
         [Display(Name = "When will your budget end?")]
 
-        public DateTime? CurrentWeekEnd { get; set; } = DateTime.Now;
+        public DateTime? CurrentWeekEnd { get; set; } = DateTime.Today;
         public double CumulativeBudget { get; set; }
         public double CumulativeSpent { get; set; }
 

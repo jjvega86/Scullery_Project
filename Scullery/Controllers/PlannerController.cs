@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Scullery.Data;
 using Scullery.Models;
 using Scullery.Services;
+using Scullery.Utilities;
 
 namespace Scullery.Controllers
 {
@@ -44,6 +45,7 @@ namespace Scullery.Controllers
             }
 
             ValidatePlannerKitchenInventory(planner);
+            ValidateCurrentBudget(planner);
 
             return View(planner);
         }
@@ -140,7 +142,43 @@ namespace Scullery.Controllers
 
         }
 
-        
+        private void ValidateCurrentBudget(Planner planner)
+        {
+            // check for a budget during the current week (Sunday - Saturday)
+            // if there isn't a budget for the current week, add one
+            // carry over the CurrentWeekBudget from previous budget OR add a property to Pod that carries that value with it
+            bool currentWeekBudgetExists = false;
+            DateTime firstDayOfWeek = TimeTools.FirstDayOfWeek(DateTime.Today);
+            DateTime lastDayOfWeek = TimeTools.LastDayOfWeek(DateTime.Today);
+
+            var allPlannerBudgets = _context.Budgets.Where(b => b.PodId == planner.PodId).ToList();
+
+            foreach (Budget selectedBudget in allPlannerBudgets)
+            {
+                if (selectedBudget.CurrentWeekStart == firstDayOfWeek)
+                {
+                    currentWeekBudgetExists = true;
+                    break;
+                }
+
+            }
+
+            if (currentWeekBudgetExists == false)
+            {
+                Budget budget = new Budget();
+                budget.PodId = planner.PodId;
+                budget.CurrentWeekBudget = 0; // Make this carry over from last budget 
+                budget.CurrentWeekStart = firstDayOfWeek;
+                budget.CurrentWeekEnd = lastDayOfWeek;
+                _context.Add(budget);
+                _context.SaveChanges();
+
+            }
+
+
+        }
+
+
 
 
     }
