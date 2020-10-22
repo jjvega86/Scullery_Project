@@ -4,14 +4,30 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
 <h1>Budget</h1>
 <input type="button" class="btn btn-primary" value="Set Weekly Budget Amount" onclick="location.href='@Url.Action("SetBudgetAmount", "Budget")'" />
 <input type="button" class="btn btn-primary" value="Enter Expense" onclick="location.href='@Url.Action("AddExpense", "Budget")'" />
 <hr />
 <h4>Current Week Spent vs. Budget</h4>
-<p> @Model.CurrentWeekSpent /  @Model.CurrentWeekBudget</p>
-<div class="progress">
-    <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="@Model.CurrentWeekSpent" aria-valuemin="0" aria-valuemax="@Model.CurrentWeekBudget"></div>
-</div>
+<p>Budget: $@Model.CurrentWeekSpent / Spent: $@Model.CurrentWeekBudget</p>
+<hr />
+<h4>Money Saved So Far</h4>
+<p>$@Model.LifeTimeSavings (Total Budgeted: $@Model.CumulativeBudget / Total Spent: $@Model.CumulativeSpent)</p>
+
+
+
+<script type="text/javascript">
+    var i = 0;
+    function makeProgress() {
+        if (i < 100) {
+            i = i + 1;
+            $(".progress-bar").css("width", i + "%").text(i + " %");
+        }
+        // Wait for sometime before running this script again
+        setTimeout("makeProgress()", 100);
+    }
+    makeProgress();
+</script>
 
 

@@ -62,6 +62,7 @@ namespace Scullery.Controllers
                 if(selectedBudget.CurrentWeekStart == firstDayOfWeek)
                 {
                     currentBudget = selectedBudget;
+                    currentBudget.LifeTimeSavings = currentBudget.CumulativeBudget - currentBudget.CumulativeSpent;
                     break;
                 }
                 

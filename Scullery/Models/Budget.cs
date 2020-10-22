@@ -34,6 +34,9 @@ namespace Scullery.Models
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:c}")]
         public double CumulativeSpent { get; set; }
 
+        [NotMapped]
+        public double LifeTimeSavings { get; set; }
+
        
 
     }

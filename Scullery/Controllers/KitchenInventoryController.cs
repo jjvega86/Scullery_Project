@@ -70,7 +70,7 @@ namespace Scullery.Controllers
 
 
 
-            return View("Index");
+            return RedirectToAction("Index");
         }
 
         private string GetLoggedInUser()
