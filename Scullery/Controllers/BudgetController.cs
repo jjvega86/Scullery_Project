@@ -45,7 +45,7 @@ namespace Scullery.Controllers
 
         public IActionResult CreateBudget()
         {
-            return null;
+            return View("Index");
         }
     }
 }
