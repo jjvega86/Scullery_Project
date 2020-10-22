@@ -16,10 +16,17 @@ namespace Scullery.Models
         public int PodId { get; set; }
         public Pod Pod { get; set; }
 
+        [Display(Name = "Enter your budget amount!")]
         public double CurrentWeekBudget { get; set; }
         public double CurrentWeekSpent { get; set; }
-        public DateTime? CurrentWeekStart { get; set; }
-        public DateTime? CurrentWeekEnd { get; set; }
+
+        [Display(Name = "When do you want your budget to start?")]
+
+        public DateTime? CurrentWeekStart { get; set; } = DateTime.Now;
+
+        [Display(Name = "When will your budget end?")]
+
+        public DateTime? CurrentWeekEnd { get; set; } = DateTime.Now;
         public double CumulativeBudget { get; set; }
         public double CumulativeSpent { get; set; }
 

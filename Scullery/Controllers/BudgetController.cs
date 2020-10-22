@@ -45,6 +45,20 @@ namespace Scullery.Controllers
 
         public IActionResult CreateBudget()
         {
+            var planner = GetLoggedInPlanner();
+            Budget budget = new Budget();
+            budget.PodId = planner.PodId;
+
+            return View(budget);
+        }
+
+        [HttpPost, ActionName("CreateBudget")]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateBudget(Budget budget)
+        {
+            _context.Add(budget);
+            _context.SaveChanges();
+
             return View("Index");
         }
     }
