@@ -16,18 +16,7 @@
     </form>
 <table class="table">
     <thead>
-        <tr>
-            <th>
-                Recipe 
-            </th>
-           <th>
-
-           </th>
-            <th>
-                Recipe Source
-            </th>
-            <th></th>
-        </tr>
+      <tr></tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
@@ -40,11 +29,12 @@
                  <img src="@Url.Content(item.ImageURL)" alt="Image">
                 </td>
                 <td>
-                    <button href="@Url.Content(item.RecipeURL)" type="button" class="btn btn-outline-success">Open Recipe</button>
+                    <button  type="button" onclick="parent.open('@Url.Content(item.RecipeURL)')" class="btn btn-outline-success">Open Recipe</button>
                 </td>
                 <td>
-                    <a asp-action="Details" asp-route-id="@item.SavedRecipeId">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.SavedRecipeId">Delete</a>
+                    <form asp-action="Delete" method="get" asp-route-id="@item.SavedRecipeId">
+                        <button type="submit" class="btn btn-outline-danger">Delete</button>
+                    </form>
                 </td>
             </tr>
         }

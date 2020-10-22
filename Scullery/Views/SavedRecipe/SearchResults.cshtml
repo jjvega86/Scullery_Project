@@ -28,7 +28,7 @@
                     @Html.DisplayFor(modelItem => item.title)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.image)
+                    <img src="@Url.Content(item.image)" alt="Image">
                 </td>
                 <td>
                     <form asp-action="ShowRecipeInformation" asp-route-id="@item.id">
