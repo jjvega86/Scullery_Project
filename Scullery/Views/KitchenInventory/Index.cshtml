@@ -3,36 +3,51 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<form asp-controller="KitchenInventory" asp-action="SearchIngredients">
-    <p>
-        Search For Ingredients: <input type="text" name="SearchString">
-        <input type="submit" value="Search" />
-    </p>
-</form>
-<hr />
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Ingredient Name
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IngredientName)
-                </td>             
-                <td>
-                    <form asp-action="Delete" asp-route-id="@item.IngredientId">
-                        <button type="submit" class="btn btn-outline-danger float-right">Delete</button>
-                    </form>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+
+<div class="container-fluid">
+    <br />
+    <div class="row">
+        <div class="col-md-4 text-center">
+            <h2>Ingredients List</h2>
+        </div>
+        <div class="col-md-2"></div>
+        <div class="col-md-6">
+            <form asp-controller="KitchenInventory" asp-action="SearchIngredients">
+                <p>
+                    Search For New Ingredients: <input type="text" name="SearchString">
+                    <input type="submit" value="Search" />
+                </p>
+            </form>
+        </div>
+    </div>
+    <br />
+    <br />
+    <div class="row">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Ingredient Name
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IngredientName)
+                        </td>
+                        <td>
+                            <form asp-action="Delete" asp-route-id="@item.IngredientId">
+                                <button type="submit" class="btn btn-outline-danger float-right">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
 

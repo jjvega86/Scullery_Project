@@ -3,36 +3,37 @@
     ViewData["Title"] = "SearchResults";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="container-fluid">
+    <br />
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h2>Search Results</h2>
+        </div>
+    </div>
+    <br />
+    <br />
+    <div class="row">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card-columns">
+                    @foreach (var ingredient in Model.Results)
+                    {
+                        <div class="card">
+                            <h4 class="card-header">
+                                @ingredient.name
+                            </h4>
+                            <div class="card-img" style="background-image: url('@ingredient.image')"></div>
+                            <div class="card-footer bg-light">
+                                <form asp-action="SaveIngredient" asp-route-id="@ingredient.id">
+                                    <button type="submit" class="btn btn-outline-success">Save To Pantry</button>
+                                </form>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
 
-<h1>SearchResults</h1>
+        </div>
+    </div>
+</div>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Ingredient Name
-            </th>
-            <th>
-                Ingredient Image
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Results)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.image)
-                </td>
-                <td>
-                    <form asp-action="SaveIngredient" asp-route-id="@item.id">
-                        <button type="submit" class="btn btn-outline-success">Save To Pantry</button>
-                    </form>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
