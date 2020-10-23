@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Scullery.Data;
 using Scullery.Models;
+using Scullery.Models.ViewModels;
 using Scullery.Services;
 using Scullery.Utilities;
 
@@ -28,11 +29,10 @@ namespace Scullery.Controllers
         }
 
 
-        // Default view that shows progress bar for Budget and Today's Assigned Meals to prepare
+        // Default view that shows Today's Assigned Meals to prepare
         public ActionResult Index()
         {
             var planner = GetLoggedInPlanner();
-
 
             if (planner == null)
             {
@@ -46,8 +46,17 @@ namespace Scullery.Controllers
 
             ValidatePlannerKitchenInventory(planner);
             ValidateCurrentBudget(planner);
+            var meals = GetTodaysMeals(planner);
 
-            return View(planner);
+            return View(meals);
+        }
+        public TodaysMeals GetTodaysMeals(Planner planner)
+        {
+            TodaysMeals meals = new TodaysMeals();
+            meals.PlannerName = planner.FirstName;
+
+            return meals;
+
         }
 
         // GET: PlannerController/Create
