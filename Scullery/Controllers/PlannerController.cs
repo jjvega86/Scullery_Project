@@ -53,7 +53,22 @@ namespace Scullery.Controllers
         public TodaysMeals GetTodaysMeals(Planner planner)
         {
             TodaysMeals meals = new TodaysMeals();
+            DateTime today = DateTime.Today;
+            meals.MealCards = new List<MealCard>();
             meals.PlannerName = planner.FirstName;
+
+            var podMembers = _context.Planners.Where(p => p.PodId == planner.PodId).ToList();
+
+            foreach(Planner podMember in podMembers)
+            {
+                var allScheduledMeals = _context.ScheduledMeals.Where(m => m.AssignedPlannerId == podMember.PlannerId && m.DateOfMeal == today).ToList();
+
+                foreach(ScheduledMeal meal in allScheduledMeals)
+                {
+                    MealCard card = new MealCard();
+                }
+            }
+            
 
             return meals;
 

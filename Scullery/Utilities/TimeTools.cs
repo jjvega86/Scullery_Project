@@ -49,6 +49,7 @@ namespace Scullery.Utilities
             return dt.AddDays(-diff).Date;
         }
 
+
         public static DateTime LastDayOfWeek(this DateTime dt) =>
             dt.FirstDayOfWeek().AddDays(6);
 
