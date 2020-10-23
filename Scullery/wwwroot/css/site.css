@@ -12,19 +12,20 @@ a {
   color: #0366d6;
 }
 
-.card-columns .card-body{
-    height: 100px;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background:#fbfafd;
+.card-columns .card-body {
+    height: 100px !important;
+    width: 100px !important;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    background: #fbfafd !important;
 }
 
-.card-columns .card-img{
-    height:330px;
-    vertical-align: bottom;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    opacity: .8;
+.card-columns .card-img {
+    height: 330px !important;
+    vertical-align: bottom !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    opacity: .8 !important;
 }
 
 .btn-primary {
