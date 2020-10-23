@@ -34,8 +34,12 @@
                             @recipe.RecipeName
                         </h4>
                         <div class="card-img" style="background-image: url('@recipe.ImageURL')"></div>   
-                        <div class="card-footer bg-light">                                                    
-                             <button class="btn btn-outline-primary" type="button" onclick="parent.open('@Url.Content(recipe.RecipeURL)')">Open Recipe</button>
+                        <div class="card-footer bg-light">
+                            <form asp-action="Delete" asp-route-id="@recipe.SavedRecipeId">
+                                <button type="submit" class="btn btn-outline-danger float-right">Delete</button>
+                            </form>
+                            <button class="btn btn-outline-primary" type="button" onclick="parent.open('@Url.Content(recipe.RecipeURL)')">Open Recipe</button>
+
                         </div>
                     </div>
 

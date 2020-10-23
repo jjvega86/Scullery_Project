@@ -73,6 +73,20 @@ namespace Scullery.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var ingredient = await _context.Ingredients.Where(r => r.IngredientId == id).SingleOrDefaultAsync();
+
+            _context.Remove(ingredient);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Index");
+
+
+        }
+
         private string GetLoggedInUser()
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);

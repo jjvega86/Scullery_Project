@@ -25,10 +25,8 @@
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.IngredientName)
-                </td>
-               
+                </td>             
                 <td>
-                    <a asp-action="Details" asp-route-id="@item.IngredientId">Details</a> |
                     <a asp-action="Delete" asp-route-id="@item.IngredientId">Delete</a>
                 </td>
             </tr>
