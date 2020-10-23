@@ -22,35 +22,45 @@
             <div class="card-columns">
                 @foreach (Scullery.Models.ViewModels.MealCard card in Model.MealCards)
                 {
-
                 <div class="card">
-                    <div class="card-img" style="background-image: url('@card.ImgUrl')"></div>
                     <h3 class="card-header">
                         @if (card.MealSlot == 1)
                         {
-                            <span>Breakfast</span>
+                            <span>Breakfast: </span> @card.MealType
                         }
                         else if (card.MealSlot == 2)
                         {
-                            <span>Lunch</span>
+                            <span>Lunch: </span> @card.MealType
                         }
                         else
                         {
-                            <span>Dinner</span>
+                            <span>Dinner: </span> @card.MealType
                         }
                     </h3>
-                    <div class="card-body">
-                        <h5 class="card-title">Assigned Cook</h5>
-                        <h6 class="card-subtitle text-muted">@card.CookName</h6>
-                    </div>
-                    <div class="card-body">
-                        <a href="#" class="card-link">Card link</a>
-                        <a href="#" class="card-link">Another link</a>
-                    </div>
+                    <div class="card-img" style="background-image: url('@card.ImgUrl')"></div>
+                    @if (card.RecipeName != "")
+                    {
+                        <h2 class="card-header"> @card.RecipeName </h2>
 
-                </div>
+                    }
+                    @if (card.MealType == "Planned")
+                    {
+                        <div class="card-body">
+                            <h5 class="card-title">Assigned Cook</h5>
+                            <h6 class="card-subtitle text-muted">@card.CookName</h6>
+                        </div>
+
+                    }
+                    <div class="card-footer">
+                        @if (card.RecipeUrl != "")
+                        {
+                            <button type="button" onclick="parent.open('@Url.Content(card.RecipeUrl)')" class="btn btn-outline-success">Open Recipe</button>
+
+                        }
+
+                    </div>
+                </div>               
                 
-
                 }
             </div>
         </div>
