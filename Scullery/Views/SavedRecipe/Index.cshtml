@@ -8,15 +8,15 @@
 <h1>My Recipes</h1>
 
 
-    <form asp-controller="SavedRecipe" asp-action="SearchResults">
-        <p>
-            Search For Recipes: <input type="text" name="SearchString">
-            <input type="submit" value="Search" />
-        </p>
-    </form>
+<form asp-controller="SavedRecipe" asp-action="SearchResults">
+    <p>
+        Search For Recipes: <input type="text" name="SearchString">
+        <input type="submit" value="Search" />
+    </p>
+</form>
 <table class="table">
     <thead>
-      <tr></tr>
+        <tr></tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
@@ -26,10 +26,10 @@
                     @Html.DisplayFor(modelItem => item.RecipeName)
                 </td>
                 <td>
-                 <img src="@Url.Content(item.ImageURL)" alt="Image">
+                    <img src="@Url.Content(item.ImageURL)" alt="Image">
                 </td>
                 <td>
-                    <button  type="button" onclick="parent.open('@Url.Content(item.RecipeURL)')" class="btn btn-outline-success">Open Recipe</button>
+                    <button type="button" onclick="parent.open('@Url.Content(item.RecipeURL)')" class="btn btn-outline-success">Open Recipe</button>
                 </td>
                 <td>
                     <form asp-action="Delete" method="get" asp-route-id="@item.SavedRecipeId">

@@ -45,7 +45,7 @@ namespace Scullery.Controllers
         // This view will trigger from the navbar "My Recipes"
         // It will take the LoggedInUser and show a list of their SavedRecipes
         // It will also include a search utility to find a recipe using the Spoonacular API
-        public async Task <IActionResult> Index()
+        public async Task<IActionResult> Index()
         {
             var planner = GetLoggedInPlanner();
 
@@ -90,11 +90,11 @@ namespace Scullery.Controllers
             return View("RecipeInformation", recipeToSave);
         }
 
-       
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task <IActionResult> Save(SavedRecipe saved)
+        public async Task<IActionResult> Save(SavedRecipe saved)
         {
             if (ModelState.IsValid)
             {
@@ -108,7 +108,7 @@ namespace Scullery.Controllers
                 return RedirectToAction("Index");
 
             }
-           
+
 
         }
 
@@ -134,7 +134,7 @@ namespace Scullery.Controllers
             var recipe = await _context.SavedRecipes.Where(r => r.SavedRecipeId == id).SingleOrDefaultAsync();
 
             _context.Remove(recipe);
-           await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
 
             return RedirectToAction("Index");
 
