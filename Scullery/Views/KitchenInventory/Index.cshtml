@@ -27,7 +27,9 @@
                     @Html.DisplayFor(modelItem => item.IngredientName)
                 </td>             
                 <td>
-                    <a asp-action="Delete" asp-route-id="@item.IngredientId">Delete</a>
+                    <form asp-action="Delete" asp-route-id="@item.IngredientId">
+                        <button type="submit" class="btn btn-outline-danger float-right">Delete</button>
+                    </form>
                 </td>
             </tr>
         }
