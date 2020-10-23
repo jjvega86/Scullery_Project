@@ -5,38 +5,46 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>My Recipes</h1>
+<div class="container-fluid">
+    <br />
+    <div class="row">
+        <div class="col-md-4 text-center">
+            <h2>My Recipes</h2>
+        </div>
+        <div class="col-md-2"></div>
+        <div class="col-md-6">
+            <form asp-controller="SavedRecipe" asp-action="SearchResults">
+                <p>
+                    Search For Recipes: <input type="text" name="SearchString">
+                    <input type="submit" value="Search" />
+                </p>
+            </form>
+        </div>
+    </div>
+    <br />
+    <br />
+    <div class="row">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card-columns">
+                    @foreach (SavedRecipe recipe in Model)
+                    {
+                    <div class="card">
+                        <h4 class="card-header">
+                            @recipe.RecipeName
+                        </h4>
+                        <div class="card-img" style="background-image: url('@recipe.ImageURL')"></div>   
+                        <div class="card-footer bg-light">                                                    
+                             <button class="btn btn-outline-primary" type="button" onclick="parent.open('@Url.Content(recipe.RecipeURL)')">Open Recipe</button>
+                        </div>
+                    </div>
+
+                    }
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
 
 
-<form asp-controller="SavedRecipe" asp-action="SearchResults">
-    <p>
-        Search For Recipes: <input type="text" name="SearchString">
-        <input type="submit" value="Search" />
-    </p>
-</form>
-<table class="table">
-    <thead>
-        <tr></tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.RecipeName)
-                </td>
-                <td>
-                    <img src="@Url.Content(item.ImageURL)" alt="Image">
-                </td>
-                <td>
-                    <button type="button" onclick="parent.open('@Url.Content(item.RecipeURL)')" class="btn btn-outline-success">Open Recipe</button>
-                </td>
-                <td>
-                    <form asp-action="Delete" method="get" asp-route-id="@item.SavedRecipeId">
-                        <button type="submit" class="btn btn-outline-danger">Delete</button>
-                    </form>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
