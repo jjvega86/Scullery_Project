@@ -19,10 +19,19 @@
     <br />
     <div class="row">
         <div class="card-columns">
-            <div class="card">
-                <div class="card-img"></div>
-                <div class="card-body"></div>
-            </div>
+            @foreach (Scullery.Models.ViewModels.MealCard card in Model.MealCards)
+            {
+                <div class="card">
+                    <div class="card-img" style="background-image: url('@card.ImgUrl')"></div>
+                    <div class="card-body">
+
+                    </div>
+                </div>
+
+
+
+            }
+
         </div>
     </div>
     

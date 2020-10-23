@@ -53,7 +53,6 @@ namespace Scullery.Controllers
         public TodaysMeals GetTodaysMeals(Planner planner)
         {
             TodaysMeals meals = new TodaysMeals();
-            DateTime today = DateTime.Today;
             meals.MealCards = new List<MealCard>();
             meals.PlannerName = planner.FirstName;
 
@@ -61,11 +60,52 @@ namespace Scullery.Controllers
 
             foreach(Planner podMember in podMembers)
             {
-                var allScheduledMeals = _context.ScheduledMeals.Where(m => m.AssignedPlannerId == podMember.PlannerId && m.DateOfMeal == today).ToList();
+                var allScheduledMeals = _context.ScheduledMeals.Where(m => m.AssignedPlannerId == podMember.PlannerId && m.DateOfMeal == DateTime.Today).ToList();
 
                 foreach(ScheduledMeal meal in allScheduledMeals)
-                {
-                    MealCard card = new MealCard();
+                {                  
+                    if(meal.MealType == "Planned")
+                    {
+                        var recipe = _context.SavedRecipes.Where(r => r.SavedRecipeId == meal.SavedRecipeId).SingleOrDefault();
+                        MealCard card = new MealCard();
+                        card.CookName = podMember.FirstName;
+                        card.ImgUrl = recipe.ImageURL;
+                        card.MealType = meal.MealType;
+                        card.MealSlot = meal.Slot;
+                        card.RecipeUrl = recipe.RecipeURL;
+                        card.RecipeName = recipe.RecipeName;
+
+                        meals.MealCards.Add(card);
+                    }
+
+                    else if (meal.MealType == "Out")
+                    {
+                        MealCard card = new MealCard();
+                        card.CookName = podMember.FirstName;
+                        card.ImgUrl = "https://www.supermarketnews.com/sites/supermarketnews.com/files/styles/article_featured_standard/public/millennials-entertaining-sharing-meal_1.jpg?itok=z2udjYxq";
+                        card.MealType = meal.MealType;
+                        card.MealSlot = meal.Slot;
+                        card.RecipeUrl = "";
+                        card.RecipeName = "";
+
+                        meals.MealCards.Add(card);
+
+                    }
+                    else
+                    {
+                        MealCard card = new MealCard();
+                        card.CookName = podMember.FirstName;
+                        card.ImgUrl = "https://www.washingtonpost.com/resizer/rduyJyxnQahs6-CwLkvPaM4oCx0=/1484x0/arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/6FVR77O5VE5THDHUVRMFLPIZ5Q.jpg";
+                        card.MealType = meal.MealType;
+                        card.MealSlot = meal.Slot;
+                        card.RecipeUrl = "";
+                        card.RecipeName = "";
+
+                        meals.MealCards.Add(card);
+
+
+                    }
+
                 }
             }
             

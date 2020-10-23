@@ -17,9 +17,11 @@ namespace Scullery.Models.ViewModels
     {
         public string CookName { get; set; }
 
+        public string RecipeName { get; set; }
+
         public string MealType { get; set; }
 
-        public string MealSlot { get; set; }
+        public int MealSlot { get; set; }
 
         public string ImgUrl { get; set; }
 
