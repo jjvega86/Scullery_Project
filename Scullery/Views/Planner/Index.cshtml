@@ -7,15 +7,21 @@
 <div class="container">
     <br />
     <div class="row">
-        <div class="col-md-10">
-            <h3 class="text-left text-primary">
-                Welcome, @Html.DisplayFor(model => model.PlannerName)!
+        <div class="col-md-2">
+            <h3 class="text-center text-primary">
+                Hi, @Html.DisplayFor(model => model.PlannerName)!
             </h3>
         </div>
-        <div class="col-md-2">
-            <input type="button" class="btn btn-outline-primary" value="Create Meal Plan" onclick="location.href='@Url.Action("Create", "MealPlan")'" />
+        <div class="col-md-8">
+            <h3 class="text-center text-primary">
+                Today is @DateTime.Today.DayOfWeek, @DateTime.Today.ToString("MM-dd-yyyy")
+            </h3>
+        </div>
+        <div class="col-md-2 justify-content-end">
+            <input type="button" class="btn btn-outline-primary btn-lg" value="Create Meal Plan" onclick="location.href='@Url.Action("Create", "MealPlan")'" />
         </div>
     </div>
+    <br />
     <br />
     <div class="row">
         <div class="col-md-12">
@@ -54,7 +60,7 @@
                     <div class="card-footer">
                         @if (card.RecipeUrl != "")
                         {
-                            <button type="button" onclick="parent.open('@Url.Content(card.RecipeUrl)')" class="btn btn-outline-success">Open Recipe</button>
+                            <button class="btn btn-outline-primary" type="button" onclick="parent.open('@Url.Content(card.RecipeUrl)')" >Open Recipe</button>
 
                         }
 

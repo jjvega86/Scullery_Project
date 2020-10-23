@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <title>@ViewData["Title"] - Scullery</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-libra.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-pulse.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-primary border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Scullery</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -21,21 +21,21 @@
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">My Kitchen</a>
+                            <a class="nav-link dropdown-toggle text-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">My Kitchen</a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" asp-controller="SavedRecipe" asp-action="Index">My Recipes</a>
                                 <a class="dropdown-item" asp-controller="KitchenInventory" asp-action="Index">My Pantry</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">My Meals</a>
+                            <a class="nav-link dropdown-toggle text-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">My Meals</a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" asp-controller="ScheduledMeal" asp-action="GetMealSchedule">My Meal Schedule</a>
                                 <a class="dropdown-item" asp-controller="MealPlan" asp-action="ViewPendingMeals">Plan Meals</a>                               
                             </div>
                         </li>                     
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Budget" asp-action="Index">Budget and Shop</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Budget" asp-action="Index">Budget and Shop</a>
                         </li>
 
                     </ul>
