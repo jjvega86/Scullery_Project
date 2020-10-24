@@ -4,69 +4,77 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
+
 <div class="container">
     <div class="row">
-        <div class="col-6">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">Date</th>
-                        <th scope="col">Breakfast</th>
-                        <th scope="col">Lunch</th>
-                        <th scope="col">Dinner</th>
-                        <th scope="col">Cook</th>
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
+        <div class="col-12">
+            <table class="table text-center">
                 <tbody>
                     @foreach (var item in Model)
                     {
-                    <tr>
-                        <th scope="row">
-                            <div class="card">
-                                <div class="card-body">
-                                    @item.MealDate.Value.ToString("MM/dd/yyyy")
+                        <tr>
+                            <th scope="row">
+                                <h4>@item.MealDate.Value.ToString("MM/dd/yyyy")</h4>
+                            </th>
+                            <td>
+                                <div class="card text-center">
+                                    @if (item.MealType == "Planned")
+                                    {
+                                        <div class="card-body">
+                                            <a href="@item.RecipeUrl" class="stretched-link"> <p class="card-header"> @item.RecipeName </p></a>
+                                        </div>
+                                        <div class="card-footer bg-secondary text-light">
+                                            @if (item.Slot == 1)
+                                            {
+                                                <h6>Breakfast</h6>
+                                            }
+                                            else if (item.Slot == 2)
+                                            {
+                                                <h6>Lunch</h6>
+
+                                            }
+                                            else
+                                            {
+                                                <h6>Dinner</h6>
+                                            }
+                                        </div>
+
+                                    }
+                                    else
+                                    {
+                                        <div class="card-body">
+                                            @item.MealType
+                                        </div>
+                                        <div class="card-footer bg-success text-light">
+                                            @if (item.Slot == 1)
+                                            {
+                                                <h6>Breakfast</h6>
+                                            }
+                                            else if (item.Slot == 2)
+                                            {
+                                                <h6>Lunch</h6>
+
+                                            }
+                                            else
+                                            {
+                                                <h6>Dinner</h6>
+                                            }
+                                        </div>
+                                    }
                                 </div>
-                            </div>
-                        </th>
-                        <td>
-                            <div class="card">
-                                <div class="card-body">
-                                    @item.MealType
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="card">
-                                <div class="card-body">
-                                    @item.MealType
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="card">
-                                <div class="card-body">
-                                    @item.MealType
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="card">
-                                <div class="card-body">
-                                    @item.PlannerName
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="card">
-                                <div class="card-body">
-                                    <form asp-controller="MealPlan" asp-action="Edit" asp-route-id="@item.ScheduledMealId">
-                                        <button type="submit" class="btn btn-outline-primary float-none">Modify Meal</button>
-                                    </form>    
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
+                            </td>
+
+                            <td class="text-center">
+                                <h4 class="text-center">@item.PlannerName</h4>
+
+                            </td>
+                            <td class="text-center">
+                                <form asp-controller="MealPlan" asp-action="Plan" method="get" asp-route-id="@item.ScheduledMealId">
+                                    <button type="submit" class="btn btn-outline-primary float-right">Modify Meal</button>
+                                </form>
+                            </td>
+                        </tr>
                     }
                 </tbody>
             </table>
@@ -75,59 +83,3 @@
     </div>
 </div>
 
-<div class="container-fluid">
-    <br />
-    <div class="row">
-        <div class="col-md-12 text-center">
-            <h2>Meal Schedule</h2>
-        </div>
-    </div>
-    <br />
-    <br />
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card-columns">
-                @foreach (var item in Model)
-                {
-                <div class="card">
-                    <h3 class="card-header">
-                        @if (item.Slot == 1)
-                        {
-                            <span>Breakfast: </span> @item.MealType
-                        }
-                        else if (item.Slot == 2)
-                        {
-                            <span>Lunch: </span> @item.MealType
-                        }
-                        else
-                        {
-                            <span>Dinner: </span> @item.MealType
-                        }
-                    </h3>
-                    @if (item.RecipeName != "None")
-                    {
-                        <a href="@item.RecipeUrl" class="stretched-link"> <h2 class="card-header"> @item.RecipeName </h2></a>
-
-                       
-
-                    }
-                    @if (item.MealType == "Planned")
-                    {
-                        <div class="card-body">
-                            <h4 class="card-title">Assigned Cook</h4>
-                            <h5 class="card-subtitle text-dark">@item.PlannerName</h5>
-                        </div>
-
-                    }
-                    <div class="card-footer bg-light">                  
-                        <form asp-controller="MealPlan" asp-action="Plan" asp-route-id="@item.ScheduledMealId">
-                            <button type="submit" class="btn btn-outline-primary float-none">Modify Meal</button>
-                        </form>
-                    </div>
-                </div>
-                }
-            </div>
-        </div>
-
-    </div>
-</div>
