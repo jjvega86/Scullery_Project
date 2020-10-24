@@ -4,32 +4,55 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<div class="container">
+    <br />
+    <div class="row text-center">
+        <div class="col-4">
+            <input type="button" class="btn btn-outline-primary btn-lg" value="Set Weekly Budget Amount" onclick="location.href='@Url.Action("SetBudgetAmount", "Budget")'" />
+        </div>
+        <div class="col-4">
+            <input type="button" class="btn btn-outline-primary btn-lg" value="Enter Expense" onclick="location.href='@Url.Action("AddExpense", "Budget")'" />
+        </div>
+        <div class="col-4">
+            <input type="button" class="btn btn-outline-primary btn-lg" value="Create Shopping List" onclick="location.href='@Url.Action("RequestShoppingList", "ScheduledMeal")'" />
+        </div>
+    </div>
+    <br />
+    <br />
+    <br />
+    <div class="row">
+        <div class="col-md-8 img-fluid">
+            <img src="~/Meal-Plan-Photo-with-Veggies.jpg" alt="mealplan" />
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
+                <div class="card-header">Current Week Spent vs. Budget</div>
+                <div class="card-body">
+                    <h4 class="card-title">Budget: $@Model.CurrentWeekBudget </h4>
+                    <h4 class="card-title">Spent: $@Model.CurrentWeekSpent </h4>
+                </div>
+            </div>
+            <br />
+            <div class="card text-white bg-success mb-3" style="max-width: 20rem;">
+                <div class="card-header">Lifetime App Savings</div>
+                <div class="card-body">
+                    <h4 class="card-title">Total: $@Model.LifeTimeSavings</h4>
+                    <h4 class="card-title">Total Budgeted: $@Model.CumulativeBudget / Total Spent: $@Model.CumulativeSpent</h4>
+                </div>
+            </div>
+        </div>
+       
 
-<h1>Budget</h1>
-<input type="button" class="btn btn-primary" value="Set Weekly Budget Amount" onclick="location.href='@Url.Action("SetBudgetAmount", "Budget")'" />
-<input type="button" class="btn btn-primary" value="Enter Expense" onclick="location.href='@Url.Action("AddExpense", "Budget")'" />
-<input type="button" class="btn btn-primary" value="Create Shopping List" onclick="location.href='@Url.Action("RequestShoppingList", "ScheduledMeal")'" />
+    </div>
 
-<hr />
-<h4>Current Week Spent vs. Budget</h4>
-<p>Budget: $@Model.CurrentWeekSpent / Spent: $@Model.CurrentWeekBudget</p>
-<hr />
-<h4>Money Saved So Far</h4>
-<p>$@Model.LifeTimeSavings (Total Budgeted: $@Model.CumulativeBudget / Total Spent: $@Model.CumulativeSpent)</p>
+</div>
 
 
 
-<script type="text/javascript">
-    var i = 0;
-    function makeProgress() {
-        if (i < 100) {
-            i = i + 1;
-            $(".progress-bar").css("width", i + "%").text(i + " %");
-        }
-        // Wait for sometime before running this script again
-        setTimeout("makeProgress()", 100);
-    }
-    makeProgress();
-</script>
+
+
+
+
+
 
 

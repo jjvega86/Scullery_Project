@@ -27,12 +27,22 @@ a {
     opacity: .8 !important;
 }
 
+.jumbotron {
+    background-size: cover;
+    height: 100%;
+}
+
+#welcome {
+    background-image: url(/veggies.jpeg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
 
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
 }
 
 /* Sticky footer styles

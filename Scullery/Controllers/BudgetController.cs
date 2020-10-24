@@ -87,7 +87,7 @@ namespace Scullery.Controllers
             _context.Update(currentBudget);
             _context.SaveChanges();
 
-            return View("Index");
+            return RedirectToAction("Index");
         }
 
         public IActionResult AddExpense()
