@@ -8,17 +8,21 @@
 
 <div class="container">
     <div class="row">
+        <div class="col-12 text-center"><h1 class="text-primary">Scheduled Meals</h1></div>
+    </div>
+    <br />
+    <div class="row">
         <div class="col-12">
-            <table class="table text-center">
+            <table class="table text-center border-top-0">
                 <tbody>
                     @foreach (var item in Model)
                     {
                         <tr>
                             <th scope="row">
-                                <h4>@item.MealDate.Value.ToString("MM/dd/yyyy")</h4>
+                                <h4 class="text-primary">@item.MealDate.Value.ToString("MM/dd/yyyy")</h4>
                             </th>
                             <td>
-                                <div class="card text-white bg-secondary mb-3 text-center">
+                                <div class="card border-primary mb-3 text-primary text-center">
                                     @if (item.MealType == "Planned")
                                     {
                                         <div class="card-header bg-secondary text-light">
@@ -37,7 +41,7 @@
                                             }
                                         </div>
                                         <div class="card-body">
-                                            <a href="@item.RecipeUrl" class="stretched-link text-white"> <h4 class="card-header"> @item.RecipeName </h4></a>
+                                            <a href="@item.RecipeUrl" class="stretched-link text-primary bg-light"> <h4 class="card-header"> @item.RecipeName </h4></a>
                                         </div>
                                         <div class="card-footer"><strong>@item.PlannerName</strong></div>
 
