@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using AspNetCore;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -295,9 +294,9 @@ namespace Scullery.Controllers
         {
             bool ready = false;
 
-            var pendingMeals = _context.ScheduledMeals.Where(m => m.Planned == false).ToList();
+            var pendingMeals = _context.ScheduledMeals.Where(m => m.Planned == false && m.AssignedPlannerId == planner.PlannerId).ToList();
 
-            if (pendingMeals != null)
+            if (pendingMeals.Count != 0)
             {
                 ready = true;
             }

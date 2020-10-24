@@ -18,20 +18,27 @@
             </h3>
         </div>
         <div class="col-md-2 justify-content-end">
+           
+            <input type="button" class="btn btn-outline-primary btn-lg" value="Create Meal Plan" onclick="location.href='@Url.Action("Create", "MealPlan")'" />
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-12 text-center">
             @if (Model.MealsReadyToPlan == true)
             {
-                <input type="button" class="btn btn-outline-primary btn-lg" value="Plan Pending Meals" onclick="location.href='@Url.Action("ViewPendingMeals", "MealPlan")'" />
+                <input type="button" class="btn btn-outline-danger btn-lg" value="Plan Pending Meals" onclick="location.href='@Url.Action("ViewPendingMeals", "MealPlan")'" />
+                <br />
 
 
             }
-            <input type="button" class="btn btn-outline-primary btn-lg" value="Create Meal Plan" onclick="location.href='@Url.Action("Create", "MealPlan")'" />
         </div>
     </div>
     <br />
     <br />
     <div class="row">
         <div class="col-md-12">
-            <div class="card-columns">
+            <div class="card-columns text-center">
                 @foreach (Scullery.Models.ViewModels.MealCard card in Model.MealCards)
                 {
                     <div class="card">

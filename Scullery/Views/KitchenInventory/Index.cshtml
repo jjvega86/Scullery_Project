@@ -23,31 +23,45 @@
     <br />
     <br />
     <div class="row">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>
-                        Ingredient Name
-                    </th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
+        <div class="col-6">
+            <table class="table">
+                <thead>
                     <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.IngredientName)
-                        </td>
-                        <td>
-                            <form asp-action="Delete" asp-route-id="@item.IngredientId">
-                                <button type="submit" class="btn btn-outline-danger float-right">Delete</button>
-                            </form>
-                        </td>
+                        <th>
+                            Ingredient Name
+                        </th>
+                        <th></th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.IngredientName)
+                            </td>
+                            <td>
+                                <form asp-action="Delete" asp-route-id="@item.IngredientId">
+                                    <button type="submit" class="btn btn-outline-danger float-right">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="col-2"></div>
+        <div class="col-4">
+            <div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
+                <div class="card-header">Attention!</div>
+                <div class="card-body">
+                    <h4 class="card-title">Your Pantry</h4>
+                    <p class="card-text">Add ingredients to this list that you already have and don't want to appear on your shopping list.</p>
+                </div>
+            </div>
+        </div>
     </div>
+    
+    
 </div>
 

@@ -26,14 +26,10 @@
                                 <a class="dropdown-item" asp-controller="SavedRecipe" asp-action="Index">My Recipes</a>
                                 <a class="dropdown-item" asp-controller="KitchenInventory" asp-action="Index">My Pantry</a>
                             </div>
+                        </li>    
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="ScheduledMeal" asp-action="GetMealSchedule">My Meal Schedule</a>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">My Meals</a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" asp-controller="ScheduledMeal" asp-action="GetMealSchedule">My Meal Schedule</a>
-                                <a class="dropdown-item" asp-controller="MealPlan" asp-action="ViewPendingMeals">Plan Meals</a>                               
-                            </div>
-                        </li>                     
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="Budget" asp-action="Index">Budget and Shop</a>
                         </li>
