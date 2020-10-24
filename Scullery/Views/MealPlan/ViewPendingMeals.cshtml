@@ -5,51 +5,68 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Meals Ready To Be Planned!</h1>
+<div class="container">
+    <br />
+    <br />
+    <div class="row">
+        <div class="col-6 text-center">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Date
+                        </th>
+                        <th>
+                            Meal Type
+                        </th>
+                        <th>
+
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @item.DateOfMeal.Value.ToString("MM/dd/yyyy")
+                            </td>
+                            <td>
+                                @if (item.Slot == 1)
+                                {
+                                    <p>Breakfast</p>
+                                }
+                                else if (item.Slot == 2)
+                                {
+                                    <p>Lunch</p>
+                                }
+                                else
+                                {
+                                    <p>Dinner</p>
+                                }
+                            </td>
+                            <td>
+                                <form asp-action="Plan" method="get" asp-route-id="@item.ScheduledMealId">
+                                    <button type="submit" class="btn btn-outline-primary float-right">Plan Meal</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="col-2"></div>
+        <div class="col-4 float-right">
+            <div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
+                <div class="card-header">Attention!</div>
+                <div class="card-body">
+                    <h4 class="card-title">Plan Meals</h4>
+                    <p class="card-text">Use this tool to plan meals assigned to you: you can plan for leftovers, eating out, or use one of your saved recipes.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
-<table class="table">
-    <thead>
-        <tr>
-           
-            <th>
-                @Html.DisplayNameFor(model => model.DateOfMeal)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Slot)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MealType)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateOfMeal)
-            </td>
-            <td>
-                @if (item.Slot == 1)
-                {
-                    <p>Breakfast</p>
-                }
-                else if (item.Slot == 2)
-                {
-                    <p>Lunch</p>
-                }
-                else
-                {
-                    <p>Dinner</p>
-                }
-            </td>           
-            <td>
-                <form asp-action="Plan" method="get" asp-route-id="@item.ScheduledMealId">
-                    <button type="submit" class="btn btn-outline-success">Plan Meal!</button>
-                </form>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+
