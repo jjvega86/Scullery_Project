@@ -46,14 +46,14 @@ namespace Scullery.Controllers
         private List<ScheduledMeal> GetAllPodScheduledMeals()
         {
             var planner = GetLoggedInPlanner();
-            var plannerPod = _context.Pods.Find(planner.PodId);
-            var allPlanners =  _context.Planners.Where(p => p.PodId == plannerPod.PodId).ToList();
+            var allPlanners =  _context.Planners.Where(p => p.PodId == planner.PodId).ToList();
             List<ScheduledMeal> scheduledMeals = new List<ScheduledMeal>();
 
             foreach (Planner podMember in allPlanners)
             {
                 var theseMeals =  _context.ScheduledMeals.Where(m => m.AssignedPlannerId == podMember.PlannerId).ToList();
-                scheduledMeals.AddRange(theseMeals);
+                var currentMeals = theseMeals.Where(m => m.DateOfMeal > DateTime.Now.AddDays(-1)).ToList();
+                scheduledMeals.AddRange(currentMeals);
 
             }
 

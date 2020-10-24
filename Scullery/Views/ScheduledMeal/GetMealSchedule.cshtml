@@ -18,60 +18,59 @@
                                 <h4>@item.MealDate.Value.ToString("MM/dd/yyyy")</h4>
                             </th>
                             <td>
-                                <div class="card text-center">
+                                <div class="card text-white bg-secondary mb-3 text-center">
                                     @if (item.MealType == "Planned")
                                     {
-                                        <div class="card-body">
-                                            <a href="@item.RecipeUrl" class="stretched-link"> <p class="card-header"> @item.RecipeName </p></a>
-                                        </div>
-                                        <div class="card-footer bg-secondary text-light">
+                                        <div class="card-header bg-secondary text-light">
                                             @if (item.Slot == 1)
                                             {
-                                                <h6>Breakfast</h6>
+                                                <h5>Breakfast</h5>
                                             }
                                             else if (item.Slot == 2)
                                             {
-                                                <h6>Lunch</h6>
+                                                <h5>Lunch</h5>
 
                                             }
                                             else
                                             {
-                                                <h6>Dinner</h6>
+                                                <h5>Dinner</h5>
                                             }
                                         </div>
+                                        <div class="card-body">
+                                            <a href="@item.RecipeUrl" class="stretched-link text-white"> <h4 class="card-header"> @item.RecipeName </h4></a>
+                                        </div>
+                                        <div class="card-footer"><strong>@item.PlannerName</strong></div>
+
+
 
                                     }
                                     else
                                     {
-                                        <div class="card-body">
-                                            @item.MealType
-                                        </div>
-                                        <div class="card-footer bg-success text-light">
+                                        <div class="card-header bg-secondary text-light">
                                             @if (item.Slot == 1)
                                             {
-                                                <h6>Breakfast</h6>
+                                                <h5>Breakfast</h5>
                                             }
                                             else if (item.Slot == 2)
                                             {
-                                                <h6>Lunch</h6>
+                                                <h5>Lunch</h5>
 
                                             }
                                             else
                                             {
-                                                <h6>Dinner</h6>
+                                                <h5>Dinner</h5>
                                             }
                                         </div>
+                                        <div class="card-body">
+                                            <strong>@item.MealType</strong> 
+                                        </div>
+
                                     }
                                 </div>
-                            </td>
-
-                            <td class="text-center">
-                                <h4 class="text-center">@item.PlannerName</h4>
-
-                            </td>
+                            </td>                       
                             <td class="text-center">
                                 <form asp-controller="MealPlan" asp-action="Plan" method="get" asp-route-id="@item.ScheduledMealId">
-                                    <button type="submit" class="btn btn-outline-primary float-right">Modify Meal</button>
+                                    <button type="submit" class="btn btn-outline-primary">Modify Meal</button>
                                 </form>
                             </td>
                         </tr>
