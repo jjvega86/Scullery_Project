@@ -18,6 +18,12 @@
             </h3>
         </div>
         <div class="col-md-2 justify-content-end">
+            @if (Model.MealsReadyToPlan == true)
+            {
+                <input type="button" class="btn btn-outline-primary btn-lg" value="Plan Pending Meals" onclick="location.href='@Url.Action("ViewPendingMeals", "MealPlan")'" />
+
+
+            }
             <input type="button" class="btn btn-outline-primary btn-lg" value="Create Meal Plan" onclick="location.href='@Url.Action("Create", "MealPlan")'" />
         </div>
     </div>

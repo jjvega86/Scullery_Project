@@ -19,5 +19,6 @@ namespace Scullery.Models.ViewModels
         public int ScheduledMealId { get; set; }
 
         public string RecipeUrl { get; set; }
+
     }
 }

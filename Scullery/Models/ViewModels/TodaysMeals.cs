@@ -8,6 +8,7 @@ namespace Scullery.Models.ViewModels
     public class TodaysMeals
     {
         public string PlannerName { get; set; }
+        public bool MealsReadyToPlan { get; set; }
 
         public List<MealCard> MealCards { get; set; }
 

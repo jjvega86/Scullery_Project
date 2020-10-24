@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using AspNetCore;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -50,11 +51,14 @@ namespace Scullery.Controllers
 
             return View(meals);
         }
+
+        
         public TodaysMeals GetTodaysMeals(Planner planner)
         {
             TodaysMeals meals = new TodaysMeals();
             meals.MealCards = new List<MealCard>();
             meals.PlannerName = planner.FirstName;
+            meals.MealsReadyToPlan = ValidateMealsReadyToPlan(planner);
 
             var podMembers = _context.Planners.Where(p => p.PodId == planner.PodId).ToList();
 
@@ -284,6 +288,22 @@ namespace Scullery.Controllers
                 budget.CumulativeSpent = lastBudget.CumulativeSpent + lastBudget.CurrentWeekSpent;
 
             }
+
+        }
+
+        private bool ValidateMealsReadyToPlan(Planner planner)
+        {
+            bool ready = false;
+
+            var pendingMeals = _context.ScheduledMeals.Where(m => m.Planned == false).ToList();
+
+            if (pendingMeals != null)
+            {
+                ready = true;
+            }
+
+            return ready;
+
 
         }
 
