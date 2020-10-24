@@ -109,7 +109,7 @@
 
                         }
                         <div class="card-footer bg-light">
-                            @if (item != "")
+                            @if (item.RecipeUrl != "")
                             {
                                 <button class="btn btn-outline-primary" type="button" onclick="parent.open('@Url.Content(card.RecipeUrl)')">Open Recipe</button>
 

@@ -111,6 +111,7 @@ namespace Scullery.Controllers
             mealEvent.PlannerName = mealPlanner.FirstName;
             mealEvent.Slot = meal.Slot;
             mealEvent.ScheduledMealId = meal.ScheduledMealId;
+            mealEvent.RecipeUrl = recipe.RecipeURL;
 
             return mealEvent;
 
