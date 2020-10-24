@@ -65,3 +65,62 @@
         }
     </tbody>
 </table>
+
+<div class="container-fluid">
+    <br />
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h2>Search Results</h2>
+        </div>
+    </div>
+    <br />
+    <br />
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card-columns">
+                @foreach (var item in Model)
+                {
+                    <div class="card">
+                        <h3 class="card-header">
+                            @if (item.Slot == 1)
+                            {
+                                <span>Breakfast: </span> @item.MealType
+                            }
+                            else if (item.Slot == 2)
+                            {
+                                <span>Lunch: </span> @item.MealType
+                            }
+                            else
+                            {
+                                <span>Dinner: </span> @item.MealType
+                            }
+                        </h3>
+                        @if (item.RecipeName != "")
+                        {
+                            <h2 class="card-header"> @item.RecipeName </h2>
+
+                        }
+                        @if (item.MealType == "Planned")
+                        {
+                            <div class="card-body">
+                                <h4 class="card-title">Assigned Cook</h4>
+                                <h5 class="card-subtitle text-dark">@item.PlannerName</h5>
+                            </div>
+
+                        }
+                        <div class="card-footer bg-light">
+                            @if (item != "")
+                            {
+                                <button class="btn btn-outline-primary" type="button" onclick="parent.open('@Url.Content(card.RecipeUrl)')">Open Recipe</button>
+
+                            }
+
+                        </div>
+                    </div>
+
+                }
+            </div>
+        </div>
+
+    </div>
+</div>
