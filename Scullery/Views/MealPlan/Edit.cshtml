@@ -22,7 +22,7 @@
             <input type="hidden" asp-for="Planned" />
             <input type="hidden" asp-for="MealType" />
             <div class="form-group">
-                <label asp-for="PlannerName"></label>
+                <label asp-for="PlannerName">Planner Name</label>
                 <select asp-for="PlannerName" class="form-control" asp-items="@Model.Planners"></select>
                 <span asp-validation-for="PlannerName" class="text-danger"></span>
             </div>
